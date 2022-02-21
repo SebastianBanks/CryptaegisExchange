@@ -1,28 +1,53 @@
-require('dotenv').config
+require('dotenv').config()
 const fs = require('fs')
 const AWS = require('aws-sdk')
+
+const uuid = require("uuid").v4
 
 const bucketName = process.env.AWS_BUCKET_NAME
 const region = process.env.AWS_BUCKET_REGION
 const accessKeyId = process.env.AWS_ACCESS_KEY
-const secretAccessKey = process.env.AWS_SECURITY_KEY
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
+
+// const params = {
+//     "credentials": {
+//         "accessKeyId": process.env.AWS_ACCESS_KEY,
+//         "secretAccessKey": process.env.AWS_SECRET_ACCESS_KEY
+//     },
+//     "acl": "public-read",
+//     "endpoint": "s3.us-west-2.amazonaws.com",
+//     "sslEnabled": false,
+//     "forcePathStyle": true,
+//     "signitureVersion": "v4"
+// }
 
 const s3 = new AWS.S3({
-    region,
-    accessKeyId,
-    secretAccessKey
+    region: "us-west-2",
+    endpoint: "http://localhost:3000",
+    accessKeyId: accessKeyId,
+    secretAccessKey: secretAccessKey,
+    sslEnabled: false,
+    forcePathStyle: true,
+    acl:'public-read',
+    signatureVersion: "v4"
 })
+// const s3 = new AWS (params)
 
-module.exports = {
-    imageUpload: (file) => {
-        const fileContent = fs.readFileSync(file)
+module.exports.generateImageURL = async function generateImageURL() {
+    const imgName = `${uuid()}`
 
-        const params = {
-            Bucket: bucketName,
-            Body: 'cat.jpg', // what you want to save in S3
-            Key: fileContent
-        }
+    const params = ({
+        Bucket: "cryptaegis-exchange",
+        Key: imgName,
+        // Expires: 60
+    })
 
-        return s3.upload(params).promise()
-    }
+    console.log(params)
+
+
+
+    const uploadURL = await s3.getSignedUrlPromise('putObject', params)
+    console.log(`uploadUrl: ${uploadURL}`)
+    return uploadURL
 }
+
