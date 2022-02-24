@@ -22,32 +22,34 @@ const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
 // }
 
 const s3 = new AWS.S3({
-    region: "us-west-2",
-    endpoint: "http://localhost:3000",
+    region: region,
+    apiVersion: '2006-03-01',
+    //endpoint: "http://localhost:3000",
     accessKeyId: accessKeyId,
     secretAccessKey: secretAccessKey,
-    sslEnabled: false,
+    // sslEnabled: false,
     forcePathStyle: true,
-    acl:'public-read',
     signatureVersion: "v4"
 })
 // const s3 = new AWS (params)
 
 module.exports.generateImageURL = async function generateImageURL() {
     const imgName = `${uuid()}`
+    console.log(imgName)
 
     const params = ({
-        Bucket: "cryptaegis-exchange",
+        Bucket: bucketName,
         Key: imgName,
-        // Expires: 60
+        Expires: 5
     })
 
     console.log(params)
 
 
-
+    
     const uploadURL = await s3.getSignedUrlPromise('putObject', params)
     console.log(`uploadUrl: ${uploadURL}`)
     return uploadURL
 }
 
+ 

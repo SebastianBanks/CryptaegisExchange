@@ -4,52 +4,62 @@ require('dotenv').config()
 
 const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
     dialect: 'postgres',
-    ssl: {
-        rejectUnauthorized: false
+    dialectOptions: {
+        ssl: {
+            rejectUnauthorized: false
+        }
     }
-    
 })
 
 module.exports = {
     createItem: (req, res) => {
-        const { price, description, item_name, product_size, owner_id, category_id, image1, image2, image3} = req.body
-
+        const { item_price, item_title, item_desc, item_size, owner_id, category_id, images} = req.body
+        let id 
         sequelize.query(`
-        INSERT INTO item(price, description, item_name, product_size, owner_id, category_id)
-        VALUES(${price}, '${description}', '${item_name}', '${product_size}', ${owner_id}, ${category_id})
+        INSERT INTO item(item_price, item_title, item_description, item_size, owner_id, category_id)
+        VALUES(${item_price}, '${item_title}', '${item_desc}', '${item_size}', ${owner_id}, ${category_id})
+        RETURNING item_id;
         `)
-        .then(dbRes => res.status(200).send(dbRes[0]))
+        .then(dbRes => res.status(200).send(id = dbRes[0]))
         .catch(err => console.log(err))
 
-        if (image1 !== undefined) {
-            // send image to s3 and get url back
-            sequelize.query(`
-            INSERT INTO images(url_path, item_id)
-            VALUES('URL', (SELECT item_id FROM item WHERE owner_id = ${owner_id} AND item_name = '${item_name}' AND price = ${price}));
-            `)
-            .then(dbRes => res.status(200).send(dbRes[0]))
-            .catch(err => console.log(err))
+        console.log(images)
+
+        for (item in images) {
+            console.log(item)
         }
 
-        if (image2 !== undefined) {
-            // send image to s3 and get url back
-            sequelize.query(`
-            INSERT INTO images(url_path, item_id)
-            VALUES('URL', (SELECT item_id FROM item WHERE owner_id = ${owner_id} AND item_name = '${item_name}' AND price = ${price}));
-            `)
-            .then(dbRes => res.status(200).send(dbRes[0]))
-            .catch(err => console.log(err))
-        }
+        console.log(id)
 
-        if (image3 !== undefined) {
-            // send image to s3 and get url back
-            sequelize.query(`
-            INSERT INTO images(url_path, item_id)
-            VALUES('URL', (SELECT item_id FROM item WHERE owner_id = ${owner_id} AND item_name = '${item_name}' AND price = ${price}));
-            `)
-            .then(dbRes => res.status(200).send(dbRes[0]))
-            .catch(err => console.log(err))
-        }
+        // if (image1 !== undefined) {
+        //     // send image to s3 and get url back
+        //     sequelize.query(`
+        //     INSERT INTO images(url_path, item_id)
+        //     VALUES('URL', (SELECT item_id FROM item WHERE owner_id = ${owner_id} AND item_name = '${item_name}' AND price = ${price}));
+        //     `)
+        //     .then(dbRes => res.status(200).send(dbRes[0]))
+        //     .catch(err => console.log(err))
+        // }
+
+        // if (image2 !== undefined) {
+        //     // send image to s3 and get url back
+        //     sequelize.query(`
+        //     INSERT INTO images(url_path, item_id)
+        //     VALUES('URL', (SELECT item_id FROM item WHERE owner_id = ${owner_id} AND item_name = '${item_name}' AND price = ${price}));
+        //     `)
+        //     .then(dbRes => res.status(200).send(dbRes[0]))
+        //     .catch(err => console.log(err))
+        // }
+
+        // if (image3 !== undefined) {
+        //     // send image to s3 and get url back
+        //     sequelize.query(`
+        //     INSERT INTO images(url_path, item_id)
+        //     VALUES('URL', (SELECT item_id FROM item WHERE owner_id = ${owner_id} AND item_name = '${item_name}' AND price = ${price}));
+        //     `)
+        //     .then(dbRes => res.status(200).send(dbRes[0]))
+        //     .catch(err => console.log(err))
+        // }
 
         // get user id and make sure they have a wallet
         // double check user has a location and a phone number or email
