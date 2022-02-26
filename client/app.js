@@ -8,11 +8,35 @@ const itemSize = document.querySelector("#item_size")
 const ownerId = document.querySelector("#owner_id")
 const catId = document.querySelector("#cat_id")
 
+const coinbaseId = document.querySelector("#coinbaseId")
+const userForm = document.querySelector("#userForm")
+const userName = document.querySelector("#userName")
+const email = document.querySelector("#email")
+const phoneNum = document.querySelector("#phoneNum")
+const location = document.querySelector("#location")
+const age = document.querySelector("#age")
 
 
-imageForm.addEventListener("submit", async event => {
-    event.preventDefault()
-    let images = []
+const createUser = (e) => {
+    e.preventDefault()
+
+    let body = {
+        coinbase_id: coinbaseId.value,
+        user_Name: userName.value,
+        user_email: email.value,
+        user_phone_number: phoneNum.value,
+        user_location: location.value,
+        user_age: age.value
+    }
+
+    
+
+}
+
+const createItem = async (e) => {
+     e.preventDefault()
+
+        let images = []
     for(let i = 0; i < imageInput.files.length; i++) {
         console.log(imageInput.files[i])
         const file = imageInput.files[i]
@@ -56,9 +80,15 @@ imageForm.addEventListener("submit", async event => {
         })
         
     console.log(images)
+}
+
+imageForm.addEventListener("submirt", createItem)
 
     
-})
+
+
+    
+
 
 
 

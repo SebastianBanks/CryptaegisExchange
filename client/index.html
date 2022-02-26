@@ -9,18 +9,40 @@
 </head>
 <body>
     <h1>Cryptaegis Exchange</h1>
+
+    <main>
+        <div class="form">
+            <h2>Create User</h2>
+            <form id="userForm">
+                <input id="coinbaseId" type="text" placeholder="Coinbase Id">
+                <input id="userName" type="text" placeholder="Name">
+                <input id="email" type="text" placeholder="Email">
+                <input id="phoneNum" type="text" placeholder="Phone Number">
+                <input id="location" type="text" placeholder="Location">
+                <input id="age" type="number" placeholder="Age">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div class="form">
+            <h2>Create Item</h2>
+            <form id="imageForm">
+                <input id="imageInput" type="file" accept="image/*" multiple>
+                <input id="item_price" type="number" placeholder="Item price">
+                <input id="item_title" type="text" placeholder="Item title">
+                <input id="item_desc" type="text" placeholder="Item Description">
+                <input id="item_size" type="text" placeholder="Item Size">
+                <input id="owner_id" type="number" placeholder="Owner id">
+                <input id="cat_id" type="number" placeholder="Category">
+                <button type="submit">Upload</button>
+            </form>>
+        </div>
+
+    </main>
+
+   
     
 
-    <form id="imageForm">
-        <input id="imageInput" type="file" accept="image/*" multiple>
-        <input id="item_price" type="number">
-        <input id="item_title" type="text">
-        <input id="item_desc" type="text">
-        <input id="item_size" type="text">
-        <input id="owner_id" type="number">
-        <input id="cat_id" type="number">
-        <button type="submit">Upload</button>
-    </form>>
+    
     
     <script src="../node_modules/axios/dist/axios.min.js"></script>
     <script src="app.js"></script>

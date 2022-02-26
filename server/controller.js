@@ -14,60 +14,27 @@ const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
 module.exports = {
     createItem: (req, res) => {
         const { item_price, item_title, item_desc, item_size, owner_id, category_id, images} = req.body
-        let id 
+        
         sequelize.query(`
         INSERT INTO item(item_price, item_title, item_description, item_size, owner_id, category_id)
         VALUES(${item_price}, '${item_title}', '${item_desc}', '${item_size}', ${owner_id}, ${category_id})
         RETURNING item_id;
         `)
-        .then(dbRes => res.status(200).send(id = dbRes[0]))
+        .then(id => {
+            for (let i = 0; i < images.length; i++) {
+                if (images[i] !== undefined) {
+                    sequelize.query(`
+                        INSERT INTO images(url_path, item_id)
+                         VALUES('${images[i]}', ${id[0]};
+                    `)
+                    .then(dbRes => res.status(200).send(dbRes[0]))
+                    .catch(err => console.log(err))
+                }
+            }
+        })
         .catch(err => console.log(err))
 
         console.log(images)
-
-        for (item in images) {
-            console.log(item)
-        }
-
-        console.log(id)
-
-        // if (image1 !== undefined) {
-        //     // send image to s3 and get url back
-        //     sequelize.query(`
-        //     INSERT INTO images(url_path, item_id)
-        //     VALUES('URL', (SELECT item_id FROM item WHERE owner_id = ${owner_id} AND item_name = '${item_name}' AND price = ${price}));
-        //     `)
-        //     .then(dbRes => res.status(200).send(dbRes[0]))
-        //     .catch(err => console.log(err))
-        // }
-
-        // if (image2 !== undefined) {
-        //     // send image to s3 and get url back
-        //     sequelize.query(`
-        //     INSERT INTO images(url_path, item_id)
-        //     VALUES('URL', (SELECT item_id FROM item WHERE owner_id = ${owner_id} AND item_name = '${item_name}' AND price = ${price}));
-        //     `)
-        //     .then(dbRes => res.status(200).send(dbRes[0]))
-        //     .catch(err => console.log(err))
-        // }
-
-        // if (image3 !== undefined) {
-        //     // send image to s3 and get url back
-        //     sequelize.query(`
-        //     INSERT INTO images(url_path, item_id)
-        //     VALUES('URL', (SELECT item_id FROM item WHERE owner_id = ${owner_id} AND item_name = '${item_name}' AND price = ${price}));
-        //     `)
-        //     .then(dbRes => res.status(200).send(dbRes[0]))
-        //     .catch(err => console.log(err))
-        // }
-
-        // get user id and make sure they have a wallet
-        // double check user has a location and a phone number or email
-        // if they don't have the items have them add this information to create item
-        // get item info from frontEnd
-        // add to the item table
-        // add the image to s3
-        // get the image url from s3 and save it to images table
     },
 
     getAvailableItems: (req, res) => {
