@@ -13,8 +13,69 @@ const userForm = document.querySelector("#userForm")
 const userName = document.querySelector("#userName")
 const email = document.querySelector("#email")
 const phoneNum = document.querySelector("#phoneNum")
-const location = document.querySelector("#location")
+const userLocation = document.querySelector("#location")
 const age = document.querySelector("#age")
+
+const searchField = document.querySelector("#searchField")
+const searchPrice = document.querySelector('#searchPrice')
+const searchLocation = document.querySelector('#searchLocation')
+const searchCat = document.querySelector('#searchCat')
+
+const itemSection = document.querySelector(".items")
+
+const localHost = "http://localhost:3000"
+
+const getImageUrl = async (itemId) => {
+    let promise = ""
+    try {
+        const {data:res} = await axios.get(`${localHost}/getItemImage/${itemId}`)
+        promise = res[0]["image_url_path"]
+        return promise
+    }
+    catch (err) {
+        console.log(err)
+    }
+    // const promise = axios.get(`${localHost}/getItemImage/${itemId}`)
+    // const dataPromise = promise.then(res => res.data[0]["image_url_path"])
+    // return dataPromise
+}
+
+const createItemCard = async (item) => {
+    const itemName = item["item_title"]
+    const itemCost = item["item_price"]
+    const itemId = item["item_id"]
+
+    let imageUrl = await getImageUrl(itemId).then(res => {
+        console.log(res)
+        return res
+    })
+    console.log(getImageUrl(itemId))
+    
+
+    console.log(`imageUrl: ${imageUrl}`)
+    const itemCard = 
+        `
+            <div class="item" id="${itemId}">
+                <img id="itemImage" src="${imageUrl}"/>
+                <h2 class="itemTextTitle">${itemName}<h2>
+                <h3 class="itemTextPrice">$${itemCost}<h3>
+            </div>
+        `
+    return itemCard
+}
+
+const getAllItems = () => {
+    axios.get(`${localHost}/items`)
+        .then(res => {
+            itemSection.innerHTML = ''
+            res.data.forEach( async item => {
+                const itemCard = await createItemCard(item);
+                console.log(`itemCard: ${itemCard}`)
+                itemSection.innerHTML += itemCard
+            })
+        })
+        .catch(err => console.log(err))
+}
 
 
 const createUser = (e) => {
@@ -22,45 +83,43 @@ const createUser = (e) => {
 
     let body = {
         coinbase_id: coinbaseId.value,
-        user_Name: userName.value,
+        user_name: userName.value,
         user_email: email.value,
         user_phone_number: phoneNum.value,
-        user_location: location.value,
+        user_location: userLocation.value,
         user_age: age.value
     }
 
-    
-
+    axios.post(`${localHost}/createUser`, body)
+        .then(() => {
+            console.log("createUser-----------")
+            console.log(body)
+        })
+        .catch(err => console.log(err))
 }
 
 const createItem = async (e) => {
      e.preventDefault()
 
-        let images = []
+        let photos = []
     for(let i = 0; i < imageInput.files.length; i++) {
         console.log(imageInput.files[i])
         const file = imageInput.files[i]
 
-        const { url } = await fetch("http://localhost:3000/s3URL").then(res => res.json())
-    console.log(url)
+        const { url } = await fetch(`${localHost}/s3URL`).then(res => res.json())
+        console.log(url)
 
-    await fetch(url, {
-        method: 'PUT',
-        headers: {
-            "Content-Type": "multipart/form-data", 
-        },
-        body: file
-    })
-    console.log({url})
-    const imageUrl = url.split('?')[0]
-    console.log(`imgUrl: ${imageUrl}`)
-    images.push(imageUrl)
-
-    const img = document.createElement("img")
-    img.src = imageUrl
-    img.width = "250px"
-    img.height = "250px"
-    document.body.appendChild(img)
+        await fetch(url, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "multipart/form-data", 
+            },
+            body: file
+        })
+        console.log({url})
+        const imageUrl = url.split('?')[0]
+        console.log(`imgUrl: ${imageUrl}`)
+        photos.push(imageUrl)
     }
 
     let body = {
@@ -70,19 +129,31 @@ const createItem = async (e) => {
         item_size: itemSize.value,
         owner_id: ownerId.value,
         category_id: catId.value,
-        images: images
+        item_images: photos
     }
     
-    axios.post('http://localhost:3000/createItem',body)
+    axios.post(`${localHost}/createItem`, body)
         .then(() => {
-            console.log("then")
+            imageForm.reset()
+            getAllItems()
+            console.log("createItem-----------")
+            console.log(`photos: ${photos}`)
             console.log(body)
         })
+        .catch(err => console.log(err))
         
-    console.log(images)
+    
+    console.log(photos)
 }
 
-imageForm.addEventListener("submirt", createItem)
+const getAvailableItems = () => {
+
+}
+
+imageForm.addEventListener("submit", createItem)
+userForm.addEventListener("submit", createUser)
+
+getAllItems()
 
     
 

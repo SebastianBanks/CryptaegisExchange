@@ -40,7 +40,7 @@ module.exports.generateImageURL = async function generateImageURL() {
     const params = ({
         Bucket: bucketName,
         Key: imgName,
-        Expires: 5
+        Expires: 60
     })
 
     console.log(params)

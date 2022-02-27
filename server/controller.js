@@ -13,38 +13,87 @@ const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
 
 module.exports = {
     createItem: (req, res) => {
-        const { item_price, item_title, item_desc, item_size, owner_id, category_id, images} = req.body
+        const { item_price, item_title, item_desc, item_size, owner_id, category_id, item_images} = req.body
         
         sequelize.query(`
         INSERT INTO item(item_price, item_title, item_description, item_size, owner_id, category_id)
         VALUES(${item_price}, '${item_title}', '${item_desc}', '${item_size}', ${owner_id}, ${category_id})
         RETURNING item_id;
         `)
-        .then(id => {
-            for (let i = 0; i < images.length; i++) {
-                if (images[i] !== undefined) {
+        .then(item_id => {
+            for (let i = 0; i < item_images.length; i++) {
+                if (item_images[i] !== undefined) {
                     sequelize.query(`
-                        INSERT INTO images(url_path, item_id)
-                         VALUES('${images[i]}', ${id[0]};
+                        INSERT INTO images(image_url_path, item_id)
+                         VALUES('${item_images[i]}', ${item_id[0][0]["item_id"]});
                     `)
                     .then(dbRes => res.status(200).send(dbRes[0]))
                     .catch(err => console.log(err))
+                } else {
+                    console.log("undefined")
                 }
             }
         })
         .catch(err => console.log(err))
 
-        console.log(images)
+        console.log(item_images)
+    },
+
+    getItemImage: async (req, res) => {
+        const { id } = req.params
+        await sequelize.query(`
+            SELECT image_url_path FROM images
+            WHERE item_id = ${id}
+            LIMIT 1;
+        `)
+        .then(dbRes => {
+            res.status(200).send(dbRes[0])
+        })
+        .catch(err => console.log(err))
+    },
+
+    getAllItems: (req, res) => {
+        sequelize.query(`
+            SELECT * FROM item
+            WHERE item_is_available = true;
+        `)
+        .then(dbRes => {
+            res.status(200).send(dbRes[0])
+        })
+        .catch(err => console.log(err))
     },
 
     getAvailableItems: (req, res) => {
         // take in filters if any
-        const { searchBar, price} = req.body
+        const { searchBar, price, location, category} = req.query
         // based on certain filters return item if available
+        sequelize.query(`
+            SELECT i.item_id, i.item_title, i.item_desc, i.item_price, i.category_id, i.owner_id, u.user_id, u.user_location
+            FROM item i
+            JOIN user_account u
+            ON i.owner_id = u.user_id
+            WHERE i.item_title LIKE '${searchBar}%' 
+            OR i.item_desc LIKE '${searchBar}%' 
+            AND item_price <= ${price} 
+            AND u.user_location = '${location}'
+            AND category_id = ${category}
+            
+
+
+
+
+            SELET * FROM item
+            WHERE item_title LIKE '${searchBar}%' 
+            OR item_desc LIKE '${searchBar}%' 
+            AND item_price <= ${price} 
+            AND (SELECT * FROM user_account) = '${location}
+            AND category_id = ${category}
+        `)
+
         if (searchBar === undefined && price === undefined) {
             sequelize.query(`
-                SELECT * FROM item;
-                WHERE item_is_available = true
+                SELECT * FROM item
+                WHERE item_is_available = true;
             `)
             .then(dbRes => res.status(200).send(dbRes[0]))
             .catch(err => console.log(err))

@@ -14,36 +14,84 @@
         <div class="form">
             <h2>Create User</h2>
             <form id="userForm">
-                <input id="coinbaseId" type="text" placeholder="Coinbase Id">
-                <input id="userName" type="text" placeholder="Name">
-                <input id="email" type="text" placeholder="Email">
-                <input id="phoneNum" type="text" placeholder="Phone Number">
-                <input id="location" type="text" placeholder="Location">
-                <input id="age" type="number" placeholder="Age">
+                <input id="coinbaseId" type="text" placeholder="Coinbase Id" required>
+                <input id="userName" type="text" placeholder="Name" required>
+                <input id="email" type="text" placeholder="Email" required>
+                <input id="phoneNum" type="text" placeholder="Phone Number" required>
+                <input id="location" type="text" placeholder="Location" required>
+                <input id="age" type="number" placeholder="Age" required>
                 <button type="submit">Submit</button>
             </form>
         </div>
         <div class="form">
             <h2>Create Item</h2>
             <form id="imageForm">
-                <input id="imageInput" type="file" accept="image/*" multiple>
-                <input id="item_price" type="number" placeholder="Item price">
-                <input id="item_title" type="text" placeholder="Item title">
-                <input id="item_desc" type="text" placeholder="Item Description">
-                <input id="item_size" type="text" placeholder="Item Size">
-                <input id="owner_id" type="number" placeholder="Owner id">
-                <input id="cat_id" type="number" placeholder="Category">
+                <input id="imageInput" type="file" accept="image/*" multiple required>
+                <input id="item_price" type="number" placeholder="Item price" step=0.01 required>
+                <input id="item_title" type="text" placeholder="Item title" required>
+                <textarea id="item_desc" rows="10" cols="30" placeholder="Item Description" style="color: black;" required></textarea> 
+                <input id="item_size" type="text" placeholder="Item Size" required>
+                <input id="owner_id" type="number" placeholder="Owner id" required>
+                <select id="cat_id" placeholder="Category" required>
+                    <option value="0" disabled selected>Select a Category</option>
+                    <option value="1">Appliances</option>
+                    <option value="2">Auto Parts & Accessories</option>
+                    <option value="3">Baby</option>
+                    <option value="4">Books & Media</option>
+                    <option value="5">Clothings & Appareal</option>
+                    <option value="6">Computers</option>
+                    <option value="19">Cookware</option>
+                    <option value="7">Cycling</option>
+                    <option value="8">Electronics</option>
+                    <option value="9">Fitness Equipment</option>
+                    <option value="10">Furniture</option>
+                    <option value="11">General</option>
+                    <option value="12">Home & Garden</option>
+                    <option value="13">Hunting & Fishing</option>
+                    <option value="14">Musical Instruments</option>
+                    <option value="15">Outdoors & Sporting</option>
+                    <option value="16">Pets</option>
+                    <option value="17">Recreational Vehicles</option>
+                    <option value="18">Toys</option>  
+                </select>
                 <button type="submit">Upload</button>
             </form>>
         </div>
+        <div class="form">
+            <h2>Search Item</h2>
+            <form id="searchForm">
+                <input id="searchField" type="text" placeholder="Search here">
+                <input id="searchPrice" type="number" placeholder="Price" required>
+                <input id="searchLocation" type="text" placeholder="Location">
+                <select id="searchCat" required>
+                    <option value="0" disabled selected>Select a Category</option>
+                    <option value="1">Appliances</option>
+                    <option value="2">Auto Parts & Accessories</option>
+                    <option value="3">Baby</option>
+                    <option value="4">Books & Media</option>
+                    <option value="5">Clothings & Appareal</option>
+                    <option value="6">Computers</option>
+                    <option value="19">Cookware</option>
+                    <option value="7">Cycling</option>
+                    <option value="8">Electronics</option>
+                    <option value="9">Fitness Equipment</option>
+                    <option value="10">Furniture</option>
+                    <option value="11">General</option>
+                    <option value="12">Home & Garden</option>
+                    <option value="13">Hunting & Fishing</option>
+                    <option value="14">Musical Instruments</option>
+                    <option value="15">Outdoors & Sporting</option>
+                    <option value="16">Pets</option>
+                    <option value="17">Recreational Vehicles</option>
+                    <option value="18">Toys</option>  
+                </select>
+            </form>
+        </div>
 
     </main>
+    <hr>
+    <section class="items"></section>
 
-   
-    
-
-    
-    
     <script src="../node_modules/axios/dist/axios.min.js"></script>
     <script src="app.js"></script>
 </body>

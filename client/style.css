@@ -1,5 +1,6 @@
 body {
     background-color: whitesmoke;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 main {
@@ -12,6 +13,47 @@ main {
     align-items: center;
 }
 
+.items {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+}
+
+#itemImage {
+    max-width: 100%;
+    height: 170px;
+    border-radius: 10px;
+    margin-top: 50px;
+}
+
+.itemTextTitle {
+    margin-top: 5px;
+}
+
+.itemTextPrice {
+    margin-top: -50px;
+}
+
+.item {
+    color: white;
+    background-color: darkblue;
+    width: 200px;
+    height: 250px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+}
+
 .form {
     color: white;
     background-color: darkblue;
@@ -21,7 +63,7 @@ main {
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
-    align-content: center;
+    /* align-content: center; */
     align-items: center;
     padding: 30px;
     border-radius: 10px;
