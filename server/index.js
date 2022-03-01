@@ -1,24 +1,25 @@
 require('dotenv').config()
-import express, { json, static } from 'express'
-import axios from 'axios'
-import { join } from 'path'
-import cors from 'cors'
-const { COINBASE_CLIENT_ID, COINBASE_CLIENT_SECRET } = process.env
-import passport from 'passport'
-// var CoinbaseStrategy = require('passport-coinbase-oauth2').Strategy;
-import { createItem, createUser, getAllItems, getItemImage, getFilteredItems } from './controller.js'
-import { seed } from './seed.js'
-import { stringify } from 'qs'
-
-import { generateImageURL } from "./s3.js"
-
+const express = require('../node_modules/express')
+const axios = require('../node_modules/axios')
+const path = require('path')
 const app = express()
-app.use(json())
+const cors = require('../node_modules/cors')
+const { SERVER_PORT, COINBASE_CLIENT_ID, COINBASE_CLIENT_SECRET } = process.env
+const passport = require('passport')
+var CoinbaseStrategy = require('passport-coinbase-oauth2').Strategy;
+const { createItem, createUser, getAllItems, getItemImage, getFilteredItems } = require('./controller.js')
+const {seed} = require('./seed.js')
+const qs = require('../node_modules/qs')
+
+const { generateImageURL } = require("./s3.js")
+
+
+app.use(express.json())
 app.use(cors())
 
-app.get('/', function(req, res) {
-    res.sendFile(join(__dirname, '../client/index.html'))
-})
+// app.get('/', function(req, res) {
+//     res.sendFile(path.join(__dirname, '../client/index.html'))
+// })
 
 // passport.use(
 //     new CoinbaseStrategy(
@@ -68,7 +69,7 @@ app.get("/callback", async (req, res) => {
     const {code, state} = req.query;
     console.log(code)
     if (state === COINBASE_CLIENT_SECRET) {
-        const data = stringify({
+        const data = qs.stringify({
             'grant_type': 'authorization_code',
             'code': code,
             'client_id': COINBASE_CLIENT_ID,
@@ -118,7 +119,7 @@ app.get("/callback", async (req, res) => {
 
 
 
-app.use(static(join(__dirname, '../client')))
+// app.use(express.static(path.join(__dirname, '../client')))
 
 
 // Dev 
@@ -126,4 +127,4 @@ app.use(static(join(__dirname, '../client')))
 
 const port = process.env.PORT || 3000
 
-app.listen(port, () => console.log(`Online - ${port}`))
+app.listen(SERVER_PORT, () => console.log(`Online - ${SERVER_PORT}`))
