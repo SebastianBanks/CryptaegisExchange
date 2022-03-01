@@ -1,6 +1,6 @@
-const Sequelize = require('sequelize')
+const Sequelize = require('../node_modules/sequelize')
 const { encrypt, decrypt } = require('./crypto.js')
-require('dotenv').config()
+require('../node_modules/dotenv').config()
 
 const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
     dialect: 'postgres',
