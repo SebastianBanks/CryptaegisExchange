@@ -1,6 +1,3 @@
-
-const axios = require("axios")
-
 const imageForm = document.querySelector("#imageForm")
 const imageInput = document.querySelector("#imageInput")
 const itemPrice = document.querySelector("#item_price")
