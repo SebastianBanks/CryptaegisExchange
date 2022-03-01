@@ -38,7 +38,7 @@ const getCoinbaseHREF = () => {
 const getImageUrl = async (itemId) => {
     let promise = ""
     try {
-        const {data:res} = await axios.get(`${localHost}/getItemImage/${itemId}`)
+        const {data:res} = await axios.get(`/getItemImage/${itemId}`)
         promise = res[0]["image_url_path"]
         return promise
     }
@@ -75,7 +75,7 @@ const createItemCard = async (item) => {
 }
 
 const getAllItems = () => {
-    axios.get(`${localHost}/items`)
+    axios.get(`/items`)
         .then(res => {
             itemSection.innerHTML = ''
             res.data.forEach( async item => {
@@ -100,7 +100,7 @@ const createUser = (e) => {
         user_age: age.value
     }
 
-    axios.post(`${localHost}/createUser`, body)
+    axios.post(`/createUser`, body)
         .then(() => {
             console.log("createUser-----------")
             console.log(body)
@@ -116,7 +116,7 @@ const createItem = async (e) => {
         console.log(imageInput.files[i])
         const file = imageInput.files[i]
 
-        const { url } = await fetch(`${localHost}/s3URL`).then(res => res.json())
+        const { url } = await fetch(`/s3URL`).then(res => res.json())
         console.log(url)
 
         await fetch(url, {
@@ -142,7 +142,7 @@ const createItem = async (e) => {
         item_images: photos
     }
     
-    axios.post(`${localHost}/createItem`, body)
+    axios.post(`/createItem`, body)
         .then(() => {
             imageForm.reset()
             getAllItems()
@@ -177,7 +177,7 @@ const getFilteredItems = (e) => {
     console.log(locationValue)
     console.log(categoryValue)
 
-    axios.get(`${localHost}/getFilteredItems?searchBar=${searchValue}&price=${priceValue}&location=${locationValue}&category=${categoryValue}`)
+    axios.get(`/getFilteredItems?searchBar=${searchValue}&price=${priceValue}&location=${locationValue}&category=${categoryValue}`)
     .then(res => {
         console.log(`res: ${res.data}`)
         
