@@ -11,9 +11,10 @@ const { createItem, createUser, getAllItems, getItemImage, getFilteredItems } = 
 const {seed} = require('./seed.js')
 const qs = require('../node_modules/qs')
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, '../client/index.html'))
-})
+const { generateImageURL } = require("./s3.js")
+
+app.use(express.json())
+app.use(cors())
 
 passport.use(
     new CoinbaseStrategy(
@@ -33,13 +34,6 @@ passport.use(
         }
     )
 )
-
-
-const { generateImageURL } = require("./s3.js")
-
-app.use(express.json())
-app.use(express.static(path.join(__dirname, "../")))
-app.use(cors())
 
 app.get('/s3URL', async (req, res) => {
     console.log('works')
@@ -118,6 +112,13 @@ app.get(
         res.redirect('/')
     }
 )
+// --------------------------------------------------------------------
+
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, '../client/index.html'))
+})
+
+app.use(express.static(path.join(__dirname, "../")))
 
 
 // Dev 
