@@ -115,13 +115,13 @@ app.get(
 // --------------------------------------------------------------------
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, '../client/index.html'))
+    res.sendFile(path.join(__dirname, './client/index.html'))
 })
 
-app.use(express.static(path.join(__dirname, "../client")))
+app.use(express.static(path.join(__dirname, './client')))
 
 
 // Dev 
 //app.post(`/seed`, seed)
 
-app.listen(SERVER_PORT, '0.0.0.0', () => console.log(`${SERVER_PORT}`))
+app.listen(SERVER_PORT, () => console.log(`${SERVER_PORT}`))
