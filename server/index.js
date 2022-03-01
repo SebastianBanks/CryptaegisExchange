@@ -1,14 +1,14 @@
-require('../node_modules/dotenv').config()
-const express = require('../node_modules/express')
-const axios = require('../node_modules/axios')
+require('dotenv').config()
+const express = require('express')
+const axios = require('axios')
 const path = require('path')
-const cors = require('../node_modules/cors')
+const cors = require('cors')
 const { COINBASE_CLIENT_ID, COINBASE_CLIENT_SECRET } = process.env
 const passport = require('passport')
 var CoinbaseStrategy = require('passport-coinbase-oauth2').Strategy;
 const { createItem, createUser, getAllItems, getItemImage, getFilteredItems } = require('./controller.js')
 const {seed} = require('./seed.js')
-const qs = require('../node_modules/qs')
+const qs = require('qs')
 
 const { generateImageURL } = require("./s3.js")
 

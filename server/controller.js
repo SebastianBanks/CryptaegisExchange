@@ -1,6 +1,6 @@
-const Sequelize = require('../node_modules/sequelize')
+const Sequelize = require('sequelize')
 const { encrypt, decrypt } = require('./crypto.js')
-require('../node_modules/dotenv').config()
+require('dotenv').config()
 const { DATABASE_URL } = process.env
 
 const sequelize = new Sequelize('postgres://qevliwugijksoj:9f85413e62007778be0492f0c6b0dc34250ffc265668963b2d18084702e980d1@ec2-44-193-188-118.compute-1.amazonaws.com:5432/dcksmfc0fg4tkd', {
