@@ -1,4 +1,3 @@
-import axios from "axios"
 
 const imageForm = document.querySelector("#imageForm")
 const imageInput = document.querySelector("#imageInput")
