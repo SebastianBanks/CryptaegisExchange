@@ -2,7 +2,7 @@ const Sequelize = require('../node_modules/sequelize')
 const { encrypt, decrypt } = require('./crypto.js')
 require('../node_modules/dotenv').config()
 
-const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
     dialectOptions: {
         ssl: {
