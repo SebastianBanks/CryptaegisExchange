@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('../node_modules/dotenv').config()
 const express = require('../node_modules/express')
 const axios = require('../node_modules/axios')
 const path = require('path')
@@ -17,9 +17,9 @@ const { generateImageURL } = require("./s3.js")
 app.use(express.json())
 app.use(cors())
 
-// app.get('/', function(req, res) {
-//     res.sendFile(path.join(__dirname, '../client/index.html'))
-// })
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, '../client/index.html'))
+})
 
 // passport.use(
 //     new CoinbaseStrategy(
@@ -119,7 +119,7 @@ app.get("/callback", async (req, res) => {
 
 
 
-// app.use(express.static(path.join(__dirname, '../client')))
+app.use(express.static(path.join(__dirname, '../client')))
 
 
 // Dev 
