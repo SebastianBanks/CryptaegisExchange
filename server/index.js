@@ -127,4 +127,4 @@ app.get("/callback", async (req, res) => {
 
 const port = process.env.PORT || 3000
 
-app.listen(SERVER_PORT, () => console.log(`Online - ${SERVER_PORT}`))
+app.listen(port, () => console.log(`Online - ${SERVER_PORT}`))
