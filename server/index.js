@@ -1,4 +1,4 @@
-require('../node_modules/dotenv').config()
+require('dotenv').config()
 const express = require('../node_modules/express')
 const axios = require('../node_modules/axios')
 const path = require('path')
