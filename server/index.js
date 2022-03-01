@@ -12,7 +12,7 @@ const {seed} = require('./seed.js')
 const qs = require('../node_modules/qs')
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, '../index.html'))
+    res.sendFile(path.join(__dirname, '../client/index.html'))
 })
 
 passport.use(
