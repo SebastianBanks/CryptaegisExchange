@@ -4,7 +4,7 @@ const axios = require('../node_modules/axios')
 const path = require('path')
 const app = express()
 const cors = require('../node_modules/cors')
-const { SERVER_PORT, COINBASE_CLIENT_ID, COINBASE_CLIENT_SECRET } = process.env
+const { COINBASE_CLIENT_ID, COINBASE_CLIENT_SECRET } = process.env
 const passport = require('passport')
 var CoinbaseStrategy = require('passport-coinbase-oauth2').Strategy;
 const { createItem, createUser, getAllItems, getItemImage, getFilteredItems } = require('./controller.js')
@@ -124,4 +124,6 @@ app.use(express.static(path.join(__dirname, '../client')))
 // Dev 
 //app.post(`/seed`, seed)
 
-app.listen(SERVER_PORT, () => console.log(`${SERVER_PORT}`))
+const port = process.env.PORT || 3000
+
+app.listen(port, () => console.log(`${port}`))
