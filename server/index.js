@@ -59,7 +59,7 @@ app.get('/getLink', (req, res) => {
     let keys = {
         client: COINBASE_CLIENT_ID,
         sec: COINBASE_CLIENT_SECRET,
-        url: "http://localhost:3000/callback",
+        url: "https://cryptaegis-exchange.herokuapp.com/callback",
         scope: "wallet:user:read,wallet:user:email,wallet:accounts:read,wallet:transactions:read&account=all"
     }
     res.status(200).send(keys)
@@ -74,7 +74,7 @@ app.get("/callback", async (req, res) => {
             'code': code,
             'client_id': COINBASE_CLIENT_ID,
             'client_secret': COINBASE_CLIENT_SECRET,
-            'redirect': "http://localhost:3000/callback"
+            'redirect': "https://cryptaegis-exchange.herokuapp.com/callback"
         });
         const config = {
             method: 'post',
