@@ -1,43 +1,43 @@
 require('dotenv').config()
-const express = require('express')
-const axios = require('axios')
-const path = require('path')
-const cors = require('cors')
+import express, { json, static } from 'express'
+import axios from 'axios'
+import { join } from 'path'
+import cors from 'cors'
 const { COINBASE_CLIENT_ID, COINBASE_CLIENT_SECRET } = process.env
-const passport = require('passport')
-var CoinbaseStrategy = require('passport-coinbase-oauth2').Strategy;
-const { createItem, createUser, getAllItems, getItemImage, getFilteredItems } = require('./controller.js')
-const {seed} = require('./seed.js')
-const qs = require('qs')
+import passport from 'passport'
+// var CoinbaseStrategy = require('passport-coinbase-oauth2').Strategy;
+import { createItem, createUser, getAllItems, getItemImage, getFilteredItems } from './controller.js'
+import { seed } from './seed.js'
+import { stringify } from 'qs'
 
-const { generateImageURL } = require("./s3.js")
+import { generateImageURL } from "./s3.js"
 
 const app = express()
-app.use(express.json())
+app.use(json())
 app.use(cors())
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, '../client/index.html'))
+    res.sendFile(join(__dirname, '../client/index.html'))
 })
 
-passport.use(
-    new CoinbaseStrategy(
-        {
-            clientID: COINBASE_CLIENT_ID,
-            clientSecret: COINBASE_CLIENT_SECRET,
-            callbackURL: "http://localhost:3000/callback",
-            authorizationURL: "https://coinbase.com/oauth/authorize",
-            tokenURL: "https://api.coinbase.com/oauth/token",
-            userProfileURL: "https://api.coinbase.com/v2/user"
-        },
-        function (accessToken, refreshToken, profile, done) {
-            console.log(`access token: ${accessToken}`)
-            console.log(`refresh token ${refreshToken}`)
-            console.log(profile)
-            return done(null, profile)
-        }
-    )
-)
+// passport.use(
+//     new CoinbaseStrategy(
+//         {
+//             clientID: COINBASE_CLIENT_ID,
+//             clientSecret: COINBASE_CLIENT_SECRET,
+//             callbackURL: "http://localhost:3000/callback",
+//             authorizationURL: "https://coinbase.com/oauth/authorize",
+//             tokenURL: "https://api.coinbase.com/oauth/token",
+//             userProfileURL: "https://api.coinbase.com/v2/user"
+//         },
+//         function (accessToken, refreshToken, profile, done) {
+//             console.log(`access token: ${accessToken}`)
+//             console.log(`refresh token ${refreshToken}`)
+//             console.log(profile)
+//             return done(null, profile)
+//         }
+//     )
+// )
 
 app.get('/s3URL', async (req, res) => {
     console.log('works')
@@ -64,13 +64,11 @@ app.get('/getLink', (req, res) => {
     res.status(200).send(keys)
 })
 
-
-
 app.get("/callback", async (req, res) => {
     const {code, state} = req.query;
     console.log(code)
     if (state === COINBASE_CLIENT_SECRET) {
-        const data = qs.stringify({
+        const data = stringify({
             'grant_type': 'authorization_code',
             'code': code,
             'client_id': COINBASE_CLIENT_ID,
@@ -98,29 +96,29 @@ app.get("/callback", async (req, res) => {
 // app.use(passport.initialize())
 
 
-app.get(
-    '/',
-    passport.authenticate('coinbase', { scope: "wallet:user:read,wallet:user:email,wallet:accounts:read,wallet:transactions:read", account: ["all"] }),
-    function (req, res) {
-        console.log(accessToken)
-        console.log(refreshToken)
-        console.log(profile)
-        console.log(res)
-    }
-)
+// app.get(
+//     '/',
+//     passport.authenticate('coinbase', { scope: "wallet:user:read,wallet:user:email,wallet:accounts:read,wallet:transactions:read", account: ["all"] }),
+//     function (req, res) {
+//         console.log(accessToken)
+//         console.log(refreshToken)
+//         console.log(profile)
+//         console.log(res)
+//     }
+// )
 
-app.get(
-    '/callback',
-    passport.authenticate('coinbase'),
-    function (req, res) {
-        res.redirect('/')
-    }
-)
+// app.get(
+//     '/callback',
+//     passport.authenticate('coinbase'),
+//     function (req, res) {
+//         res.redirect('/')
+//     }
+// )
 // --------------------------------------------------------------------
 
 
 
-app.use(express.static(path.join(__dirname, '../client')))
+app.use(static(join(__dirname, '../client')))
 
 
 // Dev 
