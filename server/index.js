@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('../node_modules/dotenv').config()
 const express = require('../node_modules/express')
 const axios = require('../node_modules/axios')
 const path = require('path')
@@ -115,10 +115,10 @@ app.get(
 // --------------------------------------------------------------------
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, '../index.html'))
+    res.sendFile(path.join(__dirname, '../client/index.html'))
 })
 
-app.use(express.static(path.join(__dirname, '../')))
+app.use(express.static(path.join(__dirname, '../client')))
 
 
 // Dev 
