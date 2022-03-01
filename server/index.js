@@ -2,7 +2,6 @@ require('../node_modules/dotenv').config()
 const express = require('../node_modules/express')
 const axios = require('../node_modules/axios')
 const path = require('path')
-const app = express()
 const cors = require('../node_modules/cors')
 const { COINBASE_CLIENT_ID, COINBASE_CLIENT_SECRET } = process.env
 const passport = require('passport')
@@ -13,6 +12,7 @@ const qs = require('../node_modules/qs')
 
 const { generateImageURL } = require("./s3.js")
 
+const app = express()
 app.use(express.json())
 app.use(cors())
 
