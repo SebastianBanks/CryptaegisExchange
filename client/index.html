@@ -9,7 +9,9 @@
 </head>
 <body>
     <h1>Cryptaegis Exchange</h1>
-
+    <a class="coinbaseBtn">
+        Connect with Coinbase
+       </a>
     <main>
         <div class="form">
             <h2>Create User</h2>
@@ -55,15 +57,15 @@
                     <option value="18">Toys</option>  
                 </select>
                 <button type="submit">Upload</button>
-            </form>>
+            </form>
         </div>
         <div class="form">
             <h2>Search Item</h2>
             <form id="searchForm">
                 <input id="searchField" type="text" placeholder="Search here">
-                <input id="searchPrice" type="number" placeholder="Price" required>
+                <input id="searchPrice" type="number" placeholder="Price">
                 <input id="searchLocation" type="text" placeholder="Location">
-                <select id="searchCat" required>
+                <select id="searchCat">
                     <option value="0" disabled selected>Select a Category</option>
                     <option value="1">Appliances</option>
                     <option value="2">Auto Parts & Accessories</option>
@@ -85,6 +87,7 @@
                     <option value="17">Recreational Vehicles</option>
                     <option value="18">Toys</option>  
                 </select>
+                <button type="submit" id="search">Search</button>
             </form>
         </div>
 

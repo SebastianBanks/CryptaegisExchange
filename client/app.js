@@ -20,10 +20,20 @@ const searchField = document.querySelector("#searchField")
 const searchPrice = document.querySelector('#searchPrice')
 const searchLocation = document.querySelector('#searchLocation')
 const searchCat = document.querySelector('#searchCat')
+const searchBtn = document.querySelector('#search')
+
+const coinbaseBtn = document.querySelector(".coinbaseBtn")
 
 const itemSection = document.querySelector(".items")
 
 const localHost = "http://localhost:3000"
+
+const getCoinbaseHREF = () => {
+    axios.get(`${localHost}/getLink`)
+        .then(res => {
+            coinbaseBtn.href = href=`https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${res.data.client}&redirect_uri=${res.data.url}&state=${res.data.sec}&scope=${res.data.scope}`
+        })
+}
 
 const getImageUrl = async (itemId) => {
     let promise = ""
@@ -146,13 +156,47 @@ const createItem = async (e) => {
     console.log(photos)
 }
 
-const getAvailableItems = () => {
+const getFilteredItems = (e) => {
+    e.preventDefault()
+    console.log(`Search ---------------------------------`)
+    let searchValue = searchField.value
+    let priceValue = searchPrice.value
+    let locationValue = searchLocation.value
+    let categoryValue = searchCat.value
 
+    if (priceValue === undefined) {
+        console.log('hi')
+    } else if (priceValue === "") {
+        console.log("hello")
+    } else {
+        console.log("yo")
+    }
+    itemSection.innerHTML = ''
+    console.log(searchValue)
+    console.log(priceValue)
+    console.log(locationValue)
+    console.log(categoryValue)
+
+    axios.get(`${localHost}/getFilteredItems?searchBar=${searchValue}&price=${priceValue}&location=${locationValue}&category=${categoryValue}`)
+    .then(res => {
+        console.log(`res: ${res.data}`)
+        
+        res.data.forEach( async item => {
+            const itemCard = await createItemCard(item);
+            console.log(`itemCard: ${itemCard}`)
+            itemSection.innerHTML += itemCard
+        })
+    })
+    .catch(err => console.log(err))
+    console.log(`----- ---------------------------------`)
 }
+
 
 imageForm.addEventListener("submit", createItem)
 userForm.addEventListener("submit", createUser)
+searchBtn.addEventListener("click", getFilteredItems)
 
+getCoinbaseHREF()
 getAllItems()
 
     

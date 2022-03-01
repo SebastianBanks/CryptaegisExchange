@@ -17,7 +17,7 @@ module.exports = {
         
         sequelize.query(`
         INSERT INTO item(item_price, item_title, item_description, item_size, owner_id, category_id)
-        VALUES(${item_price}, '${item_title}', '${item_desc}', '${item_size}', ${owner_id}, ${category_id})
+        VALUES(${item_price}, '${item_title.toLowerCase()}', '${item_desc}', '${item_size}', ${owner_id}, ${category_id})
         RETURNING item_id;
         `)
         .then(item_id => {
@@ -63,63 +63,348 @@ module.exports = {
         .catch(err => console.log(err))
     },
 
-    getAvailableItems: (req, res) => {
+    getFilteredItems: (req, res) => {
         // take in filters if any
-        const { searchBar, price, location, category} = req.query
-        // based on certain filters return item if available
-        sequelize.query(`
-            SELECT i.item_id, i.item_title, i.item_desc, i.item_price, i.category_id, i.owner_id, u.user_id, u.user_location
-            FROM item i
-            JOIN user_account u
-            ON i.owner_id = u.user_id
-            WHERE i.item_title LIKE '${searchBar}%' 
-            OR i.item_desc LIKE '${searchBar}%' 
-            AND item_price <= ${price} 
-            AND u.user_location = '${location}'
-            AND category_id = ${category}
-            
+        let { searchBar, price, location, category } = req.query
 
+        console.log(searchBar)
+        console.log(price)
+        console.log(location)
+        console.log(category)
 
-
-
-            SELET * FROM item
-            WHERE item_title LIKE '${searchBar}%' 
-            OR item_desc LIKE '${searchBar}%' 
-            AND item_price <= ${price} 
-            AND (SELECT * FROM user_account) = '${location}
-            AND category_id = ${category}
-        `)
-
-        if (searchBar === undefined && price === undefined) {
-            sequelize.query(`
-                SELECT * FROM item
-                WHERE item_is_available = true;
-            `)
-            .then(dbRes => res.status(200).send(dbRes[0]))
-            .catch(err => console.log(err))
-        } else if (searchBar !== undefined && price > 0) {
-            sequelize.query(`
-                SELECT * FROM item
-                WHERE '${searchBar}' LIKE '%' || item_name || '%' 
-                AND price <= ${price};
-            `)
-            .then(dbRes => res.status(200).send(dbRes[0]))
-            .catch(err => console.log(err))
-        } else if (searchBar != undefined && price === undefined) {
-            sequelize.query(`
-                SELECT * FROM item
-                WHERE '${searchBar}' LIKE '%' || item_name || '%';
-            `)
-            .then(dbRes => res.status(200).send(dbRes[0]))
-            .catch(err => console.log(err))
-        } else if (searchBar === undefined && price !== undefined) {
-            sequelize.query(`
-                SELECT * FROM item
-                WHERE price <= ${price};
-            `)
-            .then(dbRes => res.status(200).send(dbRes[0]))
-            .catch(err => console.log(err))
+        if (searchBar === "") {
+            searchBar = undefined
         }
+        if (price === "") {
+            price = undefined
+        }
+        if (location === "") {
+            location = undefined
+        }
+        category = Number(category)
+        
+        console.log(searchBar)
+        console.log(price)
+        console.log(location)
+        console.log(category)
+        // based on certain filters return item if available
+        if (searchBar !== undefined  && price !== undefined && location !== undefined && category !== 0) {
+            // nothing undefined
+            sequelize.query(`
+                SELECT i.item_id, i.item_title, i.item_price, i.category_id, i.owner_id, i.item_is_available, u.user_id, u.user_location
+                FROM item i
+                JOIN user_account u
+                ON i.owner_id = u.user_id
+                WHERE position('${searchBar}' in i.item_title)>0
+                AND i.item_price <= ${price} 
+                AND u.user_location LIKE '${location}%'  
+                AND i.category_id = ${category}
+                AND i.item_is_available = true;
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('ERROR @1: Filter Search')
+                console.log(err)
+                
+            })
+        } else if (searchBar !== undefined && price !== undefined && location !== undefined && category === 0) {
+            // category undefined
+            sequelize.query(`
+                SELECT i.item_id, i.item_title, i.item_price, i.category_id, i.owner_id, i.item_is_available, u.user_id, u.user_location
+                FROM item i
+                JOIN user_account u
+                ON i.owner_id = u.user_id
+                WHERE position('${searchBar}' in i.item_title)>0
+                AND i.item_price <= ${price} 
+                AND u.user_location LIKE '${location}%'  
+                AND i.item_is_available = true;
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('ERROR @2: Filter Search')
+                console.log(err)
+                
+            })
+        } else if (searchBar !== undefined && price !== undefined && location === undefined && category !== 0) {
+            // location is empty
+            sequelize.query(`
+                SELECT i.item_id, i.item_title, i.item_price, i.category_id, i.owner_id, i.item_is_available, u.user_id, u.user_location
+                FROM item i
+                JOIN user_account u
+                ON i.owner_id = u.user_id
+                WHERE position('${searchBar}' in i.item_title)>0
+                AND i.item_price <= ${price} 
+                AND i.category_id = ${category}
+                AND i.item_is_available = true;
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('ERROR @3: Filter Search')
+                console.log(err)
+                
+            })
+        } else if (searchBar !== undefined && price === undefined && location !== undefined && category !== 0) {
+            // price is undifind
+            sequelize.query(`
+                SELECT i.item_id, i.item_title, i.item_price, i.category_id, i.owner_id, i.item_is_available, u.user_id, u.user_location
+                FROM item i
+                JOIN user_account u
+                ON i.owner_id = u.user_id
+                WHERE position('${searchBar}' in i.item_title)>0
+                AND u.user_location LIKE '${location}%'  
+                AND i.category_id = ${category}
+                AND i.item_is_available = true;
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('ERROR @4: Filter Search')
+                console.log(err)
+                
+            })
+        } else if (searchBar === undefined && price !== undefined && location !== undefined && category !== 0) {
+            // sb undefined
+            sequelize.query(`
+                SELECT i.item_id, i.item_title, i.item_price, i.category_id, i.owner_id, i.item_is_available, u.user_id, u.user_location
+                FROM item i
+                JOIN user_account u
+                ON i.owner_id = u.user_id
+                WHERE i.item_price <= ${price} 
+                AND u.user_location LIKE '${location}%'  
+                AND i.category_id = ${category}
+                AND i.item_is_available = true;
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('ERROR @5: Filter Search')
+                console.log(err)
+                
+            })
+        } else if (searchBar !== undefined && price !== undefined && location === undefined && category === 0) {
+            // category & location undefind
+            sequelize.query(`
+                SELECT i.item_id, i.item_title, i.item_price, i.category_id, i.owner_id, i.item_is_available, u.user_id, u.user_location
+                FROM item i
+                JOIN user_account u
+                ON i.owner_id = u.user_id
+                WHERE position('${searchBar}' in i.item_title)>0
+                AND i.item_price <= ${price}
+                AND i.item_is_available = true;
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('ERROR @6: Filter Search')
+                console.log(err)
+                
+            })
+        } else if (searchBar !== undefined && price === undefined && location !== undefined && category === 0) {
+            // category & price is undefined
+            sequelize.query(`
+                SELECT i.item_id, i.item_title, i.item_price, i.category_id, i.owner_id, i.item_is_available, u.user_id, u.user_location
+                FROM item i
+                JOIN user_account u
+                ON i.owner_id = u.user_id
+                WHERE 'position('${searchBar}' in i.item_title)>0
+                AND u.user_location LIKE '${location}%'
+                AND i.item_is_available = true;
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('ERROR @7: Filter Search')
+                console.log(err)
+                
+            })
+        } else if (searchBar === undefined && price !== undefined && location !== undefined && category === 0) {
+            // category & sb is undefined
+            sequelize.query(`
+                SELECT i.item_id, i.item_title, i.item_price, i.category_id, i.owner_id, i.item_is_available, u.user_id, u.user_location
+                FROM item i
+                JOIN user_account u
+                ON i.owner_id = u.user_id
+                WHERE i.item_price <= ${price} 
+                AND u.user_location LIKE '${location}%'
+                AND i.item_is_available = true;
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('ERROR @8: Filter Search')
+                console.log(err)
+                
+            })
+        } else if (searchBar !== undefined && price === undefined && location === undefined && category !== 0) {
+            // location & price are undefined
+            sequelize.query(`
+                SELECT i.item_id, i.item_title, i.item_price, i.category_id, i.owner_id, i.item_is_available, u.user_id, u.user_location
+                FROM item i
+                JOIN user_account u
+                ON i.owner_id = u.user_id
+                WHERE position('${searchBar}' in i.item_title)>0
+                AND i.category_id = ${category}
+                AND i.item_is_available = true;
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('ERROR @9: Filter Search')
+                console.log(err)
+                
+            })
+        } else if (searchBar === undefined && price !== undefined && location === undefined && category !== 0) {
+            // location & sb are undefined
+            sequelize.query(`
+                SELECT i.item_id, i.item_title, i.item_price, i.category_id, i.owner_id, i.item_is_available, u.user_id, u.user_location
+                FROM item i
+                JOIN user_account u
+                ON i.owner_id = u.user_id 
+                AND i.item_price <= ${price}  
+                AND i.category_id = ${category}
+                AND i.item_is_available = true;
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('ERROR @10: Filter Search')
+                console.log(err)
+                
+            })
+        } else if (searchBar === undefined && price === undefined && location !== undefined && category !== 0) {
+            // price and sb undefined
+            sequelize.query(`
+                SELECT i.item_id, i.item_title, i.item_price, i.category_id, i.owner_id, i.item_is_available, u.user_id, u.user_location
+                FROM item i
+                JOIN user_account u
+                ON i.owner_id = u.user_id
+                WHERE u.user_location LIKE '${location}%'  
+                AND i.category_id = ${category}
+                AND i.item_is_available = true;
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('ERROR @11: Filter Search')
+                console.log(err)
+                
+            })
+        } else if (searchBar === undefined && price === undefined && location === undefined && category !== 0) {
+            //everything but category
+            sequelize.query(`
+                SELECT i.item_id, i.item_title, i.item_price, i.category_id, i.owner_id, i.item_is_available, u.user_id, u.user_location
+                FROM item i
+                JOIN user_account u
+                ON i.owner_id = u.user_id
+                WHERE i.category_id = ${category}
+                AND i.item_is_available = true;
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('ERROR @12: Filter Search')
+                console.log(err)
+                
+            })
+        } else if (searchBar === undefined && price === undefined && location !== undefined && category === 0) {
+            //everything but location
+            sequelize.query(`
+                SELECT i.item_id, i.item_title, i.item_price, i.category_id, i.owner_id, i.item_is_available, u.user_id, u.user_location
+                FROM item i
+                JOIN user_account u
+                ON i.owner_id = u.user_id
+                WHERE u.user_location LIKE '${location}%' 
+                AND i.item_is_available = true;
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('ERROR @13: Filter Search')
+                console.log(err)
+                
+            })
+        } else if (searchBar === undefined && price !== undefined && location === undefined && category === 0) {
+            // everything but price
+            sequelize.query(`
+                SELECT i.item_id, i.item_title, i.item_price, i.category_id, i.owner_id, i.item_is_available, u.user_id, u.user_location
+                FROM item i
+                JOIN user_account u
+                ON i.owner_id = u.user_id
+                WHERE i.item_price <= ${price} 
+                AND i.item_is_available = true;
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('ERROR @14: Filter Search')
+                console.log(err)
+                
+            })
+        } else if (searchBar !== undefined && price === undefined && location === undefined && category === 0) {
+            // everyting but search
+            sequelize.query(`
+                SELECT i.item_id, i.item_title, i.item_price, i.category_id, i.owner_id, i.item_is_available, u.user_id, u.user_location
+                FROM item i
+                JOIN user_account u
+                ON i.owner_id = u.user_id
+                WHERE position('${searchBar}' in i.item_title)>0
+                AND i.item_is_available = true;
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('ERROR @15: Filter Search')
+                console.log(err)
+                
+            })
+        } else if (searchBar === undefined && price === undefined && location === undefined && category === 0) {
+            // everything is undefined
+            sequelize.query(`
+            SELECT * FROM item
+            WHERE item_is_available = true;
+        `)
+        .then(dbRes => {
+            res.status(200).send(dbRes[0])
+        })
+        .catch(err => {
+            console.log('ERROR @16: Filter Search')
+            console.log(err)
+        })
+        } else {
+            console.log("error: condition not considered")
+            sequelize.query(`
+            SELECT * FROM item
+            WHERE item_is_available = true;
+        `)
+        .then(dbRes => {
+            console.log(`dbRes: ${dbRes[0]}`)
+            res.status(200).send(dbRes[0])
+        })
+        .catch(err => {
+            console.log('ERROR @17: Filter Search')
+            console.log(err)
+        })
+        }
+        
+
         
         // if no items, send a response that their are no matches
     },
