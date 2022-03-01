@@ -26,9 +26,10 @@ const coinbaseBtn = document.querySelector(".coinbaseBtn")
 const itemSection = document.querySelector(".items")
 
 const localHost = "http://localhost:3000"
+const heroku = "https://cryptaegis-exchange.herokuapp.com"
 
 const getCoinbaseHREF = () => {
-    axios.get(`${localHost}/getLink`)
+    axios.get(`${heroku}/getLink`)
         .then(res => {
             coinbaseBtn.href = href=`https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${res.data.client}&redirect_uri=${res.data.url}&state=${res.data.sec}&scope=${res.data.scope}`
         })
@@ -37,7 +38,7 @@ const getCoinbaseHREF = () => {
 const getImageUrl = async (itemId) => {
     let promise = ""
     try {
-        const {data:res} = await axios.get(`/getItemImage/${itemId}`)
+        const {data:res} = await axios.get(`${heroku}/getItemImage/${itemId}`)
         promise = res[0]["image_url_path"]
         return promise
     }
@@ -74,7 +75,7 @@ const createItemCard = async (item) => {
 }
 
 const getAllItems = () => {
-    axios.get(`/items`)
+    axios.get(`${heroku}/items`)
         .then(res => {
             itemSection.innerHTML = ''
             res.data.forEach( async item => {
@@ -99,7 +100,7 @@ const createUser = (e) => {
         user_age: age.value
     }
 
-    axios.post(`/createUser`, body)
+    axios.post(`${heroku}/createUser`, body)
         .then(() => {
             console.log("createUser-----------")
             console.log(body)
@@ -115,7 +116,7 @@ const createItem = async (e) => {
         console.log(imageInput.files[i])
         const file = imageInput.files[i]
 
-        const { url } = await fetch(`/s3URL`).then(res => res.json())
+        const { url } = await fetch(`${heroku}/s3URL`).then(res => res.json())
         console.log(url)
 
         await fetch(url, {
@@ -141,7 +142,7 @@ const createItem = async (e) => {
         item_images: photos
     }
     
-    axios.post(`/createItem`, body)
+    axios.post(`${heroku}/createItem`, body)
         .then(() => {
             imageForm.reset()
             getAllItems()
@@ -176,7 +177,7 @@ const getFilteredItems = (e) => {
     console.log(locationValue)
     console.log(categoryValue)
 
-    axios.get(`/getFilteredItems?searchBar=${searchValue}&price=${priceValue}&location=${locationValue}&category=${categoryValue}`)
+    axios.get(`${heroku}/getFilteredItems?searchBar=${searchValue}&price=${priceValue}&location=${locationValue}&category=${categoryValue}`)
     .then(res => {
         console.log(`res: ${res.data}`)
         

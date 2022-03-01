@@ -127,4 +127,4 @@ app.use(express.static(path.join(__dirname, '../client')))
 
 const port = process.env.PORT || 3000
 
-app.listen(port, () => console.log(`Online - ${SERVER_PORT}`))
+app.listen(port, () => console.log(`Online - ${port}`))
