@@ -16,6 +16,10 @@ const { generateImageURL } = require("./s3.js")
 app.use(express.json())
 app.use(cors())
 
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, '../client/index.html'))
+})
+
 passport.use(
     new CoinbaseStrategy(
         {
@@ -114,9 +118,7 @@ app.get(
 )
 // --------------------------------------------------------------------
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, '../client/index.html'))
-})
+
 
 app.use(express.static(path.join(__dirname, '../client')))
 
@@ -126,4 +128,4 @@ app.use(express.static(path.join(__dirname, '../client')))
 
 const port = process.env.PORT || 3000
 
-app.listen(port, () => console.log(`${port}`))
+app.listen(port, () => console.log(`Online - ${port}`))
