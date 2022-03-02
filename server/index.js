@@ -84,7 +84,7 @@ app.get("/callback", async (req, res) => {
             'code': code,
             'client_id': CLIENT_ID,
             'client_secret': CLIENT_SECRET,
-            'redirect_uri': "https://cryptaegis-exchange.herokuapp.com/callback"
+            'redirect_uri': "https://cryptaegis-exchange.herokuapp.com"
         });
         console.log(`data: ${data}`)
 
@@ -99,7 +99,7 @@ app.get("/callback", async (req, res) => {
                 refreshToken = response.data.refresh_token
                 console.log(`accessToken: ${accessToken}`)
                 console.log(`refreshToken: ${refreshToken}`)
-                window.location.replace("https:cryptaegis-exchange.herokuapp.com")
+                
             })
             .catch(err => {
                 console.log(`error: ${err}`)
