@@ -5,9 +5,11 @@ const path = require('path')
 const app = express()
 const cors = require('../node_modules/cors')
 const { SERVER_PORT, CLIENT_ID, CLIENT_SECRET } = process.env
+const SECERET = ""
 // const passport = require('passport')
 // var CoinbaseStrategy = require('passport-coinbase-oauth2').Strategy;
-const { createItem, createUser, getAllItems, getItemImage, getFilteredItems } = require('./controller.js')
+const { encrypt } = require('./crypto.js')
+const { createItem, createUser, getAllItems, getItemImage, getFilteredItems, generateKey } = require('./controller.js')
 const {seed} = require('./seed.js')
 const qs = require('qs')
 
@@ -62,9 +64,10 @@ let accessToken = ""
 let refreshToken = ""
 
 app.get('/getLink', (req, res) => {
+    SECERET = generateKey(7)
     let keys = {
         client: process.env.CLIENT_ID,
-        sec: process.env.CLIENT_SECRET,
+        sec: SECERET,
         url: "https://cryptaegis-exchange.herokuapp.com/callback",
         scope: "wallet:user:read,wallet:user:email,wallet:accounts:read,wallet:transactions:read&account=all"
     }
@@ -75,7 +78,7 @@ app.get("/callback", async (req, res) => {
     const {code, state} = req.query;
     console.log(`state: ${state}`)
     console.log(`code: ${code}`)
-    if (state === CLIENT_SECRET) {
+    if (state === SECERET) {
         const data = qs.stringify({
             'grant_type': 'authorization_code',
             'code': code,
@@ -91,10 +94,10 @@ app.get("/callback", async (req, res) => {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             })
-            .then(async response => {
-                accessToken = await response.data.access_token
-                refreshToken = await response.data.refresh_token
-                await res.send({ response: response?.data });
+            .then(response => {
+                accessToken = response.data.access_token
+                refreshToken = response.data.refresh_token
+                res.send({ response: response?.data });
             })
             .catch(err => {
                 console.log(`error: ${err}`)
@@ -128,6 +131,8 @@ app.get("/callback", async (req, res) => {
         //     console.log(`response: ${e.response}`)
         //     console.log("Could not trade code for tokens", e.response.data)
         // }
+    } else {
+        console.log("keys don't match")
     }
 });
 
