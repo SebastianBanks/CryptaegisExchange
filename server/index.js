@@ -5,16 +5,13 @@ const path = require('path')
 const app = express()
 const cors = require('../node_modules/cors')
 const { SERVER_PORT, CLIENT_ID, CLIENT_SECRET } = process.env
-const SECERET = ""
+let SECERET = ""
 // const passport = require('passport')
 // var CoinbaseStrategy = require('passport-coinbase-oauth2').Strategy;
 const { encrypt } = require('./crypto.js')
 const { createItem, createUser, getAllItems, getItemImage, getFilteredItems, generateKey } = require('./controller.js')
 const {seed} = require('./seed.js')
 const qs = require('qs')
-
-SECERET = generateKey(7)
-console.log(SECERET)
 
 const { generateImageURL } = require("./s3.js")
 
@@ -67,6 +64,7 @@ let accessToken = ""
 let refreshToken = ""
 
 app.get('/getLink', (req, res) => {
+    SECERET = generateKey(7)
     let keys = {
         client: process.env.CLIENT_ID,
         sec: SECERET,
