@@ -69,7 +69,7 @@ app.get('/getLink', (req, res) => {
         client: process.env.CLIENT_ID,
         sec: SECERET,
         url: "https://cryptaegis-exchange.herokuapp.com/callback",
-        scope: "wallet:user:read,wallet:user:email,wallet:accounts:read,wallet:transactions:read&account=all"
+        scope: "wallet:user:read,wallet:user:email,wallet:accounts:read,wallet:transactions:read&account=all,wallet:transactions:transfer, wallet:transactions:read"
     }
     res.status(200).send(keys)
 })
@@ -99,7 +99,7 @@ app.get("/callback", async (req, res) => {
                 refreshToken = response.data.refresh_token
                 console.log(`accessToken: ${accessToken}`)
                 console.log(`refreshToken: ${refreshToken}`)
-                
+                res.send({ response: response?.data })
             })
             .catch(err => {
                 console.log(`error: ${err}`)
