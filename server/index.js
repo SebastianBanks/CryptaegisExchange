@@ -58,8 +58,8 @@ app.post(`/createUser`, createUser)
 
 // COINBASE ----------------------------------
 
-let accessToken
-let refreshToken
+let accessToken = ""
+let refreshToken = ""
 
 app.get('/getLink', (req, res) => {
     let keys = {
@@ -75,7 +75,6 @@ app.get("/callback", async (req, res) => {
     const {code, state} = req.query;
     console.log(`state: ${state}`)
     if (state === CLIENT_SECRET) {
-        console.log('state is equal to secret')
         const data = qs.stringify({
             'grant_type': 'authorization_code',
             'code': code,
@@ -94,17 +93,17 @@ app.get("/callback", async (req, res) => {
         };
 
         try {
-            const response = await axios(config)
+            const response = await axios(config);
             
-            accessToken = response.data.access_token
-            refreshToken = response.data.refresh_token
+            accessToken = response.data.access_token;
+            refreshToken = response.data.refresh_token;
             console.log(`access: ${accessToken}`)
             console.log(`refresh: ${refreshToken}`)
             res.send({ response: response?.data });
         } catch (e) {
             console.log(`e: ${e}`)
-            console.log(`response: ${response}`)
-            console.log("Could not trade code for tokens", response.data)
+            console.log(`response: ${e.response}`)
+            console.log("Could not trade code for tokens", e.response.data)
         }
     }
 });
