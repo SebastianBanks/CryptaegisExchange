@@ -111,6 +111,7 @@ app.get("/callback", async (req, res) => {
             console.log('There was an error fool')
             console.log("Could not trade code for tokens", e)
         }
+
         // const config = {
         //     method: 'post',
         //     url: 'https//api.coinbase.com/oauth/token',
@@ -138,6 +139,63 @@ app.get("/callback", async (req, res) => {
     }
 })
 
+app.get("/user", async (req, res) => {
+    axios.get("https://api.coinbase.com/v2/user", {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    })
+    .then(response => {
+        response.send({ response: response?.data })
+    })
+    .catch(err => {
+        console.log(`Could not get user: ${err}`)
+    })
+})
+
+app.get("/account", async (req, res) => {
+    axios.get('https://api.coinbase.com/v2/accounts/BTC', {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    })
+    .then(response => {
+        res.send({ response: response?.data })
+    })
+    .catch(err => {
+        console.log(`Could not get accounts: ${err}`)
+    })
+})
+
+app.get("/transferMoney", async (req, res) => {
+    // make sure these are all strings
+    const fromId = "" // wallet id of the person buying the item
+    const toId = "" // wallet id of the person selling the item
+    const amount = "" // amount of item
+    const currency = "" // type of currency of the amount
+    const description = "" // item title
+
+    const data = JSON.stringify({
+        "type": "transaction",
+        "to" : toId,
+        "amount": amount,
+        "currency": currency,
+        "description": description
+    })
+
+    axios.post(`https://api.coinbase.com/v2/accounts/${fromId}/transactions`, data, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        }
+    })
+    .send(response => {
+        res.send({ response: response?.data })
+    })
+    .catch(err => {
+        console.log(`Their was an error with this transaction: ${err}`)
+    })
+})
 
 // app.use(passport.initialize())
 
