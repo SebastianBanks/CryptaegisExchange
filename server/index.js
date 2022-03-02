@@ -74,6 +74,7 @@ app.get('/getLink', (req, res) => {
 app.get("/callback", async (req, res) => {
     const {code, state} = req.query;
     console.log(`state: ${state}`)
+    console.log(`code: ${code}`)
     if (state === CLIENT_SECRET) {
         const data = qs.stringify({
             'grant_type': 'authorization_code',
