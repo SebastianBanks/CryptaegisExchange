@@ -97,6 +97,8 @@ app.get("/callback", async (req, res) => {
             .then(response => {
                 accessToken = response.data.access_token
                 refreshToken = response.data.refresh_token
+                console.log(`accessToken: ${accessToken}`)
+                console.log(`refreshToken: ${refreshToken}`)
                 res.send({ response: response?.data });
             })
             .catch(err => {
