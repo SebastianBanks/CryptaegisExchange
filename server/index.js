@@ -17,7 +17,7 @@ const { generateImageURL } = require("./s3.js")
 app.use(express.json())
 app.use(express.urlencoded({
     extended: true
-}))
+}));
 app.use(cors())
 
 app.get('/', function(req, res) {
@@ -84,28 +84,46 @@ app.get("/callback", async (req, res) => {
             'redirect_uri': "https://cryptaegis-exchange.herokuapp.com/callback"
         });
         console.log(`data: ${data}`)
-        const config = {
-            method: 'post',
-            url: 'https//api.coinbase.com/oauth/token',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            data
-        };
 
         try {
-            const response = await axios(config);
-            
-            accessToken = response.data.access_token;
-            refreshToken = response.data.refresh_token;
-            console.log(`access: ${accessToken}`)
-            console.log(`refresh: ${refreshToken}`)
-            res.send({ response: response?.data });
-        } catch (e) {
-            console.log(`e: ${e}`)
-            console.log(`response: ${e.response}`)
-            console.log("Could not trade code for tokens", e.response.data)
+            await axios.post('https//api.coinbase.com/oauth/token', data)
+            .then(response => {
+                accessToken = response.data.access_token
+                refreshToken = response.data.refresh_token
+                console.log(`access: ${accessToken}`)
+                console.log(`refresh: ${refreshToken}`)
+                res.send({ response: response?.data });
+            })
+            .catch(err => {
+                console.log(`error: ${err}`)
+                console.log(`response: ${response}`)
+                console.log(`data: ${response.data}`)
+            })
+        } catch {
+            console.log('There was an error fool')
         }
+        // const config = {
+        //     method: 'post',
+        //     url: 'https//api.coinbase.com/oauth/token',
+        //     headers: {
+        //         'Content-Type': 'application/x-www-form-urlencoded'
+        //     },
+        //     data
+        // };
+
+        // try {
+        //     const response = await axios(config);
+            
+        //     accessToken = response.data.access_token;
+        //     refreshToken = response.data.refresh_token;
+        //     console.log(`access: ${accessToken}`)
+        //     console.log(`refresh: ${refreshToken}`)
+        //     res.send({ response: response?.data });
+        // } catch (e) {
+        //     console.log(`e: ${e}`)
+        //     console.log(`response: ${e.response}`)
+        //     console.log("Could not trade code for tokens", e.response.data)
+        // }
     }
 });
 
