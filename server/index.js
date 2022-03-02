@@ -15,6 +15,9 @@ const { generateImageURL } = require("./s3.js")
 
 
 app.use(express.json())
+app.use(express.urlencoded({
+    extended: true
+}))
 app.use(cors())
 
 app.get('/', function(req, res) {
@@ -72,6 +75,7 @@ app.get("/callback", async (req, res) => {
     const {code, state} = req.query;
     console.log(`state: ${state}`)
     if (state === COINBASE_CLIENT_SECRET) {
+        console.log('state is equal to secret')
         const data = qs.stringify({
             'grant_type': 'authorization_code',
             'code': code,
@@ -79,6 +83,7 @@ app.get("/callback", async (req, res) => {
             'client_secret': COINBASE_CLIENT_SECRET,
             'redirect_uri': "https://cryptaegis-exchange.herokuapp.com/callback"
         });
+        console.log(`data: ${data}`)
         const config = {
             method: 'post',
             url: 'https//api.coinbase.com/oauth/token',
@@ -96,7 +101,7 @@ app.get("/callback", async (req, res) => {
             console.log(`refresh: ${refreshToken}`)
             res.send({ response: response?.data });
         } catch (e) {
-            console.log("Could not trade code for tokens", e)
+            console.log("Could not trade code for tokens", e.response.data)
         }
     }
 });
