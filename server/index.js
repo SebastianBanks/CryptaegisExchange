@@ -146,7 +146,7 @@ app.get("/user", async (req, res) => {
         }
     })
     .then(response => {
-        response.send({ response: response?.data })
+        res.send({ response: response?.data })
     })
     .catch(err => {
         console.log(`Could not get user: ${err}`)
