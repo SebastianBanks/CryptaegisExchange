@@ -70,7 +70,7 @@ app.get('/getLink', (req, res) => {
 
 app.get("/callback", async (req, res) => {
     const {code, state} = req.query;
-    console.log(code)
+    console.log(`state: ${state}`)
     if (state === COINBASE_CLIENT_SECRET) {
         const data = qs.stringify({
             'grant_type': 'authorization_code',
