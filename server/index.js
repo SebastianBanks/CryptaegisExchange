@@ -1,9 +1,9 @@
 require('dotenv').config()
-const express = require('../node_modules/express')
-const axios = require('../node_modules/axios')
+const express = require('express')
+const axios = require('axios')
 const path = require('path')
 const app = express()
-const cors = require('../node_modules/cors')
+const cors = require('cors')
 const { SERVER_PORT, CLIENT_ID, CLIENT_SECRET } = process.env
 let SECERET = ""
 // const passport = require('passport')
