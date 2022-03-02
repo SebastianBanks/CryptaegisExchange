@@ -154,7 +154,7 @@ app.get("/user", async (req, res) => {
 })
 
 app.get("/account", async (req, res) => {
-    axios.get('https://api.coinbase.com/v2/accounts/BTC', {
+    axios.get('https://api.coinbase.com/v2/accounts', {
         headers: {
             'Authorization': `Bearer ${accessToken}`
         }
