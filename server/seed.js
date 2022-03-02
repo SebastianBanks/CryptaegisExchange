@@ -77,5 +77,6 @@ module.exports = {
 
 
         `)
+        console.log('seeded')
     }
 }
