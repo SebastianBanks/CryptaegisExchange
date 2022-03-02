@@ -137,7 +137,7 @@ app.use(express.static(path.join(__dirname, '../client')))
 
 
 // Dev 
-//app.post(`/seed`, seed)
+app.post(`/seed`, seed)
 
 const port = process.env.PORT || 3000
 

@@ -194,6 +194,7 @@ const getFilteredItems = (e) => {
 }
 
 
+
 imageForm.addEventListener("submit", createItem)
 userForm.addEventListener("submit", createUser)
 searchBtn.addEventListener("click", getFilteredItems)
