@@ -63,8 +63,8 @@ let refreshToken
 
 app.get('/getLink', (req, res) => {
     let keys = {
-        client: CLIENT_ID,
-        sec: CLIENT_SECRET,
+        client: process.env.CLIENT_ID,
+        sec: process.env.CLIENT_SECRET,
         url: "https://cryptaegis-exchange.herokuapp.com/callback",
         scope: "wallet:user:read,wallet:user:email,wallet:accounts:read,wallet:transactions:read&account=all"
     }
