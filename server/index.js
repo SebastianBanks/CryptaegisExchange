@@ -90,17 +90,17 @@ app.get("/callback", async (req, res) => {
             .then(async response => {
                 accessToken = await response.data.access_token
                 refreshToken = await response.data.refresh_token
-                console.log(`access: ${accessToken}`)
-                console.log(`refresh: ${refreshToken}`)
                 await res.send({ response: response?.data });
             })
             .catch(err => {
                 console.log(`error: ${err}`)
+                console.log(`data2: ${data}`)
                 console.log(`response: ${response}`)
                 console.log(`data: ${response.data}`)
             })
-        } catch {
+        } catch (e) {
             console.log('There was an error fool')
+            console.log("Could not trade code for tokens", e)
         }
         // const config = {
         //     method: 'post',
