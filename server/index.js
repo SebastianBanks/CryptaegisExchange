@@ -55,6 +55,9 @@ app.post(`/createUser`, createUser)
 
 // COINBASE ----------------------------------
 
+let accessToken
+let refreshToken
+
 app.get('/getLink', (req, res) => {
     let keys = {
         client: COINBASE_CLIENT_ID,
@@ -74,7 +77,7 @@ app.get("/callback", async (req, res) => {
             'code': code,
             'client_id': COINBASE_CLIENT_ID,
             'client_secret': COINBASE_CLIENT_SECRET,
-            'redirect': "https://cryptaegis-exchange.herokuapp.com/callback"
+            'redirect_uri': "https://cryptaegis-exchange.herokuapp.com/callback"
         });
         const config = {
             method: 'post',
@@ -87,6 +90,10 @@ app.get("/callback", async (req, res) => {
 
         try {
             const response = await axios(config)
+            accessToken = response.data.access_token
+            refreshToken = response.data.refresh_token
+            console.log(`access: ${accessToken}`)
+            console.log(`refresh: ${refreshToken}`)
             res.send({ response: response?.data });
         } catch (e) {
             console.log("Could not trade code for tokens", e)
