@@ -99,7 +99,7 @@ app.get("/callback", async (req, res) => {
                 refreshToken = response.data.refresh_token
                 console.log(`accessToken: ${accessToken}`)
                 console.log(`refreshToken: ${refreshToken}`)
-
+                window.location.replace("https:cryptaegis-exchange.herokuapp.com")
             })
             .catch(err => {
                 console.log(`error: ${err}`)
