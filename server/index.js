@@ -64,7 +64,7 @@ let accessToken = ""
 let refreshToken = ""
 
 app.get('/getLink', (req, res) => {
-    SECERET = generateKey(7)
+    SECERET = generateKey(20)
     let keys = {
         client: process.env.CLIENT_ID,
         sec: SECERET,
@@ -89,7 +89,7 @@ app.get("/callback", async (req, res) => {
         console.log(`data: ${data}`)
 
         try {
-            await axios.post('https//api.coinbase.com/oauth/token', data, {
+            await axios.post('https://api.coinbase.com/oauth/token', data, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
