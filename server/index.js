@@ -87,12 +87,12 @@ app.get("/callback", async (req, res) => {
 
         try {
             await axios.post('https//api.coinbase.com/oauth/token', data)
-            .then(response => {
-                accessToken = response.data.access_token
-                refreshToken = response.data.refresh_token
+            .then(async response => {
+                accessToken = await response.data.access_token
+                refreshToken = await response.data.refresh_token
                 console.log(`access: ${accessToken}`)
                 console.log(`refresh: ${refreshToken}`)
-                res.send({ response: response?.data });
+                await res.send({ response: response?.data });
             })
             .catch(err => {
                 console.log(`error: ${err}`)
