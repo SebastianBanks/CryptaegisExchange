@@ -4,12 +4,12 @@ const axios = require('../node_modules/axios')
 const path = require('path')
 const app = express()
 const cors = require('../node_modules/cors')
-const { SERVER_PORT, COINBASE_CLIENT_ID, COINBASE_CLIENT_SECRET } = process.env
-const passport = require('passport')
-var CoinbaseStrategy = require('passport-coinbase-oauth2').Strategy;
+const { SERVER_PORT, CLIENT_ID, CLIENT_SECRET } = process.env
+// const passport = require('passport')
+// var CoinbaseStrategy = require('passport-coinbase-oauth2').Strategy;
 const { createItem, createUser, getAllItems, getItemImage, getFilteredItems } = require('./controller.js')
 const {seed} = require('./seed.js')
-const qs = require('../node_modules/qs')
+const qs = require('qs')
 
 const { generateImageURL } = require("./s3.js")
 
@@ -63,8 +63,8 @@ let refreshToken
 
 app.get('/getLink', (req, res) => {
     let keys = {
-        client: COINBASE_CLIENT_ID,
-        sec: COINBASE_CLIENT_SECRET,
+        client: CLIENT_ID,
+        sec: CLIENT_SECRET,
         url: "https://cryptaegis-exchange.herokuapp.com/callback",
         scope: "wallet:user:read,wallet:user:email,wallet:accounts:read,wallet:transactions:read&account=all"
     }
@@ -74,13 +74,13 @@ app.get('/getLink', (req, res) => {
 app.get("/callback", async (req, res) => {
     const {code, state} = req.query;
     console.log(`state: ${state}`)
-    if (state === COINBASE_CLIENT_SECRET) {
+    if (state === CLIENT_SECRET) {
         console.log('state is equal to secret')
         const data = qs.stringify({
             'grant_type': 'authorization_code',
             'code': code,
-            'client_id': COINBASE_CLIENT_ID,
-            'client_secret': COINBASE_CLIENT_SECRET,
+            'client_id': CLIENT_ID,
+            'client_secret': CLIENT_SECRET,
             'redirect_uri': "https://cryptaegis-exchange.herokuapp.com/callback"
         });
         console.log(`data: ${data}`)
@@ -95,6 +95,7 @@ app.get("/callback", async (req, res) => {
 
         try {
             const response = await axios(config)
+            
             accessToken = response.data.access_token
             refreshToken = response.data.refresh_token
             console.log(`access: ${accessToken}`)
@@ -102,8 +103,8 @@ app.get("/callback", async (req, res) => {
             res.send({ response: response?.data });
         } catch (e) {
             console.log(`e: ${e}`)
-            console.log(`response: ${e.response}`)
-            console.log("Could not trade code for tokens", e.response.data)
+            console.log(`response: ${response}`)
+            console.log("Could not trade code for tokens", response.data)
         }
     }
 });
