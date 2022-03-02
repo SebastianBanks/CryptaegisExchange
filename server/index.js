@@ -101,6 +101,8 @@ app.get("/callback", async (req, res) => {
             console.log(`refresh: ${refreshToken}`)
             res.send({ response: response?.data });
         } catch (e) {
+            console.log(`e: ${e}`)
+            console.log(`response: ${e.response}`)
             console.log("Could not trade code for tokens", e.response.data)
         }
     }
