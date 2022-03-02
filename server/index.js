@@ -86,7 +86,11 @@ app.get("/callback", async (req, res) => {
         console.log(`data: ${data}`)
 
         try {
-            await axios.post('https//api.coinbase.com/oauth/token', data)
+            await axios.post('https//api.coinbase.com/oauth/token', data, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
             .then(async response => {
                 accessToken = await response.data.access_token
                 refreshToken = await response.data.refresh_token
