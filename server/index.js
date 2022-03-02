@@ -84,7 +84,7 @@ app.get("/callback", async (req, res) => {
             'code': code,
             'client_id': CLIENT_ID,
             'client_secret': CLIENT_SECRET,
-            'redirect_uri': "https://cryptaegis-exchange.herokuapp.com"
+            'redirect_uri': "https://cryptaegis-exchange.herokuapp.com/callback"
         });
         console.log(`data: ${data}`)
 
