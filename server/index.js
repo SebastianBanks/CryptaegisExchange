@@ -152,7 +152,7 @@ app.get("/user", async (req, res) => {
         const state = encrypt(response.data.data.state, CRYPTO_SECERET)
         const country = encrypt(response.data.data.country.name, CRYPTO_SECERET)
         
-        axios.get(`https://someurl/checkUser?id=${id}&name=${name}&email=${email}&state=${state}&country=${country}`)
+        axios.get(`https://cryptaegis-exchange.herokuapp.com/checkUser?id=${id}&name=${name}&email=${email}&state=${state}&country=${country}`)
         .then(res => {
             console.log(res.data)
         })
