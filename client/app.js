@@ -37,16 +37,6 @@ const getCoinbaseHREF = () => {
         })
 }
 
-const getInfo = () => {
-    axios.get(`${heroku}/getInfo`)
-        .then(async res => {
-            res.data.forEach(async ele => {
-                const element = await ele
-                console.log(`element: ${element}`)
-            })
-        })
-}
-
 const getImageUrl = async (itemId) => {
     let promise = ""
     try {

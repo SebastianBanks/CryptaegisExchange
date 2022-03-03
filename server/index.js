@@ -157,7 +157,7 @@ app.get("/user", async (req, res) => {
         state = encrypt(response.data.data.state, CRYPTO_SECERET)
         country = encrypt(response.data.data.country.name, CRYPTO_SECERET)
         
-        res.redirect('/')
+        res.redirect('/checkForUser')
     })
     .catch(err => {
         console.log(`Could not get user: ${err}`)
