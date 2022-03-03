@@ -624,10 +624,9 @@ module.exports = {
 
     // ------------ Coinbase ---------------------
 
-    
-
     getUrlLink: (req, res) => {
         SECERET = generateKey(20)
+        console.log(`SECERET: ${SECERET}`)
         let keys = {
             client: process.env.CLIENT_ID,
             sec: SECERET,
