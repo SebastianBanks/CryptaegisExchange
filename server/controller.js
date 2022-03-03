@@ -482,7 +482,7 @@ module.exports = {
             console.log(coin_id)
             sequelize.query(`
                 SELECT * FROM coinbase_connect
-                WHERE '${id} = '${coin_id}'
+                WHERE '${id} = '${coin_id}';
             `)
             .then(dbRes => {
                 console.log('Check for user ----------------')
