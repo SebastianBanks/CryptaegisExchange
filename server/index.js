@@ -9,7 +9,7 @@ let SECERET = ""
 // const passport = require('passport')
 // var CoinbaseStrategy = require('passport-coinbase-oauth2').Strategy;
 const { encrypt, decrypt } = require('./crypto.js')
-const { createItem, createUser, getAllItems, getItemImage, getFilteredItems, generateKey, checkForUser } = require('./controller.js')
+const { createItem, createUser, getAllItems, getItemImage, getFilteredItems, generateKey } = require('./controller.js')
 const {seed} = require('./seed.js')
 const qs = require('qs')
 
@@ -171,7 +171,6 @@ app.get("/user", async (req, res) => {
     })
 })
 
-app.get('/checkForUser', checkForUser)
 
 app.get("/account", async (req, res) => {
     axios.get('https://api.coinbase.com/v2/accounts', {
