@@ -202,7 +202,6 @@ searchBtn.addEventListener("click", getFilteredItems)
 
 
 getCoinbaseHREF()
-getInfo()
 getAllItems()
 
 
