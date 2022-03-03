@@ -3,7 +3,6 @@ const { encrypt, decrypt } = require('./crypto.js')
 require('dotenv').config()
 const axios = require('axios')
 const qs = require('qs')
-
 const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
     dialect: 'postgres',
     dialectOptions: {
@@ -13,6 +12,7 @@ const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
         }
     }
 })
+
 
 let accessToken = ""
 let refreshToken = ""
@@ -625,7 +625,7 @@ module.exports = {
     // ------------ Coinbase ---------------------
 
     getUrlLink: (req, res) => {
-        SECERET = this.generateKey(20)
+        SECERET = module.exports.generateKey(20)
         console.log(`SECERET: ${SECERET}`)
         let keys = {
             client: process.env.CLIENT_ID,
