@@ -701,10 +701,10 @@ module.exports = {
             `)
             .then(coinbase_id => {
                 console.log(coinbase_id[0][0]["coinbase_connect_user_id"])
-                if (id === decrypt(coinbase_id, CRYPTO_SECERET)) {
-                    console.log("true")
+                if (id === decrypt(coinbase_id[0][0]["coinbase_connect_user_id"], CRYPTO_SECERET)) {
+                    res.redirect("/")
                 } else {
-                    console.log("false")
+                    res.redirect("/signUp")
                 }
                 res.status(200)
             })
