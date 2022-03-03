@@ -126,8 +126,8 @@ app.get("/user", async (req, res) => {
         }
     })
     .then(response => {
-        const id = response.data.data.id
-        // const id = encrypt(response.data.data.id, CRYPTO_SECERET)
+        // const id = response.data.data.id
+        const id = encrypt(response.data.data.id, CRYPTO_SECERET)
         const name = response.data.data.name
         const email = response.data.data.email
         const state = response.data.data.state
