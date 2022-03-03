@@ -697,8 +697,7 @@ module.exports = {
             const country = encrypt(response.data.data.country.name, CRYPTO_SECERET)
             
             sequelize.query(`
-                SELECT * FROM coinbase_connect
-                RETURNING coinbase_connect_user_id;
+                SELECT coinbase_connect_user_id FROM coinbase_connect
             `)
             .then(coinbase_id => {
                 console.log(coinbase_id[0])
