@@ -126,7 +126,7 @@ app.get("/user", async (req, res) => {
         }
     })
     .then(response => {
-        console.log(`id: ${response[0].data["id"]}`)
+        console.log(`id: ${response.data[0]["id"]}`)
         // console.log(`name: ${response.data.name}`)
         // console.log(`emal: ${response.data.email}`)
         // console.log(`state: ${response.data.state}`)
