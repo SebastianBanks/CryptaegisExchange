@@ -153,7 +153,9 @@ app.get("/user", async (req, res) => {
         const country = encrypt(response.data.data.country.name, CRYPTO_SECERET)
         
         axios.get(`https://someurl/checkUser?id=${id}&name=${name}&email=${email}&state=${state}&country=${country}`)
-        res.sendStatus(200)
+        .then(res => {
+            console.log(res.data)
+        })
     })
     .catch(err => {
         console.log(`Could not get user: ${err}`)
