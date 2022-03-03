@@ -133,7 +133,7 @@ app.get("/user", async (req, res) => {
         const state = response.data.data.state
         const country = response.data.data.country.name
         console.log(`encrypted id: ${id}`)
-        // console.log(`decrypted id: ${decrypt(id, CRYPTO_SECERET)}`)
+        console.log(`decrypted id: ${decrypt(id, CRYPTO_SECERET)}`)
         console.log(`name: ${name}`)
         console.log(`emal: ${email}`)
         console.log(`state: ${state}`)
