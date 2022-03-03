@@ -127,10 +127,10 @@ app.get("/user", async (req, res) => {
     })
     .then(response => {
         console.log(`id: ${response.data.data.id}`)
-        // console.log(`name: ${response.data.name}`)
-        // console.log(`emal: ${response.data.email}`)
-        // console.log(`state: ${response.data.state}`)
-        // console.log(`country: ${response.data.country.name}`)
+        console.log(`name: ${response.data.data.name}`)
+        console.log(`emal: ${response.data.data.email}`)
+        console.log(`state: ${response.data.data.state}`)
+        console.log(`country: ${response.data.data.country.name}`)
         
         // axios.get()
         res.send({ response: response?.data })
