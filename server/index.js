@@ -121,10 +121,17 @@ app.get("/callback", async (req, res) => {
 app.get("/user", async (req, res) => {
     axios.get("https://api.coinbase.com/v2/user", {
         headers: {
-            'Authorization': `Bearer ${accessToken}`
+            'Authorization': `Bearer ${accessToken}`,
+            'CB-VERSION': ' 2019-05-13'
         }
     })
     .then(response => {
+        console.log(`id: ${response.data.id}`)
+        console.log(`name: ${response.data.name}`)
+        console.log(`emal: ${response.data.email}`)
+        console.log(`state: ${response.data.state}`)
+        console.log(`country: ${response.data.country.name}`)
+        
         res.send({ response: response?.data })
     })
     .catch(err => {
@@ -135,7 +142,8 @@ app.get("/user", async (req, res) => {
 app.get("/account", async (req, res) => {
     axios.get('https://api.coinbase.com/v2/accounts', {
         headers: {
-            'Authorization': `Bearer ${accessToken}`
+            'Authorization': `Bearer ${accessToken}`,
+            'CB-VERSION': ' 2019-05-13'
         }
     })
     .then(response => {
@@ -165,7 +173,8 @@ app.get("/transferMoney", async (req, res) => {
     axios.post(`https://api.coinbase.com/v2/accounts/${fromId}/transactions`, data, {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`
+            'Authorization': `Bearer ${accessToken}`,
+            'CB-VERSION': ' 2019-05-13'
         }
     })
     .send(response => {
