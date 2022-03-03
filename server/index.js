@@ -62,11 +62,6 @@ app.post(`/createUser`, createUser)
 
 let accessToken = ""
 let refreshToken = ""
-let id
-let name
-let email
-let state
-let country
 
 app.get('/getInfo', (req, res) => {
 
@@ -151,13 +146,14 @@ app.get("/user", async (req, res) => {
     })
     .then(response => {
         // const id = response.data.data.id
-        id = encrypt(response.data.data.id, CRYPTO_SECERET)
-        name = encrypt(response.data.data.name, CRYPTO_SECERET)
-        email = encrypt(response.data.data.email, CRYPTO_SECERET)
-        state = encrypt(response.data.data.state, CRYPTO_SECERET)
-        country = encrypt(response.data.data.country.name, CRYPTO_SECERET)
+        const id = encrypt(response.data.data.id, CRYPTO_SECERET)
+        const name = encrypt(response.data.data.name, CRYPTO_SECERET)
+        const email = encrypt(response.data.data.email, CRYPTO_SECERET)
+        const state = encrypt(response.data.data.state, CRYPTO_SECERET)
+        const country = encrypt(response.data.data.country.name, CRYPTO_SECERET)
         
-        res.redirect('/checkForUser')
+        axios.get(`https://someurl/checkUser?id=${id}&name=${name}&email=${email}&state=${state}&country=${country}`)
+        res.sendStatus(200)
     })
     .catch(err => {
         console.log(`Could not get user: ${err}`)
