@@ -700,7 +700,7 @@ module.exports = {
                 SELECT coinbase_connect_user_id FROM coinbase_connect
             `)
             .then(coinbase_id => {
-                console.log(coinbase_id[0])
+                console.log(coinbase_id[0][0]["coinbase_connect_user_id"])
                 if (id === decrypt(coinbase_id, CRYPTO_SECERET)) {
                     console.log("true")
                 } else {
