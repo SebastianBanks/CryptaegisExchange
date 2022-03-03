@@ -40,8 +40,10 @@ const getCoinbaseHREF = () => {
 const getInfo = () => {
     axios.get(`${heroku}/getInfo`)
         .then(async res => {
-
-            console.log(`front end getInfo: ${await res.data}`)
+            res.data.forEach(async ele => {
+                const element = await ele
+                console.log(`element: ${element}`)
+            })
         })
 }
 
