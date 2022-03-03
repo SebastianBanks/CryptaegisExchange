@@ -478,19 +478,21 @@ module.exports = {
             RETURNING coinbase_connect_id;
         `)
         .then(coinbase_id => {
-            const coin_id = decrypt(coinbase_id[0][0]["coinbase_connect_id"], CRYPTO_SECERET)
-            console.log(coin_id)
-            sequelize.query(`
-                SELECT * FROM coinbase_connect
-                WHERE '${id} = '${coin_id}';
-            `)
-            .then(dbRes => {
-                console.log('Check for user ----------------')
-                console.log(dbRes[0])
-                console.log('-------------------------------')
-                res.status(200).send(dbRes[0])
-            })
-            .catch(err => console.log(err))
+            console.log(coinbase_id[0])
+            // const coin_id = decrypt(coinbase_id[0][0]["coinbase_connect_id"], CRYPTO_SECERET)
+            // console.log(coin_id)
+            // sequelize.query(`
+            //     SELECT * FROM coinbase_connect
+            //     WHERE '${id} = '${coin_id}';
+            // `)
+            // .then(dbRes => {
+            //     console.log('Check for user ----------------')
+            //     console.log(dbRes[0])
+            //     console.log('-------------------------------')
+            //     res.status(200).send(dbRes[0])
+            // })
+            // .catch(err => console.log(err))
+            res.sendStatus(200)
         })
         .catch(err => console.log(err))
     },
