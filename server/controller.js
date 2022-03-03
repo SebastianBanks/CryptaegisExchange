@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize')
 const { encrypt, decrypt } = require('./crypto.js')
 require('dotenv').config()
-
+const axios = require('axios')
+const qs = require('qs')
 
 const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
     dialect: 'postgres',
@@ -12,6 +13,11 @@ const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
         }
     }
 })
+
+let accessToken = ""
+let refreshToken = ""
+let SECERET = ""
+const { CLIENT_ID, CLIENT_SECRET, CRYPTO_SECERET } = process.env
 
 module.exports = {
     createItem: (req, res) => {
@@ -614,5 +620,146 @@ module.exports = {
           result += characters.charAt(Math.floor(Math.random() * charactersLength));
        }
        return result;
+    },
+
+    // ------------ Coinbase ---------------------
+
+    
+
+    getUrlLink: (req, res) => {
+        SECERET = generateKey(20)
+        let keys = {
+            client: process.env.CLIENT_ID,
+            sec: SECERET,
+            url: "https://cryptaegis-exchange.herokuapp.com/callback",
+            scope: "wallet:user:read,wallet:user:email,wallet:accounts:read,wallet:transactions:read&account=all,wallet:transactions:transfer, wallet:transactions:read"
+        }
+        res.status(200).send(keys)
+    },
+
+    coinbaseCallback: async (req, res) => {
+        const {code, state} = req.query;
+        console.log(`state: ${state}`)
+        console.log(`code: ${code}`)
+        if (state === SECERET) {
+            const data = qs.stringify({
+                'grant_type': 'authorization_code',
+                'code': code,
+                'client_id': CLIENT_ID,
+                'client_secret': CLIENT_SECRET,
+                'redirect_uri': "https://cryptaegis-exchange.herokuapp.com/callback"
+            });
+            console.log(`data: ${data}`)
+    
+            try {
+                await axios.post('https://api.coinbase.com/oauth/token', data, {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                })
+                .then(response => {
+                    accessToken = response.data.access_token
+                    refreshToken = response.data.refresh_token
+                    console.log(`accessToken: ${accessToken}`)
+                    console.log(`refreshToken: ${refreshToken}`)
+                    res.redirect('/user')
+                    
+                })
+                .catch(err => {
+                    console.log(`error: ${err}`)
+                    console.log(`data2: ${data}`)
+                    console.log(`response: ${response}`)
+                    console.log(`data: ${response.data}`)
+                })
+            } catch (e) {
+                console.log('There was an error fool')
+                console.log("Could not trade code for tokens", e)
+            }
+    
+        } else {
+            console.log("keys don't match")
+        }
+    },
+
+    getCoinbaseUser: async (req, res) => {
+        axios.get("https://api.coinbase.com/v2/user", {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'CB-VERSION': ' 2019-05-13'
+            }
+        })
+        .then(response => {
+            // const id = response.data.data.id
+            const encryptedId = encrypt(response.data.data.id, CRYPTO_SECERET)
+            const id = response.data.data.id
+            const name = encrypt(response.data.data.name, CRYPTO_SECERET)
+            const email = encrypt(response.data.data.email, CRYPTO_SECERET)
+            const state = encrypt(response.data.data.state, CRYPTO_SECERET)
+            const country = encrypt(response.data.data.country.name, CRYPTO_SECERET)
+            
+            sequelize.query(`
+                SELECT * FROM coinbase_connect
+                RETURNING coinbase_connect_user_id;
+            `)
+            .then(coinbase_id => {
+                console.log(coinbase_id[0])
+                if (id === decrypt(coinbase_id, CRYPTO_SECERET)) {
+                    console.log("true")
+                } else {
+                    console.log("false")
+                }
+                res.status(200)
+            })
+        })
+        .catch(err => {
+            console.log(`Could not get user: ${err}`)
+        })
+    },
+
+    getCoinbaseAccount: async (req, res) => {
+        axios.get('https://api.coinbase.com/v2/accounts', {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'CB-VERSION': ' 2019-05-13'
+            }
+        })
+        .then(response => {
+            res.send({ response: response?.data })
+        })
+        .catch(err => {
+            console.log(`Could not get accounts: ${err}`)
+        })
+    },
+
+    coinbaseTransaction: async (req, res) => {
+        // make sure these are all strings
+        const fromId = "" // wallet id of the person buying the item
+        const toId = "" // wallet id of the person selling the item
+        const amount = "" // amount of item
+        const currency = "" // type of currency of the amount
+        const description = "" // item title
+    
+        const data = JSON.stringify({
+            "type": "transaction",
+            "to" : toId,
+            "amount": amount,
+            "currency": currency,
+            "description": description
+        })
+    
+        axios.post(`https://api.coinbase.com/v2/accounts/${fromId}/transactions`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+                'CB-VERSION': ' 2019-05-13'
+            }
+        })
+        .send(response => {
+            res.send({ response: response?.data })
+        })
+        .catch(err => {
+            console.log(`Their was an error with this transaction: ${err}`)
+        })
     }
+    // -------------------------------------------
 }
