@@ -146,16 +146,24 @@ app.get("/user", async (req, res) => {
     })
     .then(response => {
         // const id = response.data.data.id
-        const id = encrypt(response.data.data.id, CRYPTO_SECERET)
+        const encryptedId = encrypt(response.data.data.id, CRYPTO_SECERET)
+        const id = response.data.data.id
         const name = encrypt(response.data.data.name, CRYPTO_SECERET)
         const email = encrypt(response.data.data.email, CRYPTO_SECERET)
         const state = encrypt(response.data.data.state, CRYPTO_SECERET)
         const country = encrypt(response.data.data.country.name, CRYPTO_SECERET)
         
-        res.redirect('/checkForUser')
-        axios.get(`https://cryptaegis-exchange.herokuapp.com/checkForUser?id=${id}&name=${name}&email=${email}&state=${state}&country=${country}`)
-        .then(res => {
-            console.log(res.data)
+        sequelize.query(`
+            SELECT * FROM coinbase_connect
+            RETURNING coinbase_connect_user_id;
+        `)
+        .then(coinbase_id => {
+            console.log(coinbase_id[0])
+            if (id === decrypt(coinbase_id, CRYPTO_SECERET)) {
+                console.log("true")
+            } else {
+                console.log("false")
+            }
         })
     })
     .catch(err => {
