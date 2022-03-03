@@ -4,11 +4,11 @@ const axios = require('axios')
 const path = require('path')
 const app = express()
 const cors = require('cors')
-const { SERVER_PORT, CLIENT_ID, CLIENT_SECRET } = process.env
+const { SERVER_PORT, CLIENT_ID, CLIENT_SECRET, CRYPTO_SECERET } = process.env
 let SECERET = ""
 // const passport = require('passport')
 // var CoinbaseStrategy = require('passport-coinbase-oauth2').Strategy;
-const { encrypt } = require('./crypto.js')
+const { encrypt, decrypt } = require('./crypto.js')
 const { createItem, createUser, getAllItems, getItemImage, getFilteredItems, generateKey } = require('./controller.js')
 const {seed} = require('./seed.js')
 const qs = require('qs')
@@ -126,13 +126,19 @@ app.get("/user", async (req, res) => {
         }
     })
     .then(response => {
-        console.log(`id: ${response.data.data.id}`)
-        console.log(`name: ${response.data.data.name}`)
-        console.log(`emal: ${response.data.data.email}`)
-        console.log(`state: ${response.data.data.state}`)
-        console.log(`country: ${response.data.data.country.name}`)
+        const id = encrypt(response.data.data.id, CRYPTO_SECERET)
+        const name = response.data.data.name
+        const email = response.data.data.email
+        const state = response.data.data.state
+        const country = response.data.data.country.name
+        console.log(`encrypted id: ${id}`)
+        console.log(`decrypted id: ${decrypt(id, CRYPTO_SECERET)}`)
+        console.log(`name: ${name}`)
+        console.log(`emal: ${email}`)
+        console.log(`state: ${state}`)
+        console.log(`country: ${country}`)
         
-        // axios.get()
+        // axios.get(`https://someurl/checkUser?id=${id}&name=${name}&email=${email}&state=${state}&country=${country}`)
         res.send({ response: response?.data })
     })
     .catch(err => {
