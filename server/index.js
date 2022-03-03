@@ -99,7 +99,8 @@ app.get("/callback", async (req, res) => {
                 refreshToken = response.data.refresh_token
                 console.log(`accessToken: ${accessToken}`)
                 console.log(`refreshToken: ${refreshToken}`)
-                res.send({ response: response?.data })
+                res.redirect('/user')
+                
             })
             .catch(err => {
                 console.log(`error: ${err}`)
@@ -112,28 +113,6 @@ app.get("/callback", async (req, res) => {
             console.log("Could not trade code for tokens", e)
         }
 
-        // const config = {
-        //     method: 'post',
-        //     url: 'https//api.coinbase.com/oauth/token',
-        //     headers: {
-        //         'Content-Type': 'application/x-www-form-urlencoded'
-        //     },
-        //     data
-        // };
-
-        // try {
-        //     const response = await axios(config);
-            
-        //     accessToken = response.data.access_token;
-        //     refreshToken = response.data.refresh_token;
-        //     console.log(`access: ${accessToken}`)
-        //     console.log(`refresh: ${refreshToken}`)
-        //     res.send({ response: response?.data });
-        // } catch (e) {
-        //     console.log(`e: ${e}`)
-        //     console.log(`response: ${e.response}`)
-        //     console.log("Could not trade code for tokens", e.response.data)
-        // }
     } else {
         console.log("keys don't match")
     }
@@ -197,27 +176,6 @@ app.get("/transferMoney", async (req, res) => {
     })
 })
 
-// app.use(passport.initialize())
-
-
-// app.get(
-//     '/',
-//     passport.authenticate('coinbase', { scope: "wallet:user:read,wallet:user:email,wallet:accounts:read,wallet:transactions:read", account: ["all"] }),
-//     function (req, res) {
-//         console.log(accessToken)
-//         console.log(refreshToken)
-//         console.log(profile)
-//         console.log(res)
-//     }
-// )
-
-// app.get(
-//     '/callback',
-//     passport.authenticate('coinbase'),
-//     function (req, res) {
-//         res.redirect('/')
-//     }
-// )
 // --------------------------------------------------------------------
 
 
