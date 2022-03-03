@@ -9,7 +9,7 @@ let SECERET = ""
 // const passport = require('passport')
 // var CoinbaseStrategy = require('passport-coinbase-oauth2').Strategy;
 const { encrypt, decrypt } = require('./crypto.js')
-const { createItem, createUser, getAllItems, getItemImage, getFilteredItems, generateKey } = require('./controller.js')
+const { createItem, createUser, getAllItems, getItemImage, getFilteredItems, generateKey, checkForUser } = require('./controller.js')
 const {seed} = require('./seed.js')
 const qs = require('qs')
 
@@ -62,6 +62,30 @@ app.post(`/createUser`, createUser)
 
 let accessToken = ""
 let refreshToken = ""
+let id
+let name
+let email
+let state
+let country
+
+app.get('/getInfo', (req, res) => {
+
+    if (id !== undefined && name !== undefined && email !== undefined) {
+        let info = {
+            i: id,
+            n: name,
+            e: email,
+            s: state,
+            c: country
+        }
+
+        res.status(200).send(info)
+    } else {
+        res.sendStatus(200)
+    }
+    
+    
+})
 
 app.get('/getLink', (req, res) => {
     SECERET = generateKey(20)
@@ -127,25 +151,20 @@ app.get("/user", async (req, res) => {
     })
     .then(response => {
         // const id = response.data.data.id
-        const id = encrypt(response.data.data.id, CRYPTO_SECERET)
-        const name = encrypt(response.data.data.name, CRYPTO_SECERET)
-        const email = encrypt(response.data.data.email, CRYPTO_SECERET)
-        const state = encrypt(response.data.data.state, CRYPTO_SECERET)
-        const country = encrypt(response.data.data.country.name, CRYPTO_SECERET)
-        console.log(`encrypted id: ${id}`)
-        console.log(`decrypted id: ${decrypt(id, CRYPTO_SECERET)}`)
-        console.log(`name: ${name}`)
-        console.log(`emal: ${email}`)
-        console.log(`state: ${state}`)
-        console.log(`country: ${country}`)
+        id = encrypt(response.data.data.id, CRYPTO_SECERET)
+        name = encrypt(response.data.data.name, CRYPTO_SECERET)
+        email = encrypt(response.data.data.email, CRYPTO_SECERET)
+        state = encrypt(response.data.data.state, CRYPTO_SECERET)
+        country = encrypt(response.data.data.country.name, CRYPTO_SECERET)
         
-        // axios.get(`https://someurl/checkUser?id=${id}&name=${name}&email=${email}&state=${state}&country=${country}`)
-        res.send({ response: response?.data })
+        res.redirect('/')
     })
     .catch(err => {
         console.log(`Could not get user: ${err}`)
     })
 })
+
+app.get('/checkForUser', checkForUser)
 
 app.get("/account", async (req, res) => {
     axios.get('https://api.coinbase.com/v2/accounts', {

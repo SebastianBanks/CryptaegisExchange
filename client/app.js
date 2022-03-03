@@ -37,6 +37,14 @@ const getCoinbaseHREF = () => {
         })
 }
 
+const getInfo = () => {
+    axios.get(`${heroku}/getInfo`)
+        .then(res => {
+
+            console.log(`front end getInfo: ${res.data}`)
+        })
+}
+
 const getImageUrl = async (itemId) => {
     let promise = ""
     try {
@@ -202,7 +210,9 @@ searchBtn.addEventListener("click", getFilteredItems)
 
 
 getCoinbaseHREF()
+getInfo()
 getAllItems()
+
 
     
 

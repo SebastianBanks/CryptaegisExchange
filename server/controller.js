@@ -470,6 +470,31 @@ module.exports = {
         // make sure this information is encrypted
     },
 
+    checkForUser: (req, res) => {
+        const { id, name, email, state, country } = req.query
+
+        sequelize.query(`
+            SELECT * FROM coinbase_connect
+            RETURNING coinbase_connect_id;
+        `)
+        .then(coinbase_id => {
+            const coin_id = decrypt(coinbase_id[0][0]["coinbase_connect_id"], CRYPTO_SECERET)
+            console.log(coin_id)
+            sequelize.query(`
+                SELECT * FROM coinbase_connect
+                WHERE '${id} = '${coin_id}'
+            `)
+            .then(dbRes => {
+                console.log('Check for user ----------------')
+                console.log(dbRes[0])
+                console.log('-------------------------------')
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => console.log(err))
+        })
+        .catch(err => console.log(err))
+    },
+
     deleteUser: (req, res) => {
         // get user id
         const id = req.params.id
