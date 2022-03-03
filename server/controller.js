@@ -492,7 +492,7 @@ module.exports = {
             //     res.status(200).send(dbRes[0])
             // })
             // .catch(err => console.log(err))
-            res.sendStatus(200)
+            res.status(200).send(coinbase_id[0])
         })
         .catch(err => console.log(err))
     },
