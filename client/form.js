@@ -18,9 +18,6 @@ const getUserFormInfo = () => {
         userName.value = await res.data.n
         email.value = await res.data.e
         userState.value = await res.data.s
-
-        console.log(id)
-        console.log(await res.data.n)
     })
 }
 
@@ -33,9 +30,9 @@ const createUser = (e) => {
         let body = {
             coinbase_id: id,
             user_name: userName.value,
-            user_email: email.value,
+            user_email: email.value.toLowerCase(),
             user_phone_number: phoneNum.value,
-            user_location: `${userCity.value}, ${userState.value}`
+            user_location: `${userCity.value.toLowerCase()}, ${userState.value.toLowerCase()}`
         }
     
         axios.post(`${heroku}/createUser`, body)
