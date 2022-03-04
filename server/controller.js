@@ -18,11 +18,11 @@ let SECERET = ""
 const { CLIENT_ID, CLIENT_SECRET, CRYPTO_SECERET } = process.env
 
 let info = {
-    i,
-    n,
-    e,
-    s,
-    c
+    i: "",
+    n: "",
+    e: "",
+    s: "",
+    c: ""
 
 }
 
