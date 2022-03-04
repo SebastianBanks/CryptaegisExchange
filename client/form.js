@@ -43,6 +43,11 @@ const createUser = (e) => {
         .catch(err => console.log(err))
 }
 
-userForm.addEventListener("submit", createUser)
+if (phoneNum.value.length < 10) {
+    alert("Phone number must have 10 characters")
+} else {
+    userForm.addEventListener("submit", createUser)
+}
+
 
 getUserFormInfo()
