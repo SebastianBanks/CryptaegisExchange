@@ -466,20 +466,26 @@ module.exports = {
 
     createUser: (req, res) => {
         // get the users id from coinbase api
-        const { coinbase_id, user_name, user_email, user_phone_number, user_location, user_age} = req.body
+        const encryptedId = encrypt(req.body.coinbase_id, CRYPTO_SECERET)
+        const encryptedUserName = encrypt(req.body.user_name, CRYPTO_SECERET)
+        const encryptedUserEmail = encrypt(req.body.user_email, CRYPTO_SECERET)
+        const encryptedUserPhoneNumber = encrypt(req.body.user_phone_number, CRYPTO_SECERET)
+        const encryptedUserLocation = encrypt(req.body.user_location, CRYPTO_SECERET)
         // get necassary data to create user
         sequelize.query(`
-            INSERT INTO user_account(user_name, user_email, user_phone_number, user_location, user_age)
-            VALUES('${user_name}', '${user_email}', '${user_phone_number}', '${user_location}', ${user_age});
-
-            INSERT INTO coinbase_connect(coinbase_connect_user_id, user_id)
-            VALUES('${coinbase_id}', (SELECT user_id FROM user_account WHERE user_name = '${user_name}' AND user_email = '${user_email}' AND user_phone_number = '${user_phone_number}' AND user_age = ${user_age}))
+            INSERT INTO user_account(user_name, user_email, user_phone_number, user_location)
+            VALUES('${encryptedUserName}', '${encryptedUserEmail}', '${encryptedUserPhoneNumber}', '${encryptedUserLocation}')
+            RETURNING user_id;
         `)
-        .then(dbRes => res.status(200).send(dbRes[0]))
-        .catch(err => console.log(err))
-        // add user to database
-        // add user wallet to database
-        // make sure this information is encrypted
+        .then(user_id => {
+            sequelize.query(`
+                INSERT INTO coinbase_connect(coinbase_connect_user_id, user_id)
+                VALUES('${encryptedId}', ${user_id[0][0]["user_id"]});
+            `)
+            .then(res.redirect('/'))
+            .catch(err => console.log(err))
+        })
+
     },
 
     // checkForUser: (req, res) => {
