@@ -631,11 +631,11 @@ module.exports = {
 
     getFormData: (req, res) => {
         const body = {
-            i: module.exports.decrypt(info.i),
-            n: module.exports.decrypt(info.n),
-            e: module.exports.decrypt(info.e),
-            s: module.exports.decrypt(info.s),
-            c: module.exports.decrypt(info.c)
+            i: decrypt(info.i, CRYPTO_SECERET),
+            n: decrypt(info.n, CRYPTO_SECERET),
+            e: decrypt(info.e, CRYPTO_SECERET),
+            s: decrypt(info.s, CRYPTO_SECERET),
+            c: decrypt(info.c, CRYPTO_SECERET)
         }
 
         res.status(200).send(body)
