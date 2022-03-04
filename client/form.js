@@ -12,7 +12,7 @@ const heroku = "https://cryptaegis-exchange.herokuapp.com"
 const getUserFormInfo = () => {
     axios.get(`${heroku}/getFormData`)
     .then(res => {
-        console.log(res.data)
+        console.log(res)
     })
 }
 
@@ -37,3 +37,5 @@ const createUser = (e) => {
 }
 
 userForm.addEventListener("submit", createUser)
+
+getUserFormInfo()
