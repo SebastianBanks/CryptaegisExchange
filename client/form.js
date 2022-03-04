@@ -9,6 +9,13 @@ const age = document.querySelector("#age")
 const localHost = "http://localhost:3000"
 const heroku = "https://cryptaegis-exchange.herokuapp.com"
 
+const getUserFormInfo = () => {
+    axios.get(`${heroku}/getFormData`)
+    .then(res => {
+        console.log(res.data)
+    })
+}
+
 const createUser = (e) => {
     e.preventDefault()
 

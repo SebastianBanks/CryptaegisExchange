@@ -5,7 +5,7 @@ const app = express()
 const cors = require('cors')
 const { SERVER_PORT } = process.env
 const { createItem, createUser, getAllItems, getItemImage, getFilteredItems, getUrlLink, 
-        coinbaseCallback, getCoinbaseUser, getCoinbaseAccount, coinbaseTransaction} = require('./controller.js')
+        coinbaseCallback, getCoinbaseUser, getCoinbaseAccount, coinbaseTransaction, getFormData } = require('./controller.js')
 const {seed} = require('./seed.js')
 const { generateImageURL } = require("./s3.js")
 
@@ -42,6 +42,7 @@ app.get("/callback", coinbaseCallback)
 app.get("/user", getCoinbaseUser)
 app.get("/account", getCoinbaseAccount)
 app.get("/transferMoney", coinbaseTransaction)
+app.get("/getFormData", getFormData)
 
 // --------------------------------------------------------------------
 

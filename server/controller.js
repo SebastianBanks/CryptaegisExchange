@@ -12,12 +12,19 @@ const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
         }
     }
 })
-
-
 let accessToken = ""
 let refreshToken = ""
 let SECERET = ""
 const { CLIENT_ID, CLIENT_SECRET, CRYPTO_SECERET } = process.env
+
+let info = {
+    i,
+    n,
+    e,
+    s,
+    c
+
+}
 
 module.exports = {
     createItem: (req, res) => {
@@ -622,6 +629,18 @@ module.exports = {
        return result;
     },
 
+    getFormData: (req, res) => {
+        const body = {
+            i: module.exports.decrypt(info.i),
+            n: module.exports.decrypt(info.n),
+            e: module.exports.decrypt(info.e),
+            s: module.exports.decrypt(info.s),
+            c: module.exports.decrypt(info.c)
+        }
+
+        res.status(200).send(body)
+    },
+
     // ------------ Coinbase ---------------------
 
     getUrlLink: (req, res) => {
@@ -695,6 +714,12 @@ module.exports = {
             const email = encrypt(response.data.data.email, CRYPTO_SECERET)
             const state = encrypt(response.data.data.state, CRYPTO_SECERET)
             const country = encrypt(response.data.data.country.name, CRYPTO_SECERET)
+
+            info.i = encryptedId
+            info.n = name
+            info.e = email
+            info.s = state
+            info.c = country
             
             sequelize.query(`
                 SELECT coinbase_connect_user_id FROM coinbase_connect
