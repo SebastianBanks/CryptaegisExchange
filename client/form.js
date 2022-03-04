@@ -15,11 +15,12 @@ const getUserFormInfo = () => {
     axios.get(`${heroku}/getFormData`)
     .then(async res => {
         id = await res.data.i
-        userName.textContent = await res.data.n
-        email.textContent = await res.data.e
-        userState.textContent = await res.data.s
+        userName.value = await res.data.n
+        email.value = await res.data.e
+        userState.value = await res.data.s
 
-        console.log(await res.data)
+        console.log(id)
+        console.log(await res.data.n)
     })
 }
 
