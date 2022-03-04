@@ -27,27 +27,29 @@ const getUserFormInfo = () => {
 const createUser = (e) => {
     e.preventDefault()
 
-    let body = {
-        coinbase_id: id,
-        user_name: userName.value,
-        user_email: email.value,
-        user_phone_number: phoneNum.value,
-        user_location: `${userCity.value}, ${userState.value}`
+    if (phoneNum.value.length < 10) {
+        alert("Phone number must have 10 characters")
+    } else {
+        let body = {
+            coinbase_id: id,
+            user_name: userName.value,
+            user_email: email.value,
+            user_phone_number: phoneNum.value,
+            user_location: `${userCity.value}, ${userState.value}`
+        }
+    
+        axios.post(`${heroku}/createUser`, body)
+            .then(() => {
+                console.log("createUser-----------")
+                console.log(body)
+            })
+            .catch(err => console.log(err))
     }
 
-    axios.post(`${heroku}/createUser`, body)
-        .then(() => {
-            console.log("createUser-----------")
-            console.log(body)
-        })
-        .catch(err => console.log(err))
+    
 }
 
-if (phoneNum.value.length < 10) {
-    alert("Phone number must have 10 characters")
-} else {
-    userForm.addEventListener("submit", createUser)
-}
 
+userForm.addEventListener("submit", createUser)
 
 getUserFormInfo()
