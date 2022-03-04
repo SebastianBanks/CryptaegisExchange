@@ -15,13 +15,36 @@
                 <input id="userName" type="text" placeholder="Name" required>
                 <p class="inputDef" id="userNameDef"></p>
                 <input id="email" type="text" placeholder="Email" required>
-                <input id="phoneNum" type="text" placeholder="Phone Number" required>
-                <input id="location" type="text" placeholder="Location" required>
-                <input id="age" type="number" placeholder="Age" required>
+                <input id="phoneNum" type="text" placeholder="Phone Number" onkeydown="phoneNumberFormatter()" required/>
+                <input id="city" type="text" placeholder="City" required>
+                <input id="state" type="text" placeholder="State" required>
                 <button type="submit">Submit</button>
             </form>
         </div>
     </main>
+    <script>
+        function formatPhoneNumber(value) {
+            if (!value) return value
+
+            const phoneNumber = value.replace(/[^\d]/g, '')
+            const phoneNumberLength = phoneNumber.length
+
+            if (phoneNumberLength < 4) return phoneNumber
+
+            if (phoneNumberLength < 7) {
+                return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`
+            }
+
+            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 9)}`
+        }
+
+        function phoneNumberFormatter() {
+            const inputField = document.getElementById('phoneNum')
+            const formattedInputValue = formatPhoneNumber(inputField.value)
+
+            inputField.value = formattedInputValue
+        }
+    </script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="form.js"></script>
 </body>

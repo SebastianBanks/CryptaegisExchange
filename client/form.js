@@ -3,16 +3,21 @@ const userForm = document.querySelector("#userForm")
 const userName = document.querySelector("#userName")
 const email = document.querySelector("#email")
 const phoneNum = document.querySelector("#phoneNum")
-const userLocation = document.querySelector("#location")
-const age = document.querySelector("#age")
+const userCity = document.querySelector("#city")
+const userState = document.querySelector("#state")
+
 
 const localHost = "http://localhost:3000"
 const heroku = "https://cryptaegis-exchange.herokuapp.com"
+let id
 
 const getUserFormInfo = () => {
     axios.get(`${heroku}/getFormData`)
     .then(async res => {
-        console.log(await res)
+        id = res.data.i
+        userName.textContent = res.data.n
+        email.textContent = res.data.e
+        userState.textContent = res.data.s
     })
 }
 
@@ -20,12 +25,11 @@ const createUser = (e) => {
     e.preventDefault()
 
     let body = {
-        coinbase_id: coinbaseId.value,
+        coinbase_id: id,
         user_name: userName.value,
         user_email: email.value,
         user_phone_number: phoneNum.value,
-        user_location: userLocation.value,
-        user_age: age.value
+        user_location: `${userCity.value}, ${userState.value}`
     }
 
     axios.post(`${heroku}/createUser`, body)

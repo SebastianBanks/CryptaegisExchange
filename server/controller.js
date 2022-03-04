@@ -21,8 +21,7 @@ let info = {
     i: "",
     n: "",
     e: "",
-    s: "",
-    c: ""
+    s: ""
 
 }
 
@@ -484,7 +483,7 @@ module.exports = {
     },
 
     // checkForUser: (req, res) => {
-    //     const { id, name, email, state, country } = req.query
+    //     const { id, name, email, location } = req.query
 
         
 
@@ -634,8 +633,7 @@ module.exports = {
             i: decrypt(info.i, CRYPTO_SECERET),
             n: decrypt(info.n, CRYPTO_SECERET),
             e: decrypt(info.e, CRYPTO_SECERET),
-            s: decrypt(info.s, CRYPTO_SECERET),
-            c: decrypt(info.c, CRYPTO_SECERET)
+            s: decrypt(info.s, CRYPTO_SECERET)
         }
 
         res.status(200).send(body)
@@ -714,13 +712,11 @@ module.exports = {
             const name = encrypt(await response.data.data.name, CRYPTO_SECERET)
             const email = encrypt(await response.data.data.email, CRYPTO_SECERET)
             const state = encrypt(await response.data.data.state, CRYPTO_SECERET)
-            const country = encrypt(await response.data.data.country.name, CRYPTO_SECERET)
 
             info.i = encryptedId
             info.n = name
             info.e = email
             info.s = state
-            info.c = country
             
             sequelize.query(`
                 SELECT coinbase_connect_user_id FROM coinbase_connect
