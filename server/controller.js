@@ -696,6 +696,7 @@ module.exports = {
     
         } else {
             console.log("keys don't match")
+            res.redirect("/")
         }
     },
 
