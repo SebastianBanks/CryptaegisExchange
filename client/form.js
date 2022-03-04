@@ -27,7 +27,7 @@ const getUserFormInfo = () => {
 const createUser = (e) => {
     e.preventDefault()
 
-    if (phoneNum.value.length < 10) {
+    if (phoneNum.value.length !== 13) {
         alert("Phone number must have 10 characters")
     } else {
         let body = {
