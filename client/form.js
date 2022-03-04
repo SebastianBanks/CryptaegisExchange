@@ -11,8 +11,8 @@ const heroku = "https://cryptaegis-exchange.herokuapp.com"
 
 const getUserFormInfo = () => {
     axios.get(`${heroku}/getFormData`)
-    .then(res => {
-        console.log(res)
+    .then(async res => {
+        console.log(await res)
     })
 }
 

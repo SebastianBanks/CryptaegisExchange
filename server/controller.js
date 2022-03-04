@@ -699,21 +699,21 @@ module.exports = {
         }
     },
 
-    getCoinbaseUser: async (req, res) => {
+    getCoinbaseUser: (req, res) => {
         axios.get("https://api.coinbase.com/v2/user", {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'CB-VERSION': ' 2019-05-13'
             }
         })
-        .then(response => {
+        .then( async response => {
             // const id = response.data.data.id
-            const encryptedId = encrypt(response.data.data.id, CRYPTO_SECERET)
-            const id = response.data.data.id
-            const name = encrypt(response.data.data.name, CRYPTO_SECERET)
-            const email = encrypt(response.data.data.email, CRYPTO_SECERET)
-            const state = encrypt(response.data.data.state, CRYPTO_SECERET)
-            const country = encrypt(response.data.data.country.name, CRYPTO_SECERET)
+            const encryptedId = encrypt(await response.data.data.id, CRYPTO_SECERET)
+            const id = await response.data.data.id
+            const name = encrypt(await response.data.data.name, CRYPTO_SECERET)
+            const email = encrypt(await response.data.data.email, CRYPTO_SECERET)
+            const state = encrypt(await response.data.data.state, CRYPTO_SECERET)
+            const country = encrypt(await response.data.data.country.name, CRYPTO_SECERET)
 
             info.i = encryptedId
             info.n = name
