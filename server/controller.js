@@ -666,7 +666,6 @@ module.exports = {
 
     getUrlLink: (req, res) => {
         SECERET = module.exports.generateKey(20)
-        console.log(`SECERET: ${SECERET}`)
         let keys = {
             client: process.env.CLIENT_ID,
             sec: SECERET,
@@ -678,8 +677,6 @@ module.exports = {
 
     coinbaseCallback: async (req, res) => {
         const {code, state} = req.query;
-        console.log(`state: ${state}`)
-        console.log(`code: ${code}`)
         if (state === SECERET) {
             const data = qs.stringify({
                 'grant_type': 'authorization_code',
@@ -688,7 +685,6 @@ module.exports = {
                 'client_secret': CLIENT_SECRET,
                 'redirect_uri': "https://cryptaegis-exchange.herokuapp.com/callback"
             });
-            console.log(`data: ${data}`)
     
             try {
                 await axios.post('https://api.coinbase.com/oauth/token', data, {
@@ -699,8 +695,6 @@ module.exports = {
                 .then(response => {
                     accessToken = response.data.access_token
                     refreshToken = response.data.refresh_token
-                    console.log(`accessToken: ${accessToken}`)
-                    console.log(`refreshToken: ${refreshToken}`)
                     res.redirect('/user')
                     
                 })
@@ -745,7 +739,6 @@ module.exports = {
                 SELECT coinbase_connect_user_id FROM coinbase_connect
             `)
             .then(coinbase_id => {
-                console.log(`coinbase_id: `)
                 if (id === decrypt(coinbase_id[0][0]["coinbase_connect_user_id"], CRYPTO_SECERET)) {
                     sequelize.query(`
                         SELECT user_id FROM coinbase_connect
