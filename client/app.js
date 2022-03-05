@@ -182,7 +182,7 @@ imageForm.addEventListener("submit", createItem)
 
 searchBtn.addEventListener("click", getFilteredItems)
 
-
+getUserIsSignedIn()
 getCoinbaseHREF()
 getAllItems()
 
