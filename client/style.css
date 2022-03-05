@@ -68,6 +68,13 @@ main {
     margin: 10px;
 }
 
+form {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .form {
     color: white;
     background-color: darkblue;
