@@ -15,6 +15,7 @@ const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
 let accessToken = ""
 let refreshToken = ""
 let SECERET = ""
+let currentUser = 0
 const { CLIENT_ID, CLIENT_SECRET, CRYPTO_SECERET } = process.env
 
 let info = {
@@ -27,30 +28,37 @@ let info = {
 
 module.exports = {
     createItem: (req, res) => {
-        const { item_price, item_title, item_desc, item_size, owner_id, category_id, item_images} = req.body
-        
-        sequelize.query(`
-        INSERT INTO item(item_price, item_title, item_description, item_size, owner_id, category_id)
-        VALUES(${item_price}, '${item_title.toLowerCase()}', '${item_desc}', '${item_size}', ${owner_id}, ${category_id})
-        RETURNING item_id;
-        `)
-        .then(item_id => {
-            for (let i = 0; i < item_images.length; i++) {
-                if (item_images[i] !== undefined) {
-                    sequelize.query(`
-                        INSERT INTO images(image_url_path, item_id)
-                         VALUES('${item_images[i]}', ${item_id[0][0]["item_id"]});
-                    `)
-                    .then(dbRes => res.status(200).send(dbRes[0]))
-                    .catch(err => console.log(err))
-                } else {
-                    console.log("undefined")
-                }
-            }
-        })
-        .catch(err => console.log(err))
+        const { item_price, item_title, item_desc, item_size, category_id, item_images} = req.body
 
-        console.log(item_images)
+        if (currentUser !== 0) {
+            sequelize.query(`
+                INSERT INTO item(item_price, item_title, item_description, item_size, owner_id, category_id)
+                VALUES(${item_price}, '${item_title.toLowerCase()}', '${item_desc}', '${item_size}', ${currentUser}, ${category_id})
+                RETURNING item_id;
+            `)
+            .then(item_id => {
+                for (let i = 0; i < item_images.length; i++) {
+                    if (item_images[i] !== undefined) {
+                        sequelize.query(`
+                            INSERT INTO images(image_url_path, item_id)
+                            VALUES('${item_images[i]}', ${item_id[0][0]["item_id"]});
+                        `)
+                        .then(dbRes => res.status(200).send(dbRes[0]))
+                        .catch(err => console.log(err))
+                    } else {
+                        console.log("undefined")
+                    }
+                }
+            })
+            .catch(err => console.log(err))
+
+            console.log(item_images)
+        } else {
+            console.log('No current user')
+            res.sendStatus(200)
+        }
+        
+        
     },
 
     getItemImage: async (req, res) => {
@@ -478,6 +486,7 @@ module.exports = {
             RETURNING user_id;
         `)
         .then(user_id => {
+            currentUser = user_id[0][0]["user_id"]
             sequelize.query(`
                 INSERT INTO coinbase_connect(coinbase_connect_user_id, user_id)
                 VALUES('${encryptedId}', ${user_id[0][0]["user_id"]});
@@ -738,7 +747,15 @@ module.exports = {
             .then(coinbase_id => {
                 console.log(`coinbase_id: `)
                 if (id === decrypt(coinbase_id[0][0]["coinbase_connect_user_id"], CRYPTO_SECERET)) {
-                    res.redirect("/")
+                    sequelize.query(`
+                        SELECT user_id FROM coinbase_connect
+                        WHERE coinbase_connect_user_id = '${coinbase_id[0][0]["coinbase_connect_user_id"]}'
+                    `)
+                    .then(user_id => {
+                        console.log(`currentUser: ${user_id[0][0]["user_id"]}`)
+                        currentUser = user_id[0][0]["user_id"]
+                        res.redirect("/")
+                    })
                 } else {
                     res.redirect("/signUp")
                 }

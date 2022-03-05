@@ -114,7 +114,6 @@ const createItem = async (e) => {
         item_title: itemTitle.value,
         item_desc: itemDesc.value,
         item_size: itemSize.value,
-        owner_id: ownerId.value,
         category_id: catId.value,
         item_images: photos
     }
