@@ -480,19 +480,32 @@ module.exports = {
         const encryptedUserPhoneNumber = encrypt(req.body.user_phone_number, CRYPTO_SECERET)
         const encryptedUserLocation = encrypt(req.body.user_location, CRYPTO_SECERET)
         // get necassary data to create user
+
         sequelize.query(`
+            SELECT coinbase_connect_user_id FROM coinbase_connect
+        `)
+        .then(coinbase_id => {
+            console.log(coinbase_id[0][0]["coinbase_connect_user_id"])
+            console.log(encryptedId)
+
+            sequelize.query(`
             INSERT INTO user_account(user_name, user_email, user_phone_number, user_location)
             VALUES('${encryptedUserName}', '${encryptedUserEmail}', '${encryptedUserPhoneNumber}', '${encryptedUserLocation}')
             RETURNING user_id;
-        `)
-        .then(user_id => {
-            currentUser = user_id[0][0]["user_id"]
-            console.log(`currentUser: ${currentUser}`)
-            sequelize.query(`
-                INSERT INTO coinbase_connect(coinbase_connect_user_id, user_id)
-                VALUES('${encryptedId}', ${user_id[0][0]["user_id"]});
             `)
-            res.redirect('/')
+            .then(user_id => {
+                currentUser = user_id[0][0]["user_id"]
+                console.log(`currentUser: ${currentUser}`)
+                sequelize.query(`
+                    INSERT INTO coinbase_connect(coinbase_connect_user_id, user_id)
+                    VALUES('${encryptedId}', ${user_id[0][0]["user_id"]});
+                `)
+                .then(res => {
+                    res.redirect('/')
+                })
+                
+            })
+        
         })
 
     },
