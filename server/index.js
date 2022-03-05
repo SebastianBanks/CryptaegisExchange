@@ -20,7 +20,7 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../client/index.html'))
 })
 app.get('/signUp', function(req, res) {
-    res.sendFile(path.join(__dirname, '../client/form.html'))
+    res.sendFile(path.join(__dirname, '../client/signUp.html'))
 })
 
 app.get('/s3URL', async (req, res) => {
