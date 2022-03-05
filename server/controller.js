@@ -496,6 +496,7 @@ module.exports = {
                     .then(user_id => {
                         console.log("already a user")
                         userExist = true
+                        console.log(`userId test: ${user_id[0][0]["user_id"]}`)
                         currentUser = user_id[0][0]["user_id"]
                         console.log("1st redirect")
                         res.redirect("/")
