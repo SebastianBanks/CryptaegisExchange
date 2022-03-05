@@ -15,13 +15,21 @@ const sequelize = new Sequelize(CONNECTION_STRING, {
 module.exports = {
     seed: (req, res) => {
         sequelize.query(`
+        DROP TABLE IF EXISTS user_account CASCADE;
+        DROP TABLE IF EXISTS category CASCADE;
+        DROP TABLE IF EXISTS item CASCADE;
+        DROP TABLE IF EXISTS reliability_score CASCADE;
+        DROP TABLE IF EXISTS coinbase_connect CASCADE;
+        DROP TABLE IF EXISTS images CASCADE;
+        DROP TABLE IF EXISTS saved_items CASCADE;
+
+
         CREATE TABLE user_account(
             user_id SERIAL PRIMARY KEY,
-            user_name VARCHAR(50) NOT NULL,
-            user_email VARCHAR(100) NOT NULL,
-            user_phone_number VARCHAR(20) NOT NULL,
-            user_location VARCHAR(1000) NOT NULL,
-            user_age INTEGER NOT NULL
+            user_name VARCHAR(150) NOT NULL ,
+            user_email VARCHAR(150) NOT NULL,
+            user_phone_number VARCHAR(150) NOT NULL,
+            user_location VARCHAR(150) NOT NULL
           );
                   
           CREATE TABLE category(
@@ -48,7 +56,7 @@ module.exports = {
           
           CREATE TABLE coinbase_connect(
             coinbase_connect_id SERIAL PRIMARY KEY,
-            coinbase_connect_user_id VARCHAR(5000),
+            coinbase_connect_user_id VARCHAR(500) NOT NULL,
             user_id INTEGER REFERENCES user_account(user_id)
           );
           
@@ -65,10 +73,10 @@ module.exports = {
           );
           
           INSERT INTO category(category_name)
-          VALUES ('Appliances'),
+          VALUES ('Appliances'), ('Art'),
           ('Auto Parts & Accessories'), ('Baby'), 
-          ('Books & Media'), ('Clothings & Appareal'),
-          ('Computers'), ('Cycling'), ('Electronics'), 
+          ('Books & Media'), ('Clothings & Appareal'), 
+          ('Cycling'), ('Electronics'), 
           ('Fitness Equipment'), ('Furniture'),
           ('General'), ('Home & Garden'), 
           ('Hunting & Fishing'), ('Musical Instruments'),
