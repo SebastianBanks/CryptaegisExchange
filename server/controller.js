@@ -485,11 +485,10 @@ module.exports = {
             SELECT coinbase_connect_user_id FROM coinbase_connect
         `)
         .then(coinbase_id => {
-            for (id in coinbase_id[0]) {
-                console.log(`test: ${id["coinbase_connect_user_id"]}`)
-            }
+            console.log(coinbase_id[0][0])
+            console.log('')
             if (decrypt(coinbase_id, CRYPTO_SECERET) !== decrypt(encryptedId, CRYPTO_SECERET)) {
-                console.log(`1st: ${coinbase_id[0][0]["coinbase_connect_id"]}`)
+                console.log(`1st: ${coinbase_id[0]}`)
                 console.log(`2nd: ${encryptedId}`)
 
                 sequelize.query(`
