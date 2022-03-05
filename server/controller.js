@@ -485,6 +485,9 @@ module.exports = {
             SELECT coinbase_connect_user_id FROM coinbase_connect
         `)
         .then(coinbase_id => {
+            for (let i = 0; i < coinbase_id[0].length; i++) {
+                console.log(`test: ${coinbase[0][i]["coinbase_connect_user_id"]}`)
+            }
             console.log(coinbase_id[0][0])
             console.log('')
             if (decrypt(coinbase_id, CRYPTO_SECERET) !== decrypt(encryptedId, CRYPTO_SECERET)) {
