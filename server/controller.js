@@ -485,12 +485,24 @@ module.exports = {
             SELECT coinbase_connect_user_id FROM coinbase_connect
         `)
         .then(coinbase_id => {
-            for (let i = 0; i < coinbase_id[0].length; i++) {
-                console.log(`test: ${coinbase_id[0][i]["coinbase_connect_user_id"]}`)
+            const length = coinbase_id[0].length
+            let userExist = false
+            for (let i = 0; i < length; i++) {
+                if (decrypt(coinbase_id[0][i]["coinbase_connect_user_id"], CRYPTO_SECERET) === decrypt(encryptedId, CRYPTO_SECERET)) {
+                    sequelize.query(`
+                        SELECT user_id FROM coinbase_connect
+                        WHERE coinbase_connect_user_id = '${decrypt(encryptedId, CRYPTO_SECERET)}'
+                    `)
+                    .then(user_id => {
+                        console.log("already a user")
+                        userExist = true
+                        currentUser = user_id[0][0]["user_id"]
+                        console.log("1st redirect")
+                        res.redirect("/")
+                    })
+                } 
             }
-            console.log(coinbase_id[0][0])
-            console.log('')
-            if (decrypt(coinbase_id, CRYPTO_SECERET) !== decrypt(encryptedId, CRYPTO_SECERET)) {
+            if (userExist === false) {
                 console.log(`1st: ${coinbase_id[0]}`)
                 console.log(`2nd: ${encryptedId}`)
 
@@ -506,9 +518,12 @@ module.exports = {
                         INSERT INTO coinbase_connect(coinbase_connect_user_id, user_id)
                         VALUES('${encryptedId}', ${user_id[0][0]["user_id"]});
                     `)
-                    .then(res.redirect("/"))
-                
-            })
+                    console.log("2nd redirect")
+                    res.redirect("/")
+                 })
+            } else {
+                console.log("3rd redirect")
+                res.redirect("/")
             }
         })
 
