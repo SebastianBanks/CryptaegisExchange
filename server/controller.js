@@ -492,11 +492,8 @@ module.exports = {
                 INSERT INTO coinbase_connect(coinbase_connect_user_id, user_id)
                 VALUES('${encryptedId}', ${user_id[0][0]["user_id"]});
             `)
-            .then(dbRes => {
-                console.log(dbRes[0])
-                res.redirect("/")
-            })
-            .catch(err => console.log(err))
+            
+            res.redirect('/')
         })
 
     },
