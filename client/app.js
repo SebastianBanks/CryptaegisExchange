@@ -172,7 +172,7 @@ const getUserIsSignedIn = () => {
     axios.get(`${heroku}/isSignedIn`)
     .then(res => {
         if (res.data === false) {
-            coinbaseBtn.style.display = "block"
+            coinbaseBtn.style.display = ""
         } else if (res.data === true) {
             coinbaseBtn.style.display = "none"
         }
