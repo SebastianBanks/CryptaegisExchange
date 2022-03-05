@@ -5,7 +5,8 @@ const app = express()
 const cors = require('cors')
 const { SERVER_PORT } = process.env
 const { createItem, createUser, getAllItems, getItemImage, getFilteredItems, getUrlLink, 
-        coinbaseCallback, getCoinbaseUser, getCoinbaseAccount, coinbaseTransaction, getFormData } = require('./controller.js')
+        coinbaseCallback, getCoinbaseUser, getCoinbaseAccount, coinbaseTransaction, getFormData,
+        returnIsSignedIn } = require('./controller.js')
 const {seed} = require('./seed.js')
 const { generateImageURL } = require("./s3.js")
 
@@ -31,6 +32,7 @@ app.get('/s3URL', async (req, res) => {
 app.get('/items', getAllItems)
 app.get('/getItemImage/:id', getItemImage)
 app.get('/getFilteredItems', getFilteredItems)
+app.get('/isSignedIn', returnIsSignedIn)
 
 app.post('/createItem', createItem)
 app.post(`/createUser`, createUser)

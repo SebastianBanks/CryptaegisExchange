@@ -645,6 +645,14 @@ module.exports = {
         res.status(200).send(body)
     },
 
+    returnIsSignedIn: (req, res) => {
+        if (accessToken === "") {
+            res.status(200).send(false)
+        } else {
+            res.status(200).send(true)
+        }
+    },
+
     // ------------ Coinbase ---------------------
 
     getUrlLink: (req, res) => {
@@ -728,6 +736,7 @@ module.exports = {
                 SELECT coinbase_connect_user_id FROM coinbase_connect
             `)
             .then(coinbase_id => {
+                console.log(`coinbase_id: `)
                 if (id === decrypt(coinbase_id[0][0]["coinbase_connect_user_id"], CRYPTO_SECERET)) {
                     res.redirect("/")
                 } else {

@@ -26,7 +26,6 @@ const heroku = "https://cryptaegis-exchange.herokuapp.com"
 const getCoinbaseHREF = () => {
     axios.get(`${heroku}/getLink`)
         .then(res => {
-            
             coinbaseBtn.href = href=`https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${res.data.client}&redirect_uri=${res.data.url}&state=${res.data.sec}&scope=${res.data.scope}`
         })
 }
@@ -167,6 +166,13 @@ const getFilteredItems = (e) => {
     })
     .catch(err => console.log(err))
     console.log(`----- ---------------------------------`)
+}
+
+const getUserIsSignedIn = () => {
+    axios.get(`${heroku}/isSignedIn`)
+    .then(res => {
+        console.log(`isUserSignedIn: ${res}`)
+    })
 }
 
 
