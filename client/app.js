@@ -170,6 +170,7 @@ const getFilteredItems = (e) => {
 const getUserIsSignedIn = () => {
     axios.get(`${heroku}/isSignedIn`)
     .then(res => {
+        console.log(res.data)
         if (res.data === false) {
             coinbaseBtn.style.display = ""
         } else if (res.data === true) {
