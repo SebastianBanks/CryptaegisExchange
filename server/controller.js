@@ -486,7 +486,7 @@ module.exports = {
         `)
         .then(coinbase_id => {
             if (decrypt(coinbase_id, CRYPTO_SECERET) !== decrypt(encryptedId, CRYPTO_SECERET)) {
-                console.log(`1st: ${coinbase_id[0][0]["coinbase_connect_user_id"]}`)
+                console.log(`1st: ${coinbase_id[0]}`)
                 console.log(`2nd: ${encryptedId}`)
 
                 sequelize.query(`
