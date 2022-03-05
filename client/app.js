@@ -171,7 +171,7 @@ const getFilteredItems = (e) => {
 const getUserIsSignedIn = () => {
     axios.get(`${heroku}/isSignedIn`)
     .then(res => {
-        console.log(`isUserSignedIn: ${res}`)
+        console.log(`isUserSignedIn: ${res.data}`)
     })
 }
 
