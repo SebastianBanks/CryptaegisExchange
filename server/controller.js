@@ -728,7 +728,7 @@ module.exports = {
                 SELECT coinbase_connect_user_id FROM coinbase_connect
             `)
             .then(coinbase_id => {
-                if (id === decrypt(coinbase_id[0][0]["coinbase_connect_user_id"], CRYPTO_SECERET) && coinbase_id[0][0] !== undefined) {
+                if (id === decrypt(coinbase_id[0][0]["coinbase_connect_user_id"], CRYPTO_SECERET)) {
                     res.redirect("/")
                 } else {
                     res.redirect("/signUp")
