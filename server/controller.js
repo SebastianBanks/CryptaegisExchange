@@ -27,13 +27,33 @@ let info = {
 }
 
 module.exports = {
+    replaceQuotes: (string) => {
+        const singleQuote = "&$"
+        const doubleQuote = "^*"
+        const backTick = "@!"
+        let returnString = string.map(char => {
+            if (char === `'`) {
+                char = singleQuote
+            } else if (char === `"`) {
+                char = doubleQuote
+            } else if (char === "`") {
+                char = backTick
+            }
+
+        return returnString
+        })
+    },
+
     createItem: (req, res) => {
         const { item_price, item_title, item_desc, item_size, category_id, item_images} = req.body
+        const safeTitle = module.exports.replaceQuotes(item_title)
+        const safeDesc = module.exports.replaceQuotes(item_desc)
+        const safeItemSize = module.exports.replaceQuotes(item_size)
 
         if (currentUser !== 0) {
             sequelize.query(`
                 INSERT INTO item(item_price, item_title, item_description, item_size, owner_id, category_id)
-                VALUES(${item_price}, "${item_title}", "${item_desc}", "${item_size}", ${currentUser}, ${category_id})
+                VALUES(${item_price}, "${safeTitle}", "${safeDesc}", "${safeItemSize}", ${currentUser}, ${category_id})
                 RETURNING item_id;
             `)
             .then(item_id => {

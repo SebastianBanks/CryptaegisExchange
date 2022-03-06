@@ -45,10 +45,32 @@ const getImageUrl = async (itemId) => {
     // return dataPromise
 }
 
+const convertAlteredString = (string) => {
+    const singleQuote = "&$"
+    const doubleQuote = "^*"
+    const backTick = "@!"
+
+    for (let i = 0; i < itemName.length; i++) {
+        if (itemName[i] === singleQuote[0] && itemName[i + 1] === singleQuote[1]) {
+            itemName[i] = `'`
+            itemName[i+1] = ``
+        } else if (itemName[i] === doubleQuote[0] && itemName[i + 1] === doubleQuote[1]) {
+            itemName[i] = `"`
+            itemName[i+1] = ``
+        } else if (itemName[i] === backTick[0] && itemName[i + 1] === backTick[1]) {
+            itemName[i] = "`"
+            itemName[i+1] = ""
+        }
+    }
+}
+
 const createItemCard = async (item) => {
-    const itemName = item["item_title"]
+    
+    const itemName = convertAlteredString(item["item_title"])
     const itemCost = item["item_price"]
     const itemId = item["item_id"]
+
+    
 
     let imageUrl = await getImageUrl(itemId).then(res => {
         console.log(res)
