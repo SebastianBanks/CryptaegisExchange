@@ -33,10 +33,11 @@ module.exports = {
         if (currentUser !== 0) {
             sequelize.query(`
                 INSERT INTO item(item_price, item_title, item_description, item_size, owner_id, category_id)
-                VALUES(${item_price}, '${item_title.toLowerCase()}', '${item_desc}', '${item_size}', ${currentUser}, ${category_id})
+                VALUES(${item_price}, '${item_title}', '${item_desc}', '${item_size}', ${currentUser}, ${category_id})
                 RETURNING item_id;
             `)
             .then(item_id => {
+                console.log(item_id[0])
                 for (let i = 0; i < item_images.length; i++) {
                     if (item_images[i] !== undefined) {
                         sequelize.query(`
