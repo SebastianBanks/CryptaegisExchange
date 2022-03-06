@@ -491,15 +491,13 @@ module.exports = {
                 if (decrypt(coinbase_id[0][i]["coinbase_connect_user_id"], CRYPTO_SECERET) === decrypt(encryptedId, CRYPTO_SECERET)) {
                     sequelize.query(`
                         SELECT user_id FROM coinbase_connect
-                        WHERE coinbase_connect_user_id = '${decrypt(encryptedId, CRYPTO_SECERET)}'
+                        WHERE coinbase_connect_user_id = '${coinbase_id[0][i]["coinbase_connect_user_id"]}'
                     `)
                     .then(user_id => {
                         console.log("already a user")
                         userExist = true
-                        console.log(`userId test: ${user_id[0]}`)
-                        console.log(`userId test: ${user_id[0][0]}`)
-                        
-                        currentUser = user_id[0]
+                        console.log(`userId test: ${user_id[0][0]["user_id"]}`)
+                        currentUser = user_id[0][0]["user_id"]
                         console.log(currentUser)
                         console.log("1st redirect")
                         res.redirect("/")
