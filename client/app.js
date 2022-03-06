@@ -174,7 +174,7 @@ const getUserIsSignedIn = () => {
         if (res.data === false) {
             coinbaseBtn.style.display = ""
         } else if (res.data === true) {
-            coinbaseBtn.style.display = "none"
+            coinbaseBtn.style.display = ""
         }
     })
 }

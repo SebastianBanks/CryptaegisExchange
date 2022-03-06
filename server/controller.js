@@ -759,7 +759,7 @@ module.exports = {
                         })
                     }
                 }
-
+                console.log(currentUser)
                 if (currentUser === 0) {
                     res.redirect("/signUp")
                 } else {
