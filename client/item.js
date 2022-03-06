@@ -78,10 +78,10 @@ const addItemDesc = async (item) => {
 const getItemDesc = () => {
     axios.get(`${heroku}/itemPage/${itemId}`)
     .then(res => {
-        res.data.forEach(item => {
-            addItemDesc(item)
+        res.data.forEach(async item => {
+            console.log(await item)
+            await addItemDesc(item)
         })
-        
     })
     .catch(err => {
         console.log(err)
@@ -95,8 +95,8 @@ const canEditBtn = () => {
         console.log(`CurrentUser: ${currentUser}`)
         axios.get(`${heroku}/getItemOwner/${itemId}`)
         .then(res => {
-            console.log(`ItemOwner: ${res.data.owner_id}`)
-            if (currentUser === res.data.owner_id) {
+            console.log(`ItemOwner: ${res.data[0]["owner_id"]}`)
+            if (currentUser === res.data[0]["owner_id"]) {
                 editBtn.style.display = ""
             } else {
                 editBtn.style.display = "none"
