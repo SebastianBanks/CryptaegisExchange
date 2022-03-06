@@ -745,7 +745,6 @@ module.exports = {
                 const arrLength = coinbase_id[0].length
                 let isUser = false
                 for (let i = 0; i < arrLength; i++) {
-                    iteration += 1
                     if (decrypt(coinbase_id[0][i]["coinbase_connect_user_id"], CRYPTO_SECERET) === decrypt(encryptedId, CRYPTO_SECERET)) {
                         sequelize.query(`
                             SELECT user_id FROM coinbase_connect
