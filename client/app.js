@@ -72,7 +72,9 @@ const convertAlteredString = async string => {
 
 const createItemCard = async (item) => {
     
-    const itemName = await convertAlteredString(item["item_title"])
+    const itemName = await convertAlteredString(item["item_title"]).then(res => {
+        return res
+    })
     const itemCost = item["item_price"]
     const itemId = item["item_id"]
 
