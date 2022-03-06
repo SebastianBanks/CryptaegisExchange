@@ -50,18 +50,24 @@ const convertAlteredString = (string) => {
     const doubleQuote = "^*"
     const backTick = "@!"
 
+    let returnString = ``
+
     for (let i = 0; i < itemName.length; i++) {
-        if (itemName[i] === singleQuote[0] && itemName[i + 1] === singleQuote[1]) {
-            itemName[i] = `'`
-            itemName[i+1] = ``
-        } else if (itemName[i] === doubleQuote[0] && itemName[i + 1] === doubleQuote[1]) {
-            itemName[i] = `"`
-            itemName[i+1] = ``
-        } else if (itemName[i] === backTick[0] && itemName[i + 1] === backTick[1]) {
-            itemName[i] = "`"
-            itemName[i+1] = ""
+        if (string[i] === singleQuote[0] && string[i + 1] === singleQuote[1]) {
+            returnString += `'`
+            i++
+        } else if (string[i] === doubleQuote[0] && string[i + 1] === doubleQuote[1]) {
+            returnString += `"`
+            i++
+        } else if (string[i] === backTick[0] && string[i + 1] === backTick[1]) {
+            returnString += "`"
+            i++
+        } else {
+            returnString += string[i]
         }
     }
+
+    return returnString
 }
 
 const createItemCard = async (item) => {
