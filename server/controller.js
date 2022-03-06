@@ -742,8 +742,11 @@ module.exports = {
                 SELECT coinbase_connect_user_id FROM coinbase_connect
             `)
             .then(coinbase_id => {
+                const arrLength = coinbase_id[0].length
+                let iteration = 0
                 let isUser = false
-                for (let i = 0; i < coinbase_id[0].length; i++) {
+                for (let i = 0; i < arrLength; i++) {
+                    iteration += 1
                     if (decrypt(coinbase_id[0][i]["coinbase_connect_user_id"], CRYPTO_SECERET) === decrypt(encryptedId, CRYPTO_SECERET)) {
                         sequelize.query(`
                             SELECT user_id FROM coinbase_connect
@@ -755,12 +758,12 @@ module.exports = {
                             currentUser = user_id[0][0]["user_id"]
                             res.redirect("/")
                         })
-                    } 
+                    } else if (iteration === arrLength - 1 && isUser === false) {
+                        res.redirect("/signUp")
+                    }
                 }
 
-                if (isUser === false) {
-                    res.redirect("/signUp")
-                }
+                
             })
         })
         .catch(err => {
