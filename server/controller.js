@@ -485,6 +485,7 @@ module.exports = {
             SELECT coinbase_connect_user_id FROM coinbase_connect
         `)
         .then(coinbase_id => {
+            const redir = { redirect: "/" }
             const length = coinbase_id[0].length
             let userExist = false
             for (let i = 0; i < length; i++) {
@@ -501,7 +502,7 @@ module.exports = {
                         console.log(currentUser)
                         console.log(userExist)
                         console.log("1st redirect")
-                        res.redirect("/")
+                        res.status(200).send(redir)
                     })
                 } 
             }
@@ -523,11 +524,11 @@ module.exports = {
                         VALUES('${encryptedId}', ${user_id[0][0]["user_id"]});
                     `)
                     console.log("2nd redirect")
-                    res.redirect("/")
+                    res.status(200).send(redir)
                  })
             } else {
                 console.log("3rd redirect")
-                res.redirect("/")
+                res.status(200).send(redir)
             }
         })
 

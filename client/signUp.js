@@ -36,9 +36,12 @@ const createUser = (e) => {
         }
     
         axios.post(`${heroku}/createUser`, body)
-            .then(() => {
+            .then(res => {
                 console.log("createUser-----------")
                 console.log(body)
+
+                console.log(res.data)
+                
             })
             .catch(err => console.log(err))
     }
