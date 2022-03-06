@@ -92,7 +92,7 @@ const canEditBtn = () => {
         console.log(`CurrentUser: ${currentUser}`)
         axios.get(`${heroku}/getItemOwner/${itemId}`)
         .then(res => {
-            console.log(`ItemOwner: ${res.data[0]}`)
+            console.log(`ItemOwner: ${res.data}`)
             if (currentUser === res.data) {
                 editBtn.style.display = ""
             } else {
