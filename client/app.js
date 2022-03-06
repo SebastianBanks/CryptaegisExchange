@@ -211,12 +211,13 @@ const getUserIsSignedIn = () => {
 
 
 
-document.addEventListener('click', function(e){
-    if(e.target && e.target.className == 'item'){
-          const itemId = e.target.id
-          console.log(itemId)
+
+ itemSection.addEventListener('click', function(e) {
+     if (e.target && e.target.className === 'item') {
+        const itemId = e.target.id
+        console.log(itemId)
      }
- });
+ })
 imageForm.addEventListener("submit", createItem)
 searchBtn.addEventListener("click", getFilteredItems)
 
