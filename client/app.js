@@ -19,7 +19,7 @@ const searchBtn = document.querySelector('#search')
 const coinbaseBtn = document.querySelector(".coinbaseBtn")
 
 const itemSection = document.querySelector(".items")
-let itemDiv
+
 
 
 const localHost = "http://localhost:3000"
@@ -108,7 +108,6 @@ const getAllItems = () => {
                 console.log(`itemCard: ${itemCard}`)
                 itemSection.innerHTML += itemCard
             })
-            itemDiv = document.querySelector('.item')
         })
         .catch(err => console.log(err))
 }
@@ -211,7 +210,7 @@ const getUserIsSignedIn = () => {
 }
 
 const goToItem = (e) => {
-    const itemDivId = itemDiv.id
+    const itemDivId = document.querySelector('.item').id
     console.log(`divId: ${itemDivId}`)
 }
 
@@ -219,7 +218,7 @@ const goToItem = (e) => {
 
 
 imageForm.addEventListener("submit", createItem)
-itemDiv.addEventListener("click", goToItem)
+$(document).on('click','.item', goToItem)
 searchBtn.addEventListener("click", getFilteredItems)
 
 getUserIsSignedIn()
