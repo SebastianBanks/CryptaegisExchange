@@ -213,9 +213,15 @@ const getUserIsSignedIn = () => {
 
 
  itemSection.addEventListener('click', function(e) {
+     let itemId
      if (e.target && e.target.className === 'item') {
-        const itemId = e.target.id
+        itemId = e.target.id
+        console.log("div")
         console.log(itemId)
+     } else if (e.target && e.target.id === 'itemImage') {
+         itemId = e.target.parentNode.id
+         console.log("img")
+         console.log(itemId)
      }
  })
 imageForm.addEventListener("submit", createItem)
