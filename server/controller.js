@@ -499,11 +499,13 @@ module.exports = {
                         console.log(`userId test: ${user_id[0][0]["user_id"]}`)
                         currentUser = user_id[0][0]["user_id"]
                         console.log(currentUser)
+                        console.log(userExist)
                         console.log("1st redirect")
                         res.redirect("/")
                     })
                 } 
             }
+            console.log(userExist)
             if (userExist === false) {
                 console.log(`1st: ${coinbase_id[0]}`)
                 console.log(`2nd: ${encryptedId}`)
