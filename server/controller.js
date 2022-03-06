@@ -732,13 +732,12 @@ module.exports = {
                                     .catch(err => {
                                         console.log(`There was an error redirecting the current user: ${err}`)
                                     })
+                                } else if (i === arrLength - 1 && currentUser === 0) {
+                                    console.log(`ifIsUser: ${currentUser}`)
+                                    console.log(arrLength)
+                                    console.log(i)
+                                    res.redirect("/signUp")
                                 }
-                            }
-                            console.log(`ifIsUser: ${currentUser}`)
-                            if (currentUser === 0) {
-                                module.exports.redirectUser(req, res)
-                            } else {
-                                res.redirect("/")
                             }
                         })
                         .catch(err => {
