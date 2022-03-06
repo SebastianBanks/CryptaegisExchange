@@ -56,7 +56,7 @@ const convertAlteredString = async string => {
 
 const addItemDesc = async (item) => {
     console.log(`addItem: ${await item}`)
-    const itemName = await convertAlteredString(item["item_title"])
+    const itemName = convertAlteredString(item["item_title"])
     const itemDesc = await convertAlteredString(item["item_desc"])
     const itemSize = await convertAlteredString(item["item_size"])
     const itemCost = item["item_price"]
@@ -77,9 +77,12 @@ const addItemDesc = async (item) => {
 
 const getItemDesc = () => {
     axios.get(`${heroku}/itemPage/${itemId}`)
-    .then(async res => {
-        console.log(`getItem: ${await res}`)
-        await addItemDesc(res.data)
+    .then(res => {
+        res.data.forEach(item => {
+            console.log(item)
+        })
+        console.log(`getItem: ${res.data}`)
+        addItemDesc(res.data)
     })
     .catch(err => {
         console.log(err)

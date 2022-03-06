@@ -116,13 +116,13 @@ form {
     height: 500px;
 }
 
-.itemPageTitle {
+/* .itemPageTitle {
 
 }
 
 .itemPagePrice {
 
-}
+} */
 
 .buyButton {
     width: 25%;
@@ -138,9 +138,9 @@ form {
     text-decoration: none;
 }
 
-.itemPageDescription {
+/* .itemPageDescription {
 
-}
+} */
 
 .editItemButton {
     width: 25%;
