@@ -31,17 +31,21 @@ module.exports = {
         const singleQuote = "&$"
         const doubleQuote = "^*"
         const backTick = "@!"
-        let returnString = string.map(char => {
-            if (char === `'`) {
-                char = singleQuote
-            } else if (char === `"`) {
-                char = doubleQuote
-            } else if (char === "`") {
-                char = backTick
+        let returnString = ``
+
+        for (let i = 0; i < string.length; i++) {
+            if (string[i] === `'`) {
+                returnString += singleQuote
+            } else if (string[i] === `"`) {
+                returnString += doubleQuote
+            } else if (string[i] === "`") {
+                returnString += backTick
+            } else {
+                returnString += string[i]
             }
+        }
 
         return returnString
-        })
     },
 
     createItem: (req, res) => {
