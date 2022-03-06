@@ -743,7 +743,6 @@ module.exports = {
             `)
             .then(coinbase_id => {
                 const arrLength = coinbase_id[0].length
-                let iteration = 0
                 let isUser = false
                 for (let i = 0; i < arrLength; i++) {
                     iteration += 1
@@ -756,14 +755,16 @@ module.exports = {
                             console.log("already a user")
                             isUser = true
                             currentUser = user_id[0][0]["user_id"]
-                            res.redirect(200, "/")
+                            res.redirect("/")
                         })
                         .catch(err => {
                             console.log(`There was an error redirecting the current user: ${err}`)
                         })
-                    } else if (iteration === arrLength - 1 && isUser === false) {
-                        res.redirect(200, "/signUp")
                     }
+                }
+
+                if (isUser === false) {
+                    res.redirect("/signUp")
                 }
             })
         })
