@@ -50,7 +50,7 @@ module.exports = {
 
     createItem: (req, res) => {
         const { item_price, item_title, item_desc, item_size, category_id, item_images} = req.body
-        const safeTitle = module.exports.replaceQuotes(item_title)
+        const safeTitle = module.exports.replaceQuotes(item_title.toLowerCase())
         const safeDesc = module.exports.replaceQuotes(item_desc)
         const safeItemSize = module.exports.replaceQuotes(item_size)
 

@@ -19,6 +19,7 @@ const searchBtn = document.querySelector('#search')
 const coinbaseBtn = document.querySelector(".coinbaseBtn")
 
 const itemSection = document.querySelector(".items")
+const itemDiv = document.querySelector(".item")
 
 const localHost = "http://localhost:3000"
 const heroku = "https://cryptaegis-exchange.herokuapp.com"
@@ -207,11 +208,16 @@ const getUserIsSignedIn = () => {
     })
 }
 
+const goToItem = (e) => {
+    const itemDivId = itemDiv.id
+    console.log(`divId: ${itemDivId}`)
+}
+
 
 
 
 imageForm.addEventListener("submit", createItem)
-
+itemDiv.addEventListener("click", goToItem)
 searchBtn.addEventListener("click", getFilteredItems)
 
 getUserIsSignedIn()
