@@ -19,7 +19,8 @@ const searchBtn = document.querySelector('#search')
 const coinbaseBtn = document.querySelector(".coinbaseBtn")
 
 const itemSection = document.querySelector(".items")
-const itemDiv = document.querySelector(".item")
+let itemDiv
+
 
 const localHost = "http://localhost:3000"
 const heroku = "https://cryptaegis-exchange.herokuapp.com"
@@ -107,6 +108,7 @@ const getAllItems = () => {
                 console.log(`itemCard: ${itemCard}`)
                 itemSection.innerHTML += itemCard
             })
+            itemDiv = document.querySelector('.item')
         })
         .catch(err => console.log(err))
 }
