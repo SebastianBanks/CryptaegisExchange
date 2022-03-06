@@ -736,7 +736,7 @@ module.exports = {
                             }
                             console.log(`ifIsUser: ${currentUser}`)
                             if (currentUser === 0) {
-                                res.redirect("/signUp")
+                                module.exports.redirectUser(req, res)
                             } else {
                                 res.redirect("/")
                             }
@@ -767,8 +767,8 @@ module.exports = {
         }
     },
 
-    getCoinbaseUser: (req, res) => {
-        
+    redirectUser: (req, res) => {
+        res.redirect("/signUp")
     },
 
     getCoinbaseAccount: async (req, res) => {
