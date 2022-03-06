@@ -52,7 +52,7 @@ const convertAlteredString = async string => {
 
     let returnString = ``
 
-    for (let i = 0; i < itemName.length; i++) {
+    for (let i = 0; i < string.length; i++) {
         if (string[i] === singleQuote[0] && string[i + 1] === singleQuote[1]) {
             returnString += `'`
             i++
@@ -72,9 +72,7 @@ const convertAlteredString = async string => {
 
 const createItemCard = async (item) => {
     
-    const itemName = await convertAlteredString(item["item_title"]).then(res => {
-        return res
-    })
+    const itemName = await convertAlteredString(item["item_title"])
     const itemCost = item["item_price"]
     const itemId = item["item_id"]
 
