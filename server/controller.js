@@ -697,29 +697,8 @@ module.exports = {
                 .then(response => {
                     accessToken = response.data.access_token
                     refreshToken = response.data.refresh_token
-                    res.redirect('/user')
-                    
-                })
-                .catch(err => {
-                    console.log(`error: ${err}`)
-                    console.log(`data2: ${data}`)
-                    console.log(`response: ${response}`)
-                    console.log(`data: ${response.data}`)
-                })
-            } catch (e) {
-                console.log('There was an error fool')
-                console.log("Could not trade code for tokens", e)
-            }
-    
-        } else {
-            console.log("keys don't match")
-            res.redirect("/")
-        }
-    },
-
-    getCoinbaseUser: (req, res) => {
-        axios.get("https://api.coinbase.com/v2/user", {
-            headers: {
+                    axios.get("https://api.coinbase.com/v2/user", {
+                headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'CB-VERSION': ' 2019-05-13'
             }
@@ -773,6 +752,27 @@ module.exports = {
         .catch(err => {
             console.log(`Could not get user: ${err}`)
         })
+                    
+                })
+                .catch(err => {
+                    console.log(`error: ${err}`)
+                    console.log(`data2: ${data}`)
+                    console.log(`response: ${response}`)
+                    console.log(`data: ${response.data}`)
+                })
+            } catch (e) {
+                console.log('There was an error fool')
+                console.log("Could not trade code for tokens", e)
+            }
+    
+        } else {
+            console.log("keys don't match")
+            res.redirect("/")
+        }
+    },
+
+    getCoinbaseUser: (req, res) => {
+        
     },
 
     getCoinbaseAccount: async (req, res) => {
