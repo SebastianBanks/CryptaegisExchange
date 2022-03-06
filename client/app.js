@@ -45,7 +45,7 @@ const getImageUrl = async (itemId) => {
     // return dataPromise
 }
 
-const convertAlteredString = (string) => {
+const convertAlteredString = async string => {
     const singleQuote = "&$"
     const doubleQuote = "^*"
     const backTick = "@!"
@@ -72,7 +72,7 @@ const convertAlteredString = (string) => {
 
 const createItemCard = async (item) => {
     
-    const itemName = convertAlteredString(item["item_title"])
+    const itemName = await convertAlteredString(item["item_title"])
     const itemCost = item["item_price"]
     const itemId = item["item_id"]
 
