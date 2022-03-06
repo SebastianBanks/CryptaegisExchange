@@ -490,7 +490,6 @@ module.exports = {
         `)
         .then(user_id => {
             currentUser = user_id[0][0]["user_id"]
-            console.log(`currentUser: ${currentUser}`)
             sequelize.query(`
                 INSERT INTO coinbase_connect(coinbase_connect_user_id, user_id)
                 VALUES('${encryptedId}', ${user_id[0][0]["user_id"]});
