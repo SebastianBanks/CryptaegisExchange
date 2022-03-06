@@ -734,7 +734,7 @@ module.exports = {
                                     })
                                 }
                             }
-                            console.log(currentUser)
+                            console.log(`ifIsUser: ${currentUser}`)
                             if (currentUser === 0) {
                                 res.redirect("/signUp")
                             } else {
