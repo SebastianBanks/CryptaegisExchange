@@ -743,7 +743,6 @@ module.exports = {
             `)
             .then(coinbase_id => {
                 const arrLength = coinbase_id[0].length
-                let isUser = false
                 for (let i = 0; i < arrLength; i++) {
                     if (decrypt(coinbase_id[0][i]["coinbase_connect_user_id"], CRYPTO_SECERET) === decrypt(encryptedId, CRYPTO_SECERET)) {
                         sequelize.query(`
@@ -752,8 +751,8 @@ module.exports = {
                         `)
                         .then(user_id => {
                             console.log("already a user")
-                            isUser = true
                             currentUser = user_id[0][0]["user_id"]
+                            console.log(currentUser)
                         })
                         .catch(err => {
                             console.log(`There was an error redirecting the current user: ${err}`)
@@ -761,8 +760,7 @@ module.exports = {
                     }
                 }
 
-                console.log(isUser)
-                if (isUser === false) {
+                if (currentUser === 0) {
                     res.redirect("/signUp")
                 } else {
                     res.redirect("/")
