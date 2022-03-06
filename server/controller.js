@@ -94,7 +94,7 @@ module.exports = {
             WHERE item_id = ${id}
         `)
         .then(dbRes => {
-            res.status(200).send(dbRes[0])
+            res.status(200).send(dbRes[0][0])
         })
         .catch(err => {
             console.log("error grabbing item info")
@@ -117,7 +117,7 @@ module.exports = {
             WHERE item_id =${id}
         `)
         .then(dbRes => {
-            res.status(200).send(dbRes[0])
+            res.status(200).send(dbRes[0][0]["owner_id"])
         })
     },
 
