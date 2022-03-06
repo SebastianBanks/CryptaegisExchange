@@ -46,7 +46,7 @@ const getImageUrl = async (itemId) => {
 }
 
 const convertAlteredString = async string => {
-    const singleQuote = "&$"
+    const singleQuote = "()"
     const doubleQuote = "^*"
     const backTick = "@!"
 

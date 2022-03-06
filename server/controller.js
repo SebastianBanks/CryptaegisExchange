@@ -28,7 +28,7 @@ let info = {
 
 module.exports = {
     replaceQuotes: (string) => {
-        const singleQuote = "&$"
+        const singleQuote = "()"
         const doubleQuote = "^*"
         const backTick = "@!"
         let returnString = ``
@@ -57,7 +57,7 @@ module.exports = {
         if (currentUser !== 0) {
             sequelize.query(`
                 INSERT INTO item(item_price, item_title, item_description, item_size, owner_id, category_id)
-                VALUES(${item_price}, "${safeTitle}", "${safeDesc}", "${safeItemSize}", ${currentUser}, ${category_id})
+                VALUES(${item_price}, '${safeTitle}', '${safeDesc}', '${safeItemSize}', ${currentUser}, ${category_id})
                 RETURNING item_id;
             `)
             .then(item_id => {
