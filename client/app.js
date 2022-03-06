@@ -209,16 +209,15 @@ const getUserIsSignedIn = () => {
     })
 }
 
-const goToItem = (e) => {
-    const itemDivId = document.querySelector('.item').id
-    console.log(`divId: ${itemDivId}`)
-}
 
 
-
-
+document.addEventListener('click', function(e){
+    if(e.target && e.target.className == 'item'){
+          const itemId = e.target.id
+          console.log(itemId)
+     }
+ });
 imageForm.addEventListener("submit", createItem)
-$(document).on('click','.item', goToItem)
 searchBtn.addEventListener("click", getFilteredItems)
 
 getUserIsSignedIn()
