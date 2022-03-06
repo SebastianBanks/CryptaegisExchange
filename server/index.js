@@ -6,7 +6,7 @@ const cors = require('cors')
 const { SERVER_PORT } = process.env
 const { createItem, createUser, getAllItems, getItemImage, getFilteredItems, getUrlLink, 
         coinbaseCallback, getCoinbaseAccount, coinbaseTransaction, getFormData,
-        returnIsSignedIn } = require('./controller.js')
+        returnIsSignedIn, getItemInfo, getCurrentUser, returnItemOwner } = require('./controller.js')
 const {seed} = require('./seed.js')
 const { generateImageURL } = require("./s3.js")
 
@@ -23,6 +23,10 @@ app.get('/signUp', function(req, res) {
     res.sendFile(path.join(__dirname, '../client/signUp.html'))
 })
 
+app.get('/itemPage', function(req, res) {
+    res.sendFile(path.join(__dirname, '../client/item.html'))
+})
+
 app.get('/s3URL', async (req, res) => {
     console.log('works')
     const url = await generateImageURL()
@@ -33,9 +37,12 @@ app.get('/items', getAllItems)
 app.get('/getItemImage/:id', getItemImage)
 app.get('/getFilteredItems', getFilteredItems)
 app.get('/isSignedIn', returnIsSignedIn)
-
+app.get('/itemPage/:id', getItemInfo)
+app.get('/getCurrentUser', getCurrentUser)
+app.get('/getItemOwner/:id', returnItemOwner)
 app.post('/createItem', createItem)
 app.post(`/createUser`, createUser)
+
 
 // COINBASE ----------------------------------
 

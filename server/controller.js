@@ -86,6 +86,38 @@ module.exports = {
         
     },
 
+    getItemInfo: (req, res) => {
+        const { id } = req.params
+
+        sequelize.query(`
+            SELECT * from item
+            WHERE item_id = ${id}
+        `)
+        .then(dbRes => {
+            res.status(200).send(dbRes[0])
+        })
+        .catch(err => {
+            console.log("error grabbing item info")
+            console.log(err)
+        })
+    },
+
+    getCurrentUser: (req, res) => {
+        res.status(200).send(currentUser)
+    },
+
+    returnItemOwner: (req, res) => {
+        const { id } = req.params
+
+        sequelize.query(`
+            SELECT owner_id FROM item
+            WHERE item_id =${id}
+        `)
+        .then(dbRes => {
+            res.status(200).send(dbRes[0])
+        })
+    },
+
     getItemImage: async (req, res) => {
         const { id } = req.params
         await sequelize.query(`

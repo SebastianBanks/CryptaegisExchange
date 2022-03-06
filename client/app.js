@@ -216,13 +216,11 @@ const getUserIsSignedIn = () => {
      let itemId
      if (e.target && e.target.className === 'item') {
         itemId = e.target.id
-        console.log("div")
-        console.log(itemId)
      } else if (e.target && e.target.id === 'itemImage') {
          itemId = e.target.parentNode.id
-         console.log("img")
-         console.log(itemId)
      }
+     localStorage.setItem("item", itemId)
+     window.location = "/itemPage"
  })
 imageForm.addEventListener("submit", createItem)
 searchBtn.addEventListener("click", getFilteredItems)
