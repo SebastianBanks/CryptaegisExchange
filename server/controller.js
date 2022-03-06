@@ -657,7 +657,7 @@ module.exports = {
     },
 
     returnIsSignedIn: (req, res) => {
-        res.status(200).send(currentUser === 0)
+        res.status(200).send(currentUser !== 0)
     },
 
     // ------------ Coinbase ---------------------
@@ -694,60 +694,60 @@ module.exports = {
                     accessToken = response.data.access_token
                     refreshToken = response.data.refresh_token
                     axios.get("https://api.coinbase.com/v2/user", {
-                headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                'CB-VERSION': ' 2019-05-13'
-            }
-        })
-        .then( async response => {
-            // const id = response.data.data.id
-            const encryptedId = encrypt(await response.data.data.id, CRYPTO_SECERET)
-            const id = await response.data.data.id
-            const name = encrypt(await response.data.data.name, CRYPTO_SECERET)
-            const email = encrypt(await response.data.data.email, CRYPTO_SECERET)
-            const state = encrypt(await response.data.data.state, CRYPTO_SECERET)
+                            headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'CB-VERSION': ' 2019-05-13'
+                        }
+                    })
+                    .then( async response => {
+                        // const id = response.data.data.id
+                        const encryptedId = encrypt(await response.data.data.id, CRYPTO_SECERET)
+                        const id = await response.data.data.id
+                        const name = encrypt(await response.data.data.name, CRYPTO_SECERET)
+                        const email = encrypt(await response.data.data.email, CRYPTO_SECERET)
+                        const state = encrypt(await response.data.data.state, CRYPTO_SECERET)
 
-            info.i = encryptedId
-            info.n = name
-            info.e = email
-            info.s = state
+                        info.i = encryptedId
+                        info.n = name
+                        info.e = email
+                        info.s = state
 
-            sequelize.query(`
-                SELECT coinbase_connect_user_id FROM coinbase_connect
-            `)
-            .then(coinbase_id => {
-                const arrLength = coinbase_id[0].length
-                for (let i = 0; i < arrLength; i++) {
-                    if (decrypt(coinbase_id[0][i]["coinbase_connect_user_id"], CRYPTO_SECERET) === decrypt(encryptedId, CRYPTO_SECERET)) {
                         sequelize.query(`
-                            SELECT user_id FROM coinbase_connect
-                            WHERE coinbase_connect_user_id = '${coinbase_id[0][i]["coinbase_connect_user_id"]}'
+                            SELECT coinbase_connect_user_id FROM coinbase_connect
                         `)
-                        .then(user_id => {
-                            console.log("already a user")
-                            currentUser = user_id[0][0]["user_id"]
-                            console.log(`User is: ${currentUser}`)
-                            res.redirect("/")
+                        .then(coinbase_id => {
+                            const arrLength = coinbase_id[0].length
+                            for (let i = 0; i < arrLength; i++) {
+                                if (decrypt(coinbase_id[0][i]["coinbase_connect_user_id"], CRYPTO_SECERET) === decrypt(encryptedId, CRYPTO_SECERET)) {
+                                    sequelize.query(`
+                                        SELECT user_id FROM coinbase_connect
+                                        WHERE coinbase_connect_user_id = '${coinbase_id[0][i]["coinbase_connect_user_id"]}'
+                                    `)
+                                    .then(user_id => {
+                                        console.log("already a user")
+                                        currentUser = user_id[0][0]["user_id"]
+                                        console.log(`User is: ${currentUser}`)
+                                        res.redirect("/")
+                                    })
+                                    .catch(err => {
+                                        console.log(`There was an error redirecting the current user: ${err}`)
+                                    })
+                                }
+                            }
+                            console.log(currentUser)
+                            if (currentUser === 0) {
+                                res.redirect("/signUp")
+                            } else {
+                                res.redirect("/")
+                            }
                         })
                         .catch(err => {
-                            console.log(`There was an error redirecting the current user: ${err}`)
+                            console.log(`there was an error redirecting the user 2 ${err}`)
                         })
-                    }
-                }
-                console.log(currentUser)
-                if (currentUser === 0) {
-                    res.redirect("/signUp")
-                } else {
-                    res.redirect("/")
-                }
-            })
-            .catch(err => {
-                console.log(`there was an error redirecting the user 2 ${err}`)
-            })
-        })
-        .catch(err => {
-            console.log(`Could not get user: ${err}`)
-        })
+                    })
+                    .catch(err => {
+                        console.log(`Could not get user: ${err}`)
+                    })
                     
                 })
                 .catch(err => {
