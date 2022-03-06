@@ -7,6 +7,7 @@ const editBtn = document.querySelector(".editItemButton")
 const backBtn = document.querySelector("#backBtn")
 const size = document.querySelector(".itemPageSize")
 let itemId = localStorage.getItem("item")
+console.log(`itemId: ${itemId}`)
 
 const localHost = "http://localhost:3000"
 const heroku = "https://cryptaegis-exchange.herokuapp.com"
@@ -54,7 +55,7 @@ const convertAlteredString = async string => {
 }
 
 const addItemDesc = async (item) => {
-    console.log(`addItem: ${item}`)
+    console.log(`addItem: ${item[0]}`)
     const itemName = await convertAlteredString(item["item_title"])
     const itemDesc = await convertAlteredString(item["item_desc"])
     const itemSize = await convertAlteredString(item["item_size"])
@@ -77,7 +78,7 @@ const addItemDesc = async (item) => {
 const getItemDesc = () => {
     axios.get(`${heroku}/itemPage/${itemId}`)
     .then(async res => {
-        console.log(`getItem: ${await res.data}`)
+        console.log(`getItem: ${await res.data[0]}`)
         await addItemDesc(res.data)
     })
     .catch(err => {
@@ -92,7 +93,7 @@ const canEditBtn = () => {
         console.log(`CurrentUser: ${currentUser}`)
         axios.get(`${heroku}/getItemOwner/${itemId}`)
         .then(res => {
-            console.log(`ItemOwner: ${res.data}`)
+            console.log(`ItemOwner: ${res.data.owner_id}`)
             if (currentUser === res.data) {
                 editBtn.style.display = ""
             } else {
