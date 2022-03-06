@@ -79,10 +79,9 @@ const getItemDesc = () => {
     axios.get(`${heroku}/itemPage/${itemId}`)
     .then(res => {
         res.data.forEach(item => {
-            console.log(item)
+            addItemDesc(item)
         })
-        console.log(`getItem: ${res.data}`)
-        addItemDesc(res.data)
+        
     })
     .catch(err => {
         console.log(err)
@@ -96,8 +95,8 @@ const canEditBtn = () => {
         console.log(`CurrentUser: ${currentUser}`)
         axios.get(`${heroku}/getItemOwner/${itemId}`)
         .then(res => {
-            console.log(`ItemOwner: ${res}`)
-            if (currentUser === res.data) {
+            console.log(`ItemOwner: ${res.data.owner_id}`)
+            if (currentUser === res.data.owner_id) {
                 editBtn.style.display = ""
             } else {
                 editBtn.style.display = "none"
