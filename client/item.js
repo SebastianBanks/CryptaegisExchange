@@ -54,7 +54,7 @@ const convertAlteredString = async string => {
 }
 
 const addItemDesc = async (item) => {
-    
+    console.log(`addItem: ${item}`)
     const itemName = await convertAlteredString(item["item_title"])
     const itemDesc = await convertAlteredString(item["item_desc"])
     const itemSize = await convertAlteredString(item["item_size"])
@@ -77,6 +77,7 @@ const addItemDesc = async (item) => {
 const getItemDesc = () => {
     axios.get(`${heroku}/itemPage/${itemId}`)
     .then(async res => {
+        console.log(`getItem: ${await res.data}`)
         await addItemDesc(res.data)
     })
     .catch(err => {
@@ -91,7 +92,7 @@ const canEditBtn = () => {
         console.log(`CurrentUser: ${currentUser}`)
         axios.get(`${heroku}/getItemOwner/${itemId}`)
         .then(res => {
-            console.log(`ItemOwner: ${res.data}`)
+            console.log(`ItemOwner: ${res.data[0]}`)
             if (currentUser === res.data) {
                 editBtn.style.display = ""
             } else {
