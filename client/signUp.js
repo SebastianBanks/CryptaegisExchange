@@ -40,8 +40,8 @@ const createUser = (e) => {
                 console.log("createUser-----------")
                 console.log(body)
 
-                console.log(res.data)
-                
+                window.location = res.data.redirect
+
             })
             .catch(err => console.log(err))
     }
