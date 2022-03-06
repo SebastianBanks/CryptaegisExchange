@@ -499,7 +499,8 @@ module.exports = {
                         console.log(`userId test: ${user_id[0]}`)
                         console.log(`userId test: ${user_id[0][0]}`)
                         
-                        currentUser = user_id[0][0]["user_id"]
+                        currentUser = user_id[0]
+                        console.log(currentUser)
                         console.log("1st redirect")
                         res.redirect("/")
                     })
