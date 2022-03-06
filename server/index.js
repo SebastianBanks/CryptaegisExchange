@@ -41,7 +41,7 @@ app.post(`/createUser`, createUser)
 
 app.get('/getLink', getUrlLink)
 app.get("/callback", coinbaseCallback)
-app.get("/user", getCoinbaseUser)
+
 app.get("/account", getCoinbaseAccount)
 app.get("/transferMoney", coinbaseTransaction)
 app.get("/getFormData", getFormData)
