@@ -657,11 +657,7 @@ module.exports = {
     },
 
     returnIsSignedIn: (req, res) => {
-        if (accessToken === "") {
-            res.status(200).send(false)
-        } else {
-            res.status(200).send(true)
-        }
+        res.status(200).send(currentUser === 0)
     },
 
     // ------------ Coinbase ---------------------
