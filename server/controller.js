@@ -103,7 +103,10 @@ module.exports = {
     },
 
     getCurrentUser: (req, res) => {
-        res.status(200).send(currentUser)
+        body = {
+            user: currentUser
+        }
+        res.status(200).send(body)
     },
 
     returnItemOwner: (req, res) => {

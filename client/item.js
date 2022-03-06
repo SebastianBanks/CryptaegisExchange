@@ -87,7 +87,7 @@ const getItemDesc = () => {
 const canEditBtn = () => {
     axios.get(`${heroku}/getCurrentUser`)
     .then(res => {
-        let currentUser = res.data
+        let currentUser = res.data.user
         console.log(`CurrentUser: ${currentUser}`)
         axios.get(`${heroku}/getItemOwner/${itemId}`)
         .then(res => {
