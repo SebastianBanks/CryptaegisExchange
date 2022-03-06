@@ -727,7 +727,7 @@ module.exports = {
                                         console.log("already a user")
                                         currentUser = user_id[0][0]["user_id"]
                                         console.log(`User is: ${currentUser}`)
-                                        res.redirect("/")
+                                        response.redirect("/")
                                     })
                                     .catch(err => {
                                         console.log(`There was an error redirecting the current user: ${err}`)
@@ -736,7 +736,7 @@ module.exports = {
                                     console.log(`ifIsUser: ${currentUser}`)
                                     console.log(arrLength)
                                     console.log(i)
-                                    res.redirect("/signUp")
+                                    response.redirect("/signUp")
                                 }
                             }
                         })
