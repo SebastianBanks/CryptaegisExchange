@@ -6,6 +6,7 @@ const desc = document.querySelector(".itemPageDescription")
 const editBtn = document.querySelector(".editItemButton")
 const backBtn = document.querySelector("#backBtn")
 const size = document.querySelector(".itemPageSize")
+const body = document.querySelector("body")
 let itemId = localStorage.getItem("item")
 console.log(`itemId: ${itemId}`)
 

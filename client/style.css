@@ -6,7 +6,7 @@ body {
 .coinbaseBtn {
     position: relative;
     width: 250px;
-    height: 50px;
+    height: 25px;
     background: #023618;
     border: none;
     border-radius: 5px;
@@ -14,6 +14,7 @@ body {
     font-weight: 500;
     padding: 8px 15px;
     margin-top: -150px;
+    text-align: center;
     font-family: "Source Sans Pro", sans-serif;
     color: ghostwhite;
     cursor: pointer;
