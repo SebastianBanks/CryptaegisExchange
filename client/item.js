@@ -138,9 +138,13 @@ const createEditDiv = async (item) => {
                 <div class="editForm">
                     <form class="editFormProperties">
                     <input id="imageEdit" type="file" accept="image/*" multiple required>
-                    <input id="priceEdit" type="number" placeholder="Item price" step=0.01 value="${itemCost}" required>
+                    <p>Title:</p>
                     <input id="titleEdit" type="text" placeholder="Item title" value="${itemName}" required>
-                    <textarea id="descEdit" rows="10" cols="30" placeholder="Item Description" style="color: black;" value="${itemDesc}" required></textarea> 
+                    <p>Price:</p>
+                    <input id="priceEdit" type="number" placeholder="Item price" step=0.01 value="${itemCost}" required>
+                    <p>Description:</p>
+                    <textarea id="descEdit" rows="10" cols="30" placeholder="Item Description" value="${itemDesc}" style="color: black;" value="${itemDesc}" required></textarea> 
+                    <p>Size:</p>
                     <input id="sizeEdit" type="text" placeholder="Item Size" value="${itemSize}" required>
                     <select id="catEdit" placeholder="Category" value="${itemCat}" required>
                         <option value="0" disabled selected>Select a Category</option>
