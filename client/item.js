@@ -178,12 +178,13 @@ const createEditDiv = async (item) => {
                     </select>
                     <p class="editPropTitle">Is available:</p>
                     <input id="checkEdit" type="checkbox" value="Item is available">
+                    
+                    </form>
                     <div class="editButtons">
                         <button class="editFormBtn" id="updateBtn">Update</button>
                         <button class="editFormBtn" id="cancelBtn">Cancel</button>
                         <button class="editFormBtn" id="deleteBtn">Delete</button>
                     </div>
-                    </form>
                 </div>
             </div>
         `
@@ -228,7 +229,6 @@ main.addEventListener("click", function(e) {
 
         axios.put(`${heroku}/editItem`, body)
         .then(res => {
-            getItemDesc()
             let popup = document.querySelector(".editItem")
             popup.display = "none"
             res.data.forEach( async item => {
@@ -244,8 +244,10 @@ main.addEventListener("click", function(e) {
         axios.delete(`${heroku}/deleteItem/${itemId}`)
         .then(res => {
             console.log(res)
-            window.location = "/"
+            
         })
+
+        window.location = "/"
     }
 })
 
