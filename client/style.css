@@ -100,7 +100,15 @@ main {
 
 .editPropTitle {
     font-size: medium;
+    font-weight: bold;
     margin-top: -5px;
+    text-align: left;
+}
+
+.editButtons {
+    position: relative;
+    display: flex;
+    flex-direction: row;
 }
 
 #sizeEdit {
