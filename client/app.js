@@ -222,7 +222,7 @@ const getUserIsSignedIn = () => {
      localStorage.setItem("item", itemId)
      window.location = "/itemPage"
  })
-imageForm.addEventListener("submit", createItem)
+// imageForm.addEventListener("submit", createItem)
 searchBtn.addEventListener("click", getFilteredItems)
 
 getUserIsSignedIn()

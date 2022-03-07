@@ -5,7 +5,7 @@ body {
 
 .coinbaseBtn {
     position: relative;
-    width: 20%;
+    width: 250px;
     height: 50px;
     background: #023618;
     border: none;
@@ -75,21 +75,22 @@ form {
     display: flex;
     flex-direction: row;
     align-content: center;
+    flex-wrap: wrap;
     justify-content: center;
 }
 
 input {
     margin-left: 10px;
     margin-right: 10px;
-    border-radius: 5px;
-    font-size: 15px;
+    border-radius: 10px;
+    
 }
 
 select {
     margin-left: 10px;
     margin-right: 10px;
     border-radius: 5px;
-    font-size: 18px;
+    
     color: #023618;
     border: none;
 }
@@ -107,7 +108,9 @@ select {
     color: ghostwhite;
     background-color: #2E1C2B;
     width: 97%;
-    height: 50px;
+    min-height: 50px;
+    max-height: 68px;
+    padding: 5px;
     position: sticky;
     display: flex;
     flex-direction: row;
