@@ -137,12 +137,12 @@ const createEditDiv = async (item) => {
                 <img id="editImageForm" src="${imageUrl}"/>
                 <div class="editForm">
                     <form class="editFormProperties">
-                    <input id="imageInput" type="file" accept="image/*" multiple required>
-                    <input id="item_price" type="number" placeholder="Item price" step=0.01 value="${itemCost}" required>
-                    <input id="item_title" type="text" placeholder="Item title" value="${itemName}" required>
-                    <textarea id="item_desc" rows="10" cols="30" placeholder="Item Description" style="color: black;" value="${itemDesc}" required></textarea> 
-                    <input id="item_size" type="text" placeholder="Item Size" value="${itemSize}" required>
-                    <select id="cat_id" placeholder="Category" value="${itemCat}" required>
+                    <input id="imageEdit" type="file" accept="image/*" multiple required>
+                    <input id="priceEdit" type="number" placeholder="Item price" step=0.01 value="${itemCost}" required>
+                    <input id="titleEdit" type="text" placeholder="Item title" value="${itemName}" required>
+                    <textarea id="descEdit" rows="10" cols="30" placeholder="Item Description" style="color: black;" value="${itemDesc}" required></textarea> 
+                    <input id="sizeEdit" type="text" placeholder="Item Size" value="${itemSize}" required>
+                    <select id="catEdit" placeholder="Category" value="${itemCat}" required>
                         <option value="0" disabled selected>Select a Category</option>
                         <option value="1">Appliances</option>
                         <option value="2">Art</option>
@@ -164,9 +164,9 @@ const createEditDiv = async (item) => {
                         <option value="17">Recreational Vehicles</option>
                         <option value="18">Toys</option>  
                     </select>
-                    <input type="checkbox" value="Item is available" checked>
-                    <button type="submit">Update</button>
-                    <button type="submit">Cancel</button>
+                    <input id="checkEdit" type="checkbox" value="Item is available" checked>
+                    <button class="editItemButton" type="submit">Update</button>
+                    <button class="editItemButton" type="submit">Cancel</button>
                     </form>
                 </div>
             </div>
