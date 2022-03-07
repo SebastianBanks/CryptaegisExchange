@@ -6,7 +6,7 @@ const cors = require('cors')
 const { SERVER_PORT } = process.env
 const { createItem, createUser, getAllItems, getItemImage, getFilteredItems, getUrlLink, 
         coinbaseCallback, getCoinbaseAccount, coinbaseTransaction, getFormData,
-        returnIsSignedIn, getItemInfo, getCurrentUser, returnItemOwner } = require('./controller.js')
+        returnIsSignedIn, getItemInfo, getCurrentUser, returnItemOwner, editItem, deleteItem } = require('./controller.js')
 const {seed} = require('./seed.js')
 const { generateImageURL } = require("./s3.js")
 
@@ -42,6 +42,9 @@ app.get('/getCurrentUser', getCurrentUser)
 app.get('/getItemOwner/:id', returnItemOwner)
 app.post('/createItem', createItem)
 app.post(`/createUser`, createUser)
+
+app.put("/editItem", editItem)
+app.delete("/deleteItem/:id", deleteItem)
 
 
 // COINBASE ----------------------------------

@@ -179,8 +179,8 @@ const createEditDiv = async (item) => {
                     <p class="editPropTitle">Is available:</p>
                     <input id="checkEdit" type="checkbox" value="Item is available">
                     <div class="editButtons">
-                        <button class="editFormBtn" type="submit">Update</button>
-                        <button class="editFormBtn" type="submit">Cancel</button>
+                        <button class="editFormBtn" id="updateBtn" type="submit">Update</button>
+                        <button class="editFormBtn" id="cancelBtn" type="submit">Cancel</button>
                         <button class="editFormBtn" id="deleteBtn" type="submit">Delete</button>
                     </div>
                     </form>
@@ -204,6 +204,46 @@ const editItem = (e) => {
         })
     })
 }
+
+main.addEventListener("submit", function(e) {
+    if (e.target && e.target.id === "updateBtn") {
+        const title = document.querySelector("#titleEdit").value
+        const price = document.querySelector('#priceEdit').value
+        const desc = document.querySelector('#descEdit').value
+        const size = document.querySelector(`#sizeEdit`).value
+        const categ = document.querySelector('#catEdit').value
+        let isChecked = document.querySelector("#checkEdit").checked
+
+        const body = {
+            id: itemId,
+            price: price,
+            description: desc,
+            is_available: isChecked,
+            item_name: title,
+            product_size: size,
+            category_id: categ
+        }
+
+        axios.put(`${heroku}/editItem`, body)
+        .then(res => {
+            getItemDesc()
+            let popup = document.querySelector(".editItem")
+            popup.display = "none"
+            res.data.forEach( async item => {
+                console.log(await item)
+            })
+        })
+    } else if (e.target && e.target.id === "cancelBtn") {
+        let popup = document.querySelector(".editItem")
+        popup.display = "none"
+    } else if (e.target && e.target.id === "deleteBtn") {
+        axios.delete(`${heroku}/deleteItem/${itemId}`)
+        .then(res => {
+            console.log(res)
+            window.location = "/"
+        })
+    }
+})
 
 getItemDesc()
 canEditBtn()
