@@ -155,7 +155,7 @@ const createEditDiv = async (item) => {
                     <p class="editPropTitle">Size:</p>
                     <input id="sizeEdit" type="text" placeholder="Item Size" value="${itemSize}" required>
                     <select id="catEdit" placeholder="Category" required>
-                        <option value="0" selected>Select a Category</option>
+                        <option value="0" disabled selected>Select a Category</option>
                         <option value="1">Appliances</option>
                         <option value="2">Art</option>
                         <option value="3">Auto Parts & Accessories</option>
@@ -177,7 +177,7 @@ const createEditDiv = async (item) => {
                         <option value="18">Toys</option>  
                     </select>
                     <p class="editPropTitle">Is available:</p>
-                    <input id="checkEdit" type="checkbox" value="Item is available" checked>
+                    <input id="checkEdit" type="checkbox" value="Item is available">
                     <div class="editButtons">
                         <button class="editFormBtn" type="submit">Update</button>
                         <button class="editFormBtn" type="submit">Cancel</button>
@@ -198,6 +198,8 @@ const editItem = (e) => {
             main.innerHTML += editForm
             const select = document.querySelector("#catEdit")
             select.value = String(item["category_id"])
+            const checked = document.querySelector("#checkEdit")
+            checked.checked = item["item_is_available"]
         })
     })
 }
