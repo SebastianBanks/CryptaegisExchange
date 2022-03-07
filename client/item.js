@@ -146,13 +146,13 @@ const createEditDiv = async (item) => {
                 <div class="editForm">
                     <form class="editFormProperties">
                     <input id="imageEdit" type="file" accept="image/*" multiple required>
-                    <p>Title:</p>
+                    <p class="editPropTitle">Title:</p>
                     <input id="titleEdit" type="text" placeholder="Item title" value="${itemName}" required>
-                    <p>Price:</p>
+                    <p class="editPropTitle">Price:</p>
                     <input id="priceEdit" type="number" placeholder="Item price" step=0.01 value="${itemCost}" required>
-                    <p>Description:</p>
-                    <textarea id="descEdit" rows="17" cols="20" placeholder="Item Description" style="color: black;" value="${itemDesc}" required></textarea> 
-                    <p>Size:</p>
+                    <p class="editPropTitle">Description:</p>
+                    <textarea id="descEdit" rows="7" cols="20" placeholder="Item Description" style="color: black;" value="${itemDesc}" required></textarea> 
+                    <p class="editPropTitle">Size:</p>
                     <input id="sizeEdit" type="text" placeholder="Item Size" value="${itemSize}" required>
                     <select id="catEdit" placeholder="Category" value="${itemCat}" required>
                         <option value="0" disabled selected>Select a Category</option>
@@ -177,8 +177,8 @@ const createEditDiv = async (item) => {
                         <option value="18">Toys</option>  
                     </select>
                     <input id="checkEdit" type="checkbox" value="Item is available" checked>
-                    <button class="editFormBtn" type="submit">Update</button>
-                    <button class="editFormBtn" type="submit">Cancel</button>
+                    <button class="editItemButton" type="submit">Update</button>
+                    <button class="editItemButton" type="submit">Cancel</button>
                     </form>
                 </div>
             </div>
