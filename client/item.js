@@ -119,7 +119,7 @@ const createEditDiv = async (item) => {
     const itemName = await convertAlteredString(item["item_title"])
     const itemCost = item["item_price"]
     const itemId = item["item_id"]
-    const itemCat = item["category_id"]
+    const itemCat = String(item["category_id"])
     const itemDesc = await convertAlteredString(item["item_description"])
     const itemSize = await convertAlteredString(item["item_size"])
     const isAvailable = item["item_is_available"]
@@ -151,7 +151,7 @@ const createEditDiv = async (item) => {
                     <p class="editPropTitle">Price:</p>
                     <input id="priceEdit" type="number" placeholder="Item price" step=0.01 value="${itemCost}" required>
                     <p class="editPropTitle">Description:</p>
-                    <textarea id="descEdit" rows="4" cols="20" style="color: black;" value="${itemDesc}" required></textarea> 
+                    <textarea id="descEdit" rows="4" cols="20" style="color: black;" required>${itemDesc}</textarea> 
                     <p class="editPropTitle">Size:</p>
                     <input id="sizeEdit" type="text" placeholder="Item Size" value="${itemSize}" required>
                     <select id="catEdit" placeholder="Category" value="${itemCat}" required>
