@@ -13,6 +13,7 @@ body {
     font-size: 20px;
     font-weight: 500;
     padding: 8px 15px;
+    margin-top: -150px;
     font-family: "Source Sans Pro", sans-serif;
     color: ghostwhite;
     cursor: pointer;
@@ -27,9 +28,23 @@ main {
     flex-wrap: wrap;
     align-content: center;
     align-items: center;
+    
+}
+
+.accent {
+    position: sticky;
+    width: 102.3%;
+    height: 250px;
+    margin-top: -20px;
+    margin-left: -10px;
+    border-bottom-left-radius: 200%;
+    border-bottom-right-radius: 200%;
+    background-color: #E1A028;
+    
 }
 
 .items {
+    margin-top: 80px;
     position: relative;
     display: flex;
     flex-direction: row;
@@ -70,6 +85,10 @@ main {
     margin: 10px;
 }
 
+.item:hover {
+    cursor: pointer;
+}
+
 form {
     position: relative;
     display: flex;
@@ -80,15 +99,15 @@ form {
 }
 
 input {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
     border-radius: 10px;
     
 }
 
 select {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
     border-radius: 5px;
     
     color: #023618;
@@ -104,14 +123,17 @@ select {
     border-radius: 20px;
 }
 
+#submit:hover {
+    cursor: pointer;
+}
+
 .form {
     color: ghostwhite;
     background-color: #2E1C2B;
-    width: 97%;
     min-height: 50px;
-    max-height: 68px;
+    max-height: 80px;
     padding: 5px;
-    position: sticky;
+    position: fixed;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -119,7 +141,14 @@ select {
     align-items: center;
     font-size: 24px;
     border-radius: 50px;
-    margin: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 95%;
+    right: 0;
+    left: 0;
+    margin-top: -220px;
+    
+    z-index: 1;
 }
 
 .itemPage {
@@ -154,18 +183,24 @@ select {
     margin-top: -10px;
 }
 
-.buyButton {
-    width: 40%;
-    background: #023618;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 8px 15px;
-    font-family: "Source Sans Pro", sans-serif;
-    color: ghostwhite;
+.coin {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.crypto {
+    width: 75px;
+    height: 75px;
+    border-radius: 20px;
+    margin: 10px;
+}
+
+.crypto:hover {
     cursor: pointer;
-    text-decoration: none;
 }
 
 /* .itemPageDescription {
@@ -198,4 +233,34 @@ select {
     color: #f0f0f0;
     cursor: pointer;
     text-decoration: none;
+}
+
+.editItem {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    background-color: #E1A028;
+    color: black;
+    width: 350px;
+    height: 5000px;
+    z-index: 2;
+}
+
+#editImageForm {
+    max-width: 100%;
+    height: 170px;
+    border-radius: 10px;
+    margin-top: 50px;
+}
+
+.editForm {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
 }
