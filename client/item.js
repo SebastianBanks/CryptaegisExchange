@@ -198,8 +198,6 @@ const editItem = (e) => {
             console.log(await item)
             const editForm = await createEditDiv(item)
             main.innerHTML += editForm
-            let popup = document.querySelector(".editItem")
-            popup.style.display = "flex"
             const select = document.querySelector("#catEdit")
             select.value = String(item["category_id"])
             const checked = document.querySelector("#checkEdit")
@@ -233,7 +231,7 @@ main.addEventListener("click", function(e) {
     } else if (e.target && e.target.id === "cancelBtn") {
         console.log("cancel")
         let popup = document.querySelector(".editItem")
-        popup.style.display = "none"
+        main.removeChild(popup)
     } else if (e.target && e.target.id === "deleteBtn") {
         console.log("delete")
         deleteItem(itemId)
@@ -243,14 +241,9 @@ main.addEventListener("click", function(e) {
 const updateItem = (body) => {
     axios.put(`${heroku}/editItem`, body)
         .then(res => {
+            getItemDesc()
             let popup = document.querySelector(".editItem")
-            popup.display = "none"
-            res.data.forEach( async item => {
-                console.log(await item)
-                getItemDesc()
-                let popup = document.querySelector(".editItem")
-                popup.style.display = "flex"
-            })
+            main.removeChild(popup)
         })
 }
 
