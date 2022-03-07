@@ -76,11 +76,11 @@ const getItemDesc = () => {
             price.textContent = `$${itemCost}`
             size.textContent = itemSize
 
-            let imageUrl = await getImageUrl(itemId).then(res => {
+            img.src = await getImageUrl(itemId).then(res => {
                 console.log(res)
                 return res
             })
-            img.href = imageUrl
+            
             console.log(getImageUrl(itemId))
             console.log(`imageUrl: ${imageUrl}`)
             //--------------------------
