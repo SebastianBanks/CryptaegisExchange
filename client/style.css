@@ -76,6 +76,8 @@ main {
     position: relative;
     display: flex;
     flex-direction: column;
+    margin-left: 10px;
+    width: 250px;
 }
 
 #imageEdit {
@@ -106,7 +108,7 @@ main {
 }
 
 .editButtons {
-    width: fit-content;
+    width: 200;
     position: relative;
     display: flex;
     flex-direction: row;
@@ -127,7 +129,7 @@ main {
 }
 
 .editFormBtn {
-    width: 250px;
+    width: 90px;
     background: #023618;
     border: none;
     border-radius: 5px;
