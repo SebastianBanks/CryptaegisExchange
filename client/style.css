@@ -116,13 +116,13 @@ form {
     height: 500px;
 }
 
-/* .itemPageTitle {
-
+.itemPageDescription {
+    margin-top: -15px;
 }
 
-.itemPagePrice {
-
-} */
+.itemPageSize {
+    margin-top: -15px;
+}
 
 .buyButton {
     width: 40%;
