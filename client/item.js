@@ -181,6 +181,7 @@ const createEditDiv = async (item) => {
                     <div class="editButtons">
                         <button class="editFormBtn" type="submit">Update</button>
                         <button class="editFormBtn" type="submit">Cancel</button>
+                        <button class="editFormBtn" id="deleteBtn" type="submit">Delete</button>
                     </div>
                     </form>
                 </div>

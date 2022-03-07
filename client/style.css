@@ -115,6 +115,10 @@ main {
     flex-direction: row;
 }
 
+#deleteBtn {
+    background-color: #2E1C2B;
+}
+
 #sizeEdit {
     margin: 5px;
     margin-top: -5px;
