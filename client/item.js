@@ -55,23 +55,7 @@ const convertAlteredString = async string => {
 }
 
 const addItemDesc = async (item) => {
-    console.log(`addItem: ${await item["item"]}`)
-    const itemName = convertAlteredString(item["item_title"])
-    const itemDesc = await convertAlteredString(item["item_desc"])
-    const itemSize = await convertAlteredString(item["item_size"])
-    const itemCost = item["item_price"]
-    let imageUrl = await getImageUrl(itemId).then(res => {
-        console.log(res)
-        return res
-    })
-    console.log(getImageUrl(itemId))
     
-
-    console.log(`imageUrl: ${imageUrl}`)
-    title.textContent = itemName
-    desc.textContent = itemDesc
-    price.textContent = `$${itemCost}`
-    size.textContent = itemSize
     
 }
 
@@ -80,7 +64,28 @@ const getItemDesc = () => {
     .then(res => {
         res.data.forEach(async item => {
             console.log(await item)
-            await addItemDesc(item)
+            // await addItemDesc(item)
+
+
+            console.log(`addItem: ${await item}`)
+            const itemName = convertAlteredString(item["item_title"])
+            const itemDesc = await convertAlteredString(item["item_desc"])
+            const itemSize = await convertAlteredString(item["item_size"])
+            const itemCost = item["item_price"]
+            let imageUrl = await getImageUrl(itemId).then(res => {
+                console.log(res)
+                return res
+            })
+            console.log(getImageUrl(itemId))
+            
+
+            console.log(`imageUrl: ${imageUrl}`)
+            title.textContent = itemName
+            desc.textContent = itemDesc
+            price.textContent = `$${itemCost}`
+            size.textContent = itemSize
+
+            //--------------------------
         })
     })
     .catch(err => {
