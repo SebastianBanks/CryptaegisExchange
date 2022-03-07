@@ -153,8 +153,8 @@ const createEditDiv = async (item) => {
                     <p class="editPropTitle">Description:</p>
                     <textarea id="descEdit" rows="4" cols="20" style="color: black;" required>${itemDesc}</textarea> 
                     <p class="editPropTitle">Size:</p>
-                    <input id="sizeEdit" type="text" placeholder="Item Size" value=${itemSize} required>
-                    <select id="catEdit" placeholder="Category" value="${itemCat}" required>
+                    <input id="sizeEdit" type="text" placeholder="Item Size" value="${itemSize}" required>
+                    <select id="catEdit" placeholder="Category" value=${itemCat} required>
                         <option value="0" disabled selected>Select a Category</option>
                         <option value="1">Appliances</option>
                         <option value="2">Art</option>
