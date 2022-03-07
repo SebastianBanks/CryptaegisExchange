@@ -66,25 +66,22 @@ const getItemDesc = () => {
             console.log(await item)
             // await addItemDesc(item)
 
+            const itemName = await item["item_title"]
+            const itemDesc = await item["item_desc"]
+            const itemSize = await item["item_size"]
+            const itemCost = await item["item_price"]
 
-            console.log(`addItem: ${await item}`)
-            const itemName = convertAlteredString(item["item_title"])
-            const itemDesc = await convertAlteredString(item["item_desc"])
-            const itemSize = await convertAlteredString(item["item_size"])
-            const itemCost = item["item_price"]
-            let imageUrl = await getImageUrl(itemId).then(res => {
-                console.log(res)
-                return res
-            })
-            console.log(getImageUrl(itemId))
-            
-
-            console.log(`imageUrl: ${imageUrl}`)
             title.textContent = itemName
             desc.textContent = itemDesc
             price.textContent = `$${itemCost}`
             size.textContent = itemSize
 
+            let imageUrl = await getImageUrl(itemId).then(res => {
+                console.log(res)
+                return res
+            })
+            console.log(getImageUrl(itemId))
+            console.log(`imageUrl: ${imageUrl}`)
             //--------------------------
         })
     })
