@@ -120,7 +120,7 @@ const createEditDiv = async (item) => {
     const itemId = item["item_id"]
     const itemCat = await convertAlteredString(item["category_id"])
     const itemDesc = await convertAlteredString(item["item_description"])
-    const itemSize = awaitconvertAlteredString(item["item_size"])
+    const itemSize = await convertAlteredString(item["item_size"])
     const isAvailable = item["item_is_available"]
     
 
