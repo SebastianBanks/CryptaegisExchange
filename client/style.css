@@ -1,5 +1,5 @@
 body {
-    background-color: #FCFFFC;
+    background-color: #F5F5F5;
     font-family: "Source Sans Pro", sans-serif;
 }
 
@@ -12,7 +12,7 @@ body {
     font-weight: 500;
     padding: 8px 15px;
     font-family: "Source Sans Pro", sans-serif;
-    color: #fff;
+    color: #F5F5F5;
     cursor: pointer;
     text-decoration: none;
   }
@@ -53,7 +53,7 @@ main {
 }
 
 .item {
-    color: white;
+    color: #F5F5F5;
     background-color: #023618;
     width: 200px;
     height: 250px;
@@ -77,7 +77,7 @@ form {
 }
 
 .form {
-    color: white;
+    color: #F5F5F5;
     background-color: #023618;
     width: 300px;
     height: 350px;
@@ -105,7 +105,7 @@ form {
     max-width: 100%;
     height: 500px;
     border-radius: 10px;
-    margin-right: 20px;
+    margin-right: 75px;
 }
 
 .itemPageContent {
@@ -133,7 +133,7 @@ form {
     font-weight: 500;
     padding: 8px 15px;
     font-family: "Source Sans Pro", sans-serif;
-    color: #fff;
+    color: #F5F5F5;
     cursor: pointer;
     text-decoration: none;
 }
@@ -151,7 +151,7 @@ form {
     font-weight: 500;
     padding: 8px 15px;
     font-family: "Source Sans Pro", sans-serif;
-    color: #fff;
+    color: #F5F5F5;
     cursor: pointer;
     text-decoration: none;
 }
@@ -165,7 +165,7 @@ form {
     font-weight: 500;
     padding: 8px 15px;
     font-family: "Source Sans Pro", sans-serif;
-    color: #fff;
+    color: #F5F5F5;
     cursor: pointer;
     text-decoration: none;
 }
