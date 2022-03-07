@@ -195,8 +195,9 @@ const editItem = (e) => {
     axios.get(`${heroku}/itemPage/${itemId}`)
     .then(res => {
         res.data.forEach(async item => {
-
+            console.log(document.querySelector(".editItem"))
             if (main.contains(document.querySelector(".editItem"))) {
+                console.log("it exists")
                 document.querySelector(".editItem").style.display = "flex"
             } else {
                 console.log(await item)
