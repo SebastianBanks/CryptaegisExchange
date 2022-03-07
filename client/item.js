@@ -62,7 +62,7 @@ const getItemDesc = () => {
             // await addItemDesc(item)
 
             const itemName = await item["item_title"]
-            const itemDesc = await item["item_desc"]
+            const itemDesc = await item["item_description"]
             const itemSize = await item["item_size"]
             const itemCost = await item["item_price"]
 

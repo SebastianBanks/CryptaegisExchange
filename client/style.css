@@ -1,11 +1,11 @@
 body {
-    background-color: #EFF6E0;
+    background-color: #BFD7EA;
     font-family: "Source Sans Pro", sans-serif;
 }
 
 .coinbaseBtn {
     width: 100%;
-    background: #1E3888;
+    background: #023618;
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -54,7 +54,7 @@ main {
 
 .item {
     color: white;
-    background-color: #BD632F;
+    background-color: #2F2235;
     width: 200px;
     height: 250px;
     position: relative;
@@ -78,7 +78,7 @@ form {
 
 .form {
     color: white;
-    background-color: #A4243B;
+    background-color: #2F2235;
     width: 300px;
     height: 350px;
     position: relative;
@@ -109,7 +109,7 @@ form {
 }
 
 .itemPageContent {
-    background-color: #BD632F;
+    background-color: #2F2235;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -127,7 +127,7 @@ form {
 
 .buyButton {
     width: 25%;
-    background: #1E3888;
+    background: #023618;
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -145,7 +145,7 @@ form {
 
 .editItemButton {
     width: 25%;
-    background: #1E3888;
+    background: #023618;
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -159,7 +159,7 @@ form {
 
 #backBtn {
     width: 100px;
-    background: #1E3888;
+    background: #023618;
     border: none;
     border-radius: 5px;
     font-size: 16px;
