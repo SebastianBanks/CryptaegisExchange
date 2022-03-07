@@ -55,7 +55,7 @@ const convertAlteredString = async string => {
 }
 
 const addItemDesc = async (item) => {
-    console.log(`addItem: ${await item}`)
+    console.log(`addItem: ${await item["item"]}`)
     const itemName = convertAlteredString(item["item_title"])
     const itemDesc = await convertAlteredString(item["item_desc"])
     const itemSize = await convertAlteredString(item["item_size"])
