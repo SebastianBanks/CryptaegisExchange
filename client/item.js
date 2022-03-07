@@ -123,6 +123,14 @@ const createEditDiv = async (item) => {
     const itemDesc = await convertAlteredString(item["item_description"])
     const itemSize = await convertAlteredString(item["item_size"])
     const isAvailable = item["item_is_available"]
+
+    console.log(itemName)
+    console.log(itemCost)
+    console.log(itemId)
+    console.log(itemCat)
+    console.log(itemDesc)
+    console.log(itemSize)
+    console.log(isAvailable)
     
 
     let imageUrl = await getImageUrl(itemId).then(res => {
@@ -143,7 +151,7 @@ const createEditDiv = async (item) => {
                     <p>Price:</p>
                     <input id="priceEdit" type="number" placeholder="Item price" step=0.01 value="${itemCost}" required>
                     <p>Description:</p>
-                    <textarea id="descEdit" rows="10" cols="30" placeholder="Item Description" value="${itemDesc}" style="color: black;" value="${itemDesc}" required></textarea> 
+                    <textarea id="descEdit" rows="17" cols="20" placeholder="Item Description" style="color: black;" value="${itemDesc}" required></textarea> 
                     <p>Size:</p>
                     <input id="sizeEdit" type="text" placeholder="Item Size" value="${itemSize}" required>
                     <select id="catEdit" placeholder="Category" value="${itemCat}" required>
