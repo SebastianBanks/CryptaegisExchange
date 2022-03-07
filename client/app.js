@@ -28,6 +28,7 @@ const heroku = "https://cryptaegis-exchange.herokuapp.com"
 const getCoinbaseHREF = () => {
     axios.get(`${heroku}/getLink`)
         .then(res => {
+            console.log(`https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${res.data.client}&redirect_uri=${res.data.url}&state=${res.data.sec}&scope=${res.data.scope}`)
             coinbaseBtn.href =`https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${res.data.client}&redirect_uri=${res.data.url}&state=${res.data.sec}&scope=${res.data.scope}`
         })
 }

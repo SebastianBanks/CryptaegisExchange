@@ -77,7 +77,6 @@ const getItemDesc = () => {
             })
             
             console.log(getImageUrl(itemId))
-            console.log(`imageUrl: ${imageUrl}`)
             //--------------------------
         })
     })
