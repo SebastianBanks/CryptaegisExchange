@@ -54,11 +54,6 @@ const convertAlteredString = async string => {
     return returnString
 }
 
-const addItemDesc = async (item) => {
-    
-    
-}
-
 const getItemDesc = () => {
     axios.get(`${heroku}/itemPage/${itemId}`)
     .then(res => {
@@ -71,10 +66,10 @@ const getItemDesc = () => {
             const itemSize = await item["item_size"]
             const itemCost = await item["item_price"]
 
-            title.textContent = itemName
-            desc.textContent = itemDesc
+            title.textContent = convertAlteredString(itemName)
+            desc.textContent = convertAlteredString(itemDesc)
             price.textContent = `$${itemCost}`
-            size.textContent = itemSize
+            size.textContent = convertAlteredString(itemSize)
 
             img.src = await getImageUrl(itemId).then(res => {
                 console.log(res)
