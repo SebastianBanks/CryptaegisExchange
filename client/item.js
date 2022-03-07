@@ -197,7 +197,7 @@ const editItem = (e) => {
         res.data.forEach(async item => {
             console.log(await item)
             const editForm = await createEditDiv(item)
-            main.innerHTML += editForm
+            main.appendChild(editForm)
             const select = document.querySelector("#catEdit")
             select.value = String(item["category_id"])
             const checked = document.querySelector("#checkEdit")
