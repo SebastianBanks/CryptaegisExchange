@@ -198,6 +198,8 @@ const editItem = (e) => {
             console.log(await item)
             const editForm = await createEditDiv(item)
             main.innerHTML += editForm
+            let popup = document.querySelector(".editItem")
+            popup.style.display = "flex"
             const select = document.querySelector("#catEdit")
             select.value = String(item["category_id"])
             const checked = document.querySelector("#checkEdit")
@@ -245,6 +247,9 @@ const updateItem = (body) => {
             popup.display = "none"
             res.data.forEach( async item => {
                 console.log(await item)
+                getItemDesc()
+                let popup = document.querySelector(".editItem")
+                popup.style.display = "flex"
             })
         })
 }
