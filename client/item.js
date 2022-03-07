@@ -226,8 +226,20 @@ main.addEventListener("click", function(e) {
             product_size: size,
             category_id: categ
         }
+        updateItem(body)
+        
+    } else if (e.target && e.target.id === "cancelBtn") {
+        console.log("cancel")
+        let popup = document.querySelector(".editItem")
+        popup.display = "none"
+    } else if (e.target && e.target.id === "deleteBtn") {
+        console.log("delete")
+        deleteItem(itemId)
+    }
+})
 
-        axios.put(`${heroku}/editItem`, body)
+const updateItem = (body) => {
+    axios.put(`${heroku}/editItem`, body)
         .then(res => {
             let popup = document.querySelector(".editItem")
             popup.display = "none"
@@ -235,21 +247,15 @@ main.addEventListener("click", function(e) {
                 console.log(await item)
             })
         })
-    } else if (e.target && e.target.id === "cancelBtn") {
-        console.log("cancel")
-        let popup = document.querySelector(".editItem")
-        popup.display = "none"
-    } else if (e.target && e.target.id === "deleteBtn") {
-        console.log("delete")
-        axios.delete(`${heroku}/deleteItem/${itemId}`)
+}
+
+const deleteItem = (id) => {
+    axios.delete(`${heroku}/deleteItem/${id}`)
         .then(res => {
             console.log(res)
-            
+            window.location = "/"
         })
-
-        window.location = "/"
-    }
-})
+}
 
 getItemDesc()
 canEditBtn()

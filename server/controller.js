@@ -522,11 +522,13 @@ module.exports = {
     editItem: (req, res) => {
         // get the item id and new item details
         const { id, price, description, is_available, item_name, product_size, category_id} = req.body
-
+        const safeTitle = module.exports.replaceQuotes(item_name.toLowerCase())
+        const safeDesc = module.exports.replaceQuotes(description)
+        const safeItemSize = module.exports.replaceQuotes(product_size)
         // update the item to match the new item details
         sequelize.query(`
             UPDATE item
-            SET item_price = ${price}, item_description = '${description}, item_is_available = ${is_available}, item_name = '${item_name}, item_size = '${product_size}, category_id = ${category_id}
+            SET item_price = ${price}, item_description = '${safeDesc}, item_is_available = ${is_available}, item_name = '${safeTitle}, item_size = '${safeItemSize}, category_id = ${category_id}
             WHERE item_id = ${id};
         `)
         .then(dbRes => res.status(200).send(dbRes[0]))
