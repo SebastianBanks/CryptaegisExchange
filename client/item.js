@@ -154,8 +154,8 @@ const createEditDiv = async (item) => {
                     <textarea id="descEdit" rows="4" cols="20" style="color: black;" required>${itemDesc}</textarea> 
                     <p class="editPropTitle">Size:</p>
                     <input id="sizeEdit" type="text" placeholder="Item Size" value="${itemSize}" required>
-                    <select id="catEdit" placeholder="Category" value=${itemCat} required>
-                        <option value="0" disabled selected>Select a Category</option>
+                    <select id="catEdit" placeholder="Category" required>
+                        <option value="0" selected>Select a Category</option>
                         <option value="1">Appliances</option>
                         <option value="2">Art</option>
                         <option value="3">Auto Parts & Accessories</option>
@@ -196,6 +196,8 @@ const editItem = (e) => {
             console.log(await item)
             const editForm = await createEditDiv(item)
             main.innerHTML += editForm
+            const select = document.querySelector("#catEdit")
+            select.value = String(item["category_id"])
         })
     })
 }
