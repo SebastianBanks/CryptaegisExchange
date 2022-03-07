@@ -14,7 +14,7 @@ const searchField = document.querySelector("#searchField")
 const searchPrice = document.querySelector('#searchPrice')
 const searchLocation = document.querySelector('#searchLocation')
 const searchCat = document.querySelector('#searchCat')
-const searchBtn = document.querySelector('#search')
+const searchBtn = document.querySelector('#submit')
 
 const coinbaseBtn = document.querySelector(".coinbaseBtn")
 
