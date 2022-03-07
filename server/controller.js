@@ -534,7 +534,7 @@ module.exports = {
         // update the item to match the new item details
         sequelize.query(`
             UPDATE item
-            SET item_price = ${price}, item_description = '${safeDesc}', item_is_available = ${is_available}, item_name = '${safeTitle}', item_size = '${safeItemSize}', category_id = ${category_id}
+            SET item_price = ${price}, item_description = '${safeDesc}', item_is_available = ${is_available}, item_title = '${safeTitle}', item_size = '${safeItemSize}', category_id = ${category_id}
             WHERE item_id = ${id};
         `)
         .then(dbRes => res.status(200).send(dbRes[0]))

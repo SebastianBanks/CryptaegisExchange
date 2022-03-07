@@ -231,7 +231,7 @@ main.addEventListener("click", function(e) {
     } else if (e.target && e.target.id === "cancelBtn") {
         console.log("cancel")
         let popup = document.querySelector(".editItem")
-        popup.display = "none"
+        popup.style.display = "none"
     } else if (e.target && e.target.id === "deleteBtn") {
         console.log("delete")
         deleteItem(itemId)
