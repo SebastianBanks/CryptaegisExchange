@@ -80,6 +80,7 @@ const getItemDesc = () => {
                 console.log(res)
                 return res
             })
+            img.href = imageUrl
             console.log(getImageUrl(itemId))
             console.log(`imageUrl: ${imageUrl}`)
             //--------------------------
