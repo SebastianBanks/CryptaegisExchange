@@ -195,13 +195,20 @@ const editItem = (e) => {
     axios.get(`${heroku}/itemPage/${itemId}`)
     .then(res => {
         res.data.forEach(async item => {
-            console.log(await item)
-            const editForm = await createEditDiv(item)
-            main.appendChild(editForm)
-            const select = document.querySelector("#catEdit")
-            select.value = String(item["category_id"])
-            const checked = document.querySelector("#checkEdit")
-            checked.checked = item["item_is_available"]
+
+            if (main.contains(document.querySelector(".editItem"))) {
+                document.querySelector(".editItem").style.display = "flex"
+            } else {
+                console.log(await item)
+                const editForm = await createEditDiv(item)
+                main.innerHTML += editForm
+                const select = document.querySelector("#catEdit")
+                select.value = String(item["category_id"])
+                const checked = document.querySelector("#checkEdit")
+                checked.checked = item["item_is_available"]
+            }
+
+            
         })
     })
 }
@@ -209,6 +216,8 @@ const editItem = (e) => {
 main.addEventListener("click", function(e) {
     if (e.target && e.target.id === "updateBtn") {
         console.log("update")
+
+        
 
         const title = document.querySelector("#titleEdit").value
         const price = document.querySelector('#priceEdit').value
@@ -241,9 +250,14 @@ main.addEventListener("click", function(e) {
 const updateItem = (body) => {
     axios.put(`${heroku}/editItem`, body)
         .then(res => {
+
+            res.data.forEach(async item => {
+                console.log(item)
+            })
+
             getItemDesc()
             let popup = document.querySelector(".editItem")
-            main.removeChild(popup)
+            popup.style.display = "none"
         })
 }
 
