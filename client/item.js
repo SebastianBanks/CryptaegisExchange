@@ -6,7 +6,7 @@ const desc = document.querySelector(".itemPageDescription")
 const editBtn = document.querySelector(".editItemButton")
 const backBtn = document.querySelector("#backBtn")
 const size = document.querySelector(".itemPageSize")
-const body = document.querySelector("body")
+const main = document.querySelector("main")
 let itemId = localStorage.getItem("item")
 console.log(`itemId: ${itemId}`)
 
@@ -180,7 +180,7 @@ const editItem = (e) => {
         res.data.forEach(async item => {
             console.log(await item)
             const editForm = await createEditDiv(item)
-            body.innerHTML += editForm
+            main.innerHTML += editForm
         })
     })
 }
