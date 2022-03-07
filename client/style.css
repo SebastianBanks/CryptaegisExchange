@@ -55,6 +55,7 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     background-color: #E1A028;
     color: black;
     width: 600px;
@@ -79,6 +80,7 @@ main {
 
 #imageEdit {
     margin: 5px;
+    margin-top: 5px;
 }
 
 #priceEdit {
@@ -121,9 +123,21 @@ main {
 
 #checkEdit {
     margin: 5px;
+    margin-top: -5px;
 }
 
 .editFormBtn {
+    width: 250px;
+    background: #023618;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 15px;
+    font-family: "Source Sans Pro", sans-serif;
+    color: #f0f0f0;
+    cursor: pointer;
+    text-decoration: none;
     margin: 5px;
 }
 

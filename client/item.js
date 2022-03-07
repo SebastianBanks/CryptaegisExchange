@@ -179,8 +179,8 @@ const createEditDiv = async (item) => {
                     <p class="editPropTitle">Is available:</p>
                     <input id="checkEdit" type="checkbox" value="Item is available" checked>
                     <div class="editButtons">
-                        <button class="editItemButton" type="submit">Update</button>
-                        <button class="editItemButton" type="submit">Cancel</button>
+                        <button class="editFormBtn" type="submit">Update</button>
+                        <button class="editFormBtn" type="submit">Cancel</button>
                     </div>
                     </form>
                 </div>
