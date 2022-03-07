@@ -179,9 +179,9 @@ const createEditDiv = async (item) => {
                     <p class="editPropTitle">Is available:</p>
                     <input id="checkEdit" type="checkbox" value="Item is available">
                     <div class="editButtons">
-                        <button class="editFormBtn" id="updateBtn" type="submit">Update</button>
-                        <button class="editFormBtn" id="cancelBtn" type="submit">Cancel</button>
-                        <button class="editFormBtn" id="deleteBtn" type="submit">Delete</button>
+                        <button class="editFormBtn" id="updateBtn">Update</button>
+                        <button class="editFormBtn" id="cancelBtn">Cancel</button>
+                        <button class="editFormBtn" id="deleteBtn">Delete</button>
                     </div>
                     </form>
                 </div>
@@ -205,8 +205,10 @@ const editItem = (e) => {
     })
 }
 
-main.addEventListener("submit", function(e) {
+main.addEventListener("click", function(e) {
     if (e.target && e.target.id === "updateBtn") {
+        console.log("update")
+
         const title = document.querySelector("#titleEdit").value
         const price = document.querySelector('#priceEdit').value
         const desc = document.querySelector('#descEdit').value
@@ -234,9 +236,11 @@ main.addEventListener("submit", function(e) {
             })
         })
     } else if (e.target && e.target.id === "cancelBtn") {
+        console.log("cancel")
         let popup = document.querySelector(".editItem")
         popup.display = "none"
     } else if (e.target && e.target.id === "deleteBtn") {
+        console.log("delete")
         axios.delete(`${heroku}/deleteItem/${itemId}`)
         .then(res => {
             console.log(res)
