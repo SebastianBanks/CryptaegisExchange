@@ -192,6 +192,7 @@ const createEditDiv = async (item) => {
 }
 
 const editItem = (e) => {
+    console.log("inside edit item")
     axios.get(`${heroku}/itemPage/${itemId}`)
     .then(res => {
         res.data.forEach(async item => {
@@ -273,4 +274,5 @@ const deleteItem = (id) => {
 getItemDesc()
 canEditBtn()
 backBtn.addEventListener("click", goBackAPage)
+console.log("edit item 2")
 editBtn.addEventListener("click", editItem)
