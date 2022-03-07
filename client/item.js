@@ -66,10 +66,10 @@ const getItemDesc = () => {
             const itemSize = await item["item_size"]
             const itemCost = await item["item_price"]
 
-            title.textContent = convertAlteredString(itemName)
-            desc.textContent = convertAlteredString(itemDesc)
+            title.textContent = await convertAlteredString(itemName)
+            desc.textContent = await convertAlteredString(itemDesc)
             price.textContent = `$${itemCost}`
-            size.textContent = convertAlteredString(itemSize)
+            size.textContent = await convertAlteredString(itemSize)
 
             img.src = await getImageUrl(itemId).then(res => {
                 console.log(res)
