@@ -58,7 +58,7 @@ main {
     margin-left: -10px;
     border-bottom-left-radius: 200%;
     border-bottom-right-radius: 200%;
-    background-color: #E1A028;
+    background-color: #78C0E0;
     
 }
 
@@ -74,7 +74,7 @@ main {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: #2B59C3;
+    background-color: #E1A028;
     color: black;
     width: 700px;
     height: 500px;

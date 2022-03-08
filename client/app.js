@@ -120,6 +120,8 @@ const getAllItems = () => {
 const createItem = async (e) => {
      e.preventDefault()
 
+     const imageInput = document.querySelector("#imageEdit")
+
     let photos = []
     for(let i = 0; i < imageInput.files.length; i++) {
         console.log(imageInput.files[i])
