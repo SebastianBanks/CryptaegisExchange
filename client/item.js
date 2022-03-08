@@ -255,6 +255,49 @@ const updateItem = (body) => {
 
             res.data.forEach(async item => {
                 console.log(item)
+                const itemName = await item["item_title"]
+                const itemDesc = await item["item_description"]
+                const itemSize = await item["item_size"]
+                const itemCost = await item["item_price"]
+
+                title.textContent = await convertAlteredString(itemName)
+                desc.textContent = await convertAlteredString(itemDesc)
+                price.textContent = `$${itemCost}`
+                size.textContent = await convertAlteredString(itemSize)
+                
+            })
+
+            let imageInput = document.querySelector("#imageEdit")
+
+            let photos = []
+            for(let i = 0; i < imageInput.files.length; i++) {
+                console.log(imageInput.files[i])
+                const file = imageInput.files[i]
+
+                const { url } = await fetch(`${heroku}/s3URL`).then(res => res.json())
+                console.log(url)
+
+                await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        "Content-Type": "multipart/form-data", 
+                    },
+                    body: file
+                })
+                console.log({url})
+                const imageUrl = url.split('?')[0]
+                console.log(`imgUrl: ${imageUrl}`)
+                photos.push(imageUrl)
+            }
+
+            let images = {
+                img_arry: photos,
+                item_id: itemId
+            }
+
+            axios.post(`${heroku}/addImages`, images)
+            .then(res => {
+                console.log(res)
             })
 
             getItemDesc()

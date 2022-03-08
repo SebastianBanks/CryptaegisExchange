@@ -506,6 +506,24 @@ module.exports = {
         // if no items, send a response that their are no matches
     },
 
+    addImages: (req, res) => {
+        const { img_arry, item_id } = req.body
+
+        for (let i = 0; i < img_arry.length; i++) {
+            sequelize.query(`
+                INSERT INTO images(image_url_path, item_id)
+                VALUES('${img_arry[i]}', ${item_id})
+            `)
+            .then(dbRes => {
+                res.status(200).send(dbRes[0])
+            })
+            .catch(err => {
+                console.log('error uploading image')
+                console.log(err)
+            })
+        }
+    },
+
     deleteItem: (req, res) => {
         // get the item id
         const id = req.params.id

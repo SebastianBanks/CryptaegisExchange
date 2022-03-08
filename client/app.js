@@ -1,5 +1,5 @@
 
-const imageForm = document.querySelector("#imageForm")
+
 const imageInput = document.querySelector("#imageInput")
 const itemPrice = document.querySelector("#item_price")
 const itemTitle = document.querySelector("#item_title")
@@ -17,6 +17,7 @@ const searchCat = document.querySelector('#searchCat')
 const searchBtn = document.querySelector('#submit')
 
 const coinbaseBtn = document.querySelector(".coinbaseBtn")
+const addItemBtn = document.querySelector(".addItemBtn")
 
 const itemSection = document.querySelector(".items")
 
@@ -119,7 +120,7 @@ const getAllItems = () => {
 const createItem = async (e) => {
      e.preventDefault()
 
-        let photos = []
+    let photos = []
     for(let i = 0; i < imageInput.files.length; i++) {
         console.log(imageInput.files[i])
         const file = imageInput.files[i]
@@ -140,18 +141,25 @@ const createItem = async (e) => {
         photos.push(imageUrl)
     }
 
+    const title = document.querySelector("#titleEdit").value
+    const price = document.querySelector('#priceEdit').value
+    const desc = document.querySelector('#descEdit').value
+    const size = document.querySelector(`#sizeEdit`).value
+    const categ = document.querySelector('#catEdit').value
+
     let body = {
-        item_price: itemPrice.value,
-        item_title: itemTitle.value,
-        item_desc: itemDesc.value,
-        item_size: itemSize.value,
-        category_id: catId.value,
+        item_price: price,
+        item_title: title,
+        item_desc: desc,
+        item_size: size,
+        category_id: categ,
         item_images: photos
     }
     
     axios.post(`${heroku}/createItem`, body)
         .then(() => {
             imageForm.reset()
+            document.querySelector(".editItems").style.display = "none"
             getAllItems()
             console.log("createItem-----------")
             console.log(`photos: ${photos}`)
@@ -204,13 +212,62 @@ const getUserIsSignedIn = () => {
         console.log(res.data)
         if (res.data === false) {
             coinbaseBtn.style.display = ""
+            addItemBtn.style.display = "none"
         } else if (res.data === true) {
             coinbaseBtn.style.display = "none"
+            addItemBtn.style.display = ""
         }
     })
 }
 
-
+const createItemForm = (e) => {
+    const editDiv = 
+        `
+            <div class="editItem">
+                <div class="editForm">
+                    <form class="editFormProperties">
+                        <input id="imageEdit" type="file" accept="image/*" multiple required>
+                        <p class="editPropTitle">Title:</p>
+                        <input id="titleEdit" type="text" placeholder="Item title" required>
+                        <p class="editPropTitle">Price:</p>
+                        <input id="priceEdit" type="number" placeholder="Item price" step=0.01 required>
+                        <p class="editPropTitle">Description:</p>
+                        <textarea id="descEdit" rows="4" cols="20" style="color: black;" required></textarea> 
+                        <p class="editPropTitle">Size:</p>
+                        <input id="sizeEdit" type="text" placeholder="Item Size" required>
+                        <select id="catEdit" placeholder="Category" required>
+                            <option value="0" disabled selected>Select a Category</option>
+                            <option value="1">Appliances</option>
+                            <option value="2">Art</option>
+                            <option value="3">Auto Parts & Accessories</option>
+                            <option value="4">Baby</option>
+                            <option value="5">Books & Media</option>
+                            <option value="6">Clothings & Appareal</option>
+                            <option value="19">Cookware</option>
+                            <option value="7">Cycling</option>
+                            <option value="8">Electronics</option>
+                            <option value="9">Fitness Equipment</option>
+                            <option value="10">Furniture</option>
+                            <option value="11">General</option>
+                            <option value="12">Home & Garden</option>
+                            <option value="13">Hunting & Fishing</option>
+                            <option value="14">Musical Instruments</option>
+                            <option value="15">Outdoors & Sporting</option>
+                            <option value="16">Pets</option>
+                            <option value="17">Recreational Vehicles</option>
+                            <option value="18">Toys</option>  
+                        </select>
+                    
+                    </form>
+                    <div class="editButtons">
+                        <button class="editFormBtn" id="updateBtn">Add Item</button>
+                        <button class="editFormBtn" id="cancelBtn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        `
+        main.innerHTML += editDiv
+}
 
 
  itemSection.addEventListener('click', function(e) {
@@ -223,9 +280,21 @@ const getUserIsSignedIn = () => {
      localStorage.setItem("item", itemId)
      window.location = "/itemPage"
  })
-// imageForm.addEventListener("submit", createItem)
-searchBtn.addEventListener("click", getFilteredItems)
 
+ main.addEventListener('click', function(e) {
+     if (e.target && e.target.id === "updateBtn") {
+         createItem
+     } else if (e.target && e.target.id === "cancelBtn") {
+        document.querySelector(".editItems").style.display = "none"
+     } else {
+         console.log("missed target")
+     }
+ })
+
+
+imageForm.addEventListener("submit", createItem)
+searchBtn.addEventListener("click", getFilteredItems)
+addItemBtn.addEventListener("click", createItemForm)
 getUserIsSignedIn()
 getCoinbaseHREF()
 getAllItems()
