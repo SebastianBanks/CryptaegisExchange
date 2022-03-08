@@ -1,4 +1,4 @@
-
+const main = document.querySelector("main")
 
 const imageInput = document.querySelector("#imageInput")
 const itemPrice = document.querySelector("#item_price")
