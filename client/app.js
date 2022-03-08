@@ -159,7 +159,8 @@ const createItem = async (e) => {
     axios.post(`${heroku}/createItem`, body)
         .then(() => {
             document.querySelector(".editFormProperties").reset()
-            document.querySelector(".editItems").style.display = "none"
+            let popup = document.querySelector(".editItem")
+            popup.style.display = "none"
             getAllItems()
             console.log("createItem-----------")
             console.log(`photos: ${photos}`)
