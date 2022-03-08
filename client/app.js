@@ -161,8 +161,9 @@ const createItem = async (e) => {
     axios.post(`${heroku}/createItem`, body)
         .then(() => {
             document.querySelector(".editFormProperties").reset()
-            let popup = document.querySelector(".editItem")
-            popup.style.display = "none"
+            // let popup = document.querySelector(".editItem")
+            // popup.style.display = "none"
+            window.location = "/"
             getAllItems()
             console.log("createItem-----------")
             console.log(`photos: ${photos}`)
@@ -290,8 +291,9 @@ const createItemForm = (e) => {
          createItem(e)
      } else if (e.target && e.target.id === "cancelBtn") {
          console.log("cancel")
-        let popup = document.querySelector(".editItem")
-        popup.style.display = "none"
+        // let popup = document.querySelector(".editItem")
+        // popup.style.display = "none"
+        window.location = "/"
      } else {
          console.log("missed target")
      }

@@ -263,8 +263,9 @@ main.addEventListener("click", async function(e) {
         
     } else if (e.target && e.target.id === "cancelBtn") {
         console.log("cancel")
-        let popup = document.querySelector(".editItem")
-        popup.style.display = "none"
+        // let popup = document.querySelector(".editItem")
+        // popup.style.display = "none"
+        window.location = "/itemPage"
     } else if (e.target && e.target.id === "deleteBtn") {
         console.log("delete")
         deleteItem(itemId)
@@ -290,8 +291,9 @@ const updateItem = (body) => {
             })
 
             getItemDesc()
-            let popup = document.querySelector(".editItem")
-            popup.style.display = "none"
+            // let popup = document.querySelector(".editItem")
+            // popup.style.display = "none"
+            window.location = "/itemPage"
         })
 }
 
