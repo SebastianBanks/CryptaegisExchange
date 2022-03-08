@@ -282,10 +282,13 @@ const createItemForm = (e) => {
  })
 
  main.addEventListener('click', function(e) {
+     console.log("add Item")
      if (e.target && e.target.id === "updateBtn") {
-         createItem
+         createItem(e)
      } else if (e.target && e.target.id === "cancelBtn") {
-        document.querySelector(".editItems").style.display = "none"
+         console.log("cancel")
+        let popup = document.querySelector(".editItem")
+        popup.style.display = "none"
      } else {
          console.log("missed target")
      }
