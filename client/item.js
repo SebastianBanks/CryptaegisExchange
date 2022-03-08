@@ -13,8 +13,6 @@ console.log(`itemId: ${itemId}`)
 const localHost = "http://localhost:3000"
 const heroku = "https://cryptaegis-exchange.herokuapp.com"
 
-backBtn.textContent = "< Back"
-
 const getImageUrl = async (itemId) => {
     let promise = ""
     try {
@@ -215,7 +213,7 @@ const editItem = (e) => {
     })
 }
 
-main.addEventListener("click", function(e) {
+main.addEventListener("click", async function(e) {
     if (e.target && e.target.id === "updateBtn") {
         console.log("update")
 
@@ -228,6 +226,29 @@ main.addEventListener("click", function(e) {
         const categ = document.querySelector('#catEdit').value
         let isChecked = document.querySelector("#checkEdit").checked
 
+        let imageInput = document.querySelector("#imageEdit")
+
+        let photos = []
+        for(let i = 0; i < imageInput.files.length; i++) {
+            console.log(imageInput.files[i])
+            const file = imageInput.files[i]
+
+            const { url } = await fetch(`${heroku}/s3URL`).then(res => res.json())
+            console.log(url)
+
+            await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "multipart/form-data", 
+                },
+                body: file
+            })
+            console.log({url})
+            const imageUrl = url.split('?')[0]
+            console.log(`imgUrl: ${imageUrl}`)
+            photos.push(imageUrl)
+        }
+
         const body = {
             id: itemId,
             price: price,
@@ -238,6 +259,7 @@ main.addEventListener("click", function(e) {
             category_id: categ
         }
         updateItem(body)
+        addPhotos(photos)
         
     } else if (e.target && e.target.id === "cancelBtn") {
         console.log("cancel")
@@ -267,43 +289,26 @@ const updateItem = (body) => {
                 
             })
 
-            let imageInput = document.querySelector("#imageEdit")
-
-            let photos = []
-            for(let i = 0; i < imageInput.files.length; i++) {
-                console.log(imageInput.files[i])
-                const file = imageInput.files[i]
-
-                const { url } = await fetch(`${heroku}/s3URL`).then(res => res.json())
-                console.log(url)
-
-                await fetch(url, {
-                    method: 'PUT',
-                    headers: {
-                        "Content-Type": "multipart/form-data", 
-                    },
-                    body: file
-                })
-                console.log({url})
-                const imageUrl = url.split('?')[0]
-                console.log(`imgUrl: ${imageUrl}`)
-                photos.push(imageUrl)
-            }
-
-            let images = {
-                img_arry: photos,
-                item_id: itemId
-            }
-
-            axios.post(`${heroku}/addImages`, images)
-            .then(res => {
-                console.log(res)
-            })
-
             getItemDesc()
             let popup = document.querySelector(".editItem")
             popup.style.display = "none"
         })
+}
+
+const addPhotos = (photos) => {
+    let images = {
+        img_arry: photos,
+        item_id: itemId
+    }
+
+    axios.post(`${heroku}/addImages`, images)
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log("could not add photos")
+        console.log(err)
+    })
 }
 
 const deleteItem = (id) => {
