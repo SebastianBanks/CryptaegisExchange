@@ -272,6 +272,7 @@ const createItemForm = (e) => {
             </div>
         `
         main.innerHTML += editDiv
+        document.getElementById("overlay").style.display = "block"
 }
 
 
