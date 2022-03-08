@@ -227,6 +227,7 @@ const getUserIsSignedIn = () => {
 const createItemForm = (e) => {
     const editDiv = 
         `
+            <div id="overlay"></div>
             <div class="editItem">
                 <div class="editForm">
                     <form class="editFormProperties">
