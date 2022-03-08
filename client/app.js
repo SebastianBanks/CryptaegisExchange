@@ -1,12 +1,12 @@
 const main = document.querySelector("main")
 
-const imageInput = document.querySelector("#imageInput")
-const itemPrice = document.querySelector("#item_price")
-const itemTitle = document.querySelector("#item_title")
-const itemDesc = document.querySelector("#item_desc")
-const itemSize = document.querySelector("#item_size")
-const ownerId = document.querySelector("#owner_id")
-const catId = document.querySelector("#cat_id")
+// const imageInput = document.querySelector("#imageInput")
+// const itemPrice = document.querySelector("#item_price")
+// const itemTitle = document.querySelector("#item_title")
+// const itemDesc = document.querySelector("#item_desc")
+// const itemSize = document.querySelector("#item_size")
+// const ownerId = document.querySelector("#owner_id")
+// const catId = document.querySelector("#cat_id")
 
 
 
@@ -158,7 +158,7 @@ const createItem = async (e) => {
     
     axios.post(`${heroku}/createItem`, body)
         .then(() => {
-            imageForm.reset()
+            document.querySelector(".editFormProperties").reset()
             document.querySelector(".editItems").style.display = "none"
             getAllItems()
             console.log("createItem-----------")
@@ -292,7 +292,7 @@ const createItemForm = (e) => {
  })
 
 
-imageForm.addEventListener("submit", createItem)
+// imageForm.addEventListener("submit", createItem)
 searchBtn.addEventListener("click", getFilteredItems)
 addItemBtn.addEventListener("click", createItemForm)
 getUserIsSignedIn()
