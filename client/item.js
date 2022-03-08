@@ -203,8 +203,7 @@ const editItem = (e) => {
                 console.log(await item)
                 const editForm = await createEditDiv(item)
                 main.innerHTML += editForm
-                const overlay = document.querySelector('#overly')
-                overlay.style.display = "block"
+                document.getElementById("overlay").style.display = "block"
                 const select = document.querySelector("#catEdit")
                 select.value = String(item["category_id"])
                 const checked = document.querySelector("#checkEdit")
